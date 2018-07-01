@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="account register">
+    <div class="header">
+        <h1>Brobet</h1>
+        <span class="intro">Sign up to bet with your bros.</span>
+    </div>
+    <div class="body">
+        <form id="register-form">
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" placeholder="Username" class="username" name="username" />
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="Password" class="password" name="password" />
+            </div>
+            <div class="input-group">
+                <input type="submit" class="submit" value="Next"/>
+            </div>
+        </form>
+        <div class="terms">
+            By signing up, you agree to our <a>Terms</a>. Learn how we collect, use and share your data in our <a>Data Policy</a> and how we use cookies and similar technology in our <a>Cookies Policy</a>.
+        </div>
+    </div>
+</div>
+
+<div class="account to-login">
+    <span>Have an account? <a href="/Account/Login">Log in</a></span>
+</div>
+
+<script>
+    $(function () {
+        var $username = $(this).find('.username');
+        var $password = $(this).find('.password');
+
+        $('#register-form').submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+
+            var error = false;
+            if ($username.val().length < 3) {
+                //Username error
+                error = true;
+            }
+            if ($password.val().length < 3) {
+                //Password error
+                error = true;
+            }
+            if (error) return;
+
+            $.ajax({
+                type: "POST",
+                url: '/Account/Register',
+                data: data,
+                success: successResponse,
+                error: errorResponse
+            });
+
+
+            function successResponse(response) {
+                if (response.response === 'ERROR') {
+                    if (response.message === 'USERNAME_IN_USE') {
+                        $username.addClass('error');
+                    }
+                }
+                else if (response.response === 'SUCCESS') {
+                    location.reload();
+                }
+            }
+
+            function errorResponse(response) {
+                console.log(response);
+            }
+
+        });
+    });
+</script>

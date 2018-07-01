@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BrobetModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="BrobetModel.Team">
+        <MappingFragment StoreEntitySet="Team">
+          <ScalarProperty Name="logoUrl" ColumnName="logoUrl" />
+          <ScalarProperty Name="founded" ColumnName="founded" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="apiId" ColumnName="apiId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fixtures">
+      <EntityTypeMapping TypeName="BrobetModel.Fixture">
+        <MappingFragment StoreEntitySet="Fixture">
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="startingAt" ColumnName="startingAt" />
+          <ScalarProperty Name="updatedAt" ColumnName="updatedAt" />
+          <ScalarProperty Name="standings" ColumnName="standings" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="scores" ColumnName="scores" />
+          <ScalarProperty Name="visitorTeamApiId" ColumnName="visitorTeamApiId" />
+          <ScalarProperty Name="localTeamApiId" ColumnName="localTeamApiId" />
+          <ScalarProperty Name="visitorTeamId" ColumnName="visitorTeamId" />
+          <ScalarProperty Name="localTeamId" ColumnName="localTeamId" />
+          <ScalarProperty Name="refereeId" ColumnName="refereeId" />
+          <ScalarProperty Name="venueId" ColumnName="venueId" />
+          <ScalarProperty Name="groupId" ColumnName="groupId" />
+          <ScalarProperty Name="roundId" ColumnName="roundId" />
+          <ScalarProperty Name="stageId" ColumnName="stageId" />
+          <ScalarProperty Name="seasonId" ColumnName="seasonId" />
+          <ScalarProperty Name="apiId" ColumnName="apiId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="webpages_Membership">
+      <EntityTypeMapping TypeName="BrobetModel.webpages_Membership">
+        <MappingFragment StoreEntitySet="webpages_Membership">
+          <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+          <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+          <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+          <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+          <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="webpages_OAuthMembership">
+      <EntityTypeMapping TypeName="BrobetModel.webpages_OAuthMembership">
+        <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+          <ScalarProperty Name="Provider" ColumnName="Provider" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="webpages_Roles">
+      <EntityTypeMapping TypeName="BrobetModel.webpages_Roles">
+        <MappingFragment StoreEntitySet="webpages_Roles">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FriendRequests">
+      <EntityTypeMapping TypeName="BrobetModel.FriendRequest">
+        <MappingFragment StoreEntitySet="FriendRequest">
+          <ScalarProperty Name="accepted" ColumnName="accepted" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="toUserId" ColumnName="toUserId" />
+          <ScalarProperty Name="fromUserId" ColumnName="fromUserId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="BrobetModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="BrobetModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+      <EndProperty Name="User">
+        <ScalarProperty Name="userId" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="webpages_Roles">
+        <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Friendships">
+      <EntityTypeMapping TypeName="BrobetModel.Friendship">
+        <MappingFragment StoreEntitySet="Friendship">
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="toUserId" ColumnName="toUserId" />
+          <ScalarProperty Name="fromUserId" ColumnName="fromUserId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
