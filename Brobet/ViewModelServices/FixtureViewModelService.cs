@@ -15,7 +15,13 @@ namespace Brobet.ViewModelServices
         {
             var model = new IndexViewModel();
             var fixtureService = new FixtureService();
+            var accountService = new AccountServices();
             model.fixtures = fixtureService.GetFixtures();
+            model.friends = accountService.GetFriends().Select(fr => new IndexViewModel.Friend
+            {
+                userId = fr.userId,
+                username = fr.username
+            }).ToList();
             return model;
         }
     }

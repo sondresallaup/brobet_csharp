@@ -49,16 +49,36 @@
 </div>
 
 
+<div class="modal-background hidden">
+    <div class="modal">
+        <div class="friends-list-modal">
+            <ul>
+                @foreach(var friend in Model.friends)
+                {
+                    <li class="friend" data-friend-id="@friend.userId">
+                        @friend.username
+                    </li>
+                }
+                <li>
+                    <a href="javascript:void(0);" class="cancel">Cancel</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
 <script>
     $(function () {
         window.setInterval(function () {
             updateFixtures();
         }, 10000);
 
+        var fixtures;
 
         function updateFixtures() {
             $.get('/Home/GetFixturesJson', function (data) {
-                var fixtures = JSON.parse(data);
+                fixtures = JSON.parse(data);
                 console.log(fixtures);
 
                 for (var key in fixtures) {
@@ -80,8 +100,29 @@
                 }
             });
         }
-
         updateFixtures();
+
+        $('.fixture').click(function () {
+            var fixtureId = $(this).data('fixture-id');
+            showModal();
+        });
+
+        $('.modal-background, .modal .friends-list-modal .cancel').click(function (e) {
+            if (e.target !== e.currentTarget) return;
+            hideModal();
+        });
+
+
+
+        function showModal() {
+            var $this = $('.modal-background');
+            $this.removeClass('hidden');
+        }
+
+        function hideModal() {
+            var $this = $('.modal-background');
+            $this.addClass('hidden');
+        }
     });
 
 </script>

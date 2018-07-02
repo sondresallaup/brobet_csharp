@@ -23,16 +23,18 @@
                 <input type="text" placeholder="Add bro by username" class="request-username" name="username" />
                 <input type="submit" class="submit" value="Send request">
             </form>
-
-            <h2>Received bro requests</h2>
-            <ul>
-                @foreach (var friend in Model.receivedFriendRequests)
-                {
-                    <li>
-                        @friend.username - <a href="/Account/AcceptFriendRequest/@friend.userId">Accept</a>
-                    </li>
-                }
-            </ul>
+            @if (Model.receivedFriendRequests.Any())
+            {
+                <h2>Received bro requests</h2>
+                <ul>
+                    @foreach (var friend in Model.receivedFriendRequests)
+                    {
+                        <li>
+                            @friend.username - <a href="/Account/AcceptFriendRequest/@friend.userId">Accept</a>
+                        </li>
+                    }
+                </ul>
+            }
 
             <h2>Bros</h2>
             <ul>
@@ -43,16 +45,18 @@
                     </li>
                 }
             </ul>
-
-            <h2>Sent bro requests</h2>
-            <ul>
-                @foreach (var friend in Model.sentFriendRequests)
-                {
-                    <li>
-                        @friend.username
-                    </li>
-                }
-            </ul>
+            @if (Model.sentFriendRequests.Any())
+            {
+                <h2>Sent bro requests</h2>
+                <ul>
+                    @foreach (var friend in Model.sentFriendRequests)
+                    {
+                        <li>
+                            @friend.username
+                        </li>
+                    }
+                </ul>
+            }
         </div>
         }
     </div>

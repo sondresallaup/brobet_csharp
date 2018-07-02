@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="account login">
+    <div class="header">
+        <h1>Brobet</h1>
+    </div>
+    <div class="body">
+        <form id="login-form">
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" placeholder="Username" class="username" name="username" />
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="Password" class="password" name="password" />
+            </div>
+            <div class="input-group">
+                <input type="submit" class="submit" value="Log in"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="account to-login">
+    <span>Don't have an account? <a href="/Account/Register">Sign up</a></span>
+</div>
+
+<script>
+    $(function () {
+        var $username = $(this).find('.username');
+        var $password = $(this).find('.password');
+
+        $('#login-form').submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+
+            var error = false;
+            if ($username.val().length < 3) {
+                //Username error
+                error = true;
+            }
+            if ($password.val().length < 3) {
+                //Password error
+                error = true;
+            }
+            if (error) return;
+
+            $.ajax({
+                type: "POST",
+                url: '/Account/Login',
+                data: data,
+                success: successResponse,
+                error: errorResponse
+            });
+
+
+            function successResponse(response) {
+                if (response.response === 'ERROR') {
+                    if (response.message === 'WRONG_AUTHENTICATION') {
+                        $username.addClass('error');
+                    }
+                }
+                else if (response.response === 'SUCCESS') {
+                    location.reload();
+                }
+            }
+
+            function errorResponse(response) {
+                console.log(response);
+            }
+
+        });
+    });
+</script>
