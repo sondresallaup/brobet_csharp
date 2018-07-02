@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <setParameter name="IIS Web Application Name" value="Default Web Site/" />
-  <setParameter name="DefaultConnection-Web.config Connection String" value="Data Source=(local)\SQLEXPRESS;Initial Catalog=Brobet;Integrated Security=True" />
-  <setParameter name="BrobetEntities-Web.config Connection String" value="metadata=res://*/db.BrobetEF.csdl|res://*/db.BrobetEF.ssdl|res://*/db.BrobetEF.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local)\SQLEXPRESS;initial catalog=Brobet;integrated security=True;multipleactiveresultsets=True;application name=EntityFramework&quot;" />
-  <setParameter name="Entities-Web.config Connection String" value="metadata=res://*/Models.BrobetEF.csdl|res://*/Models.BrobetEF.ssdl|res://*/Models.BrobetEF.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=(local)\SQLEXPRESS;initial catalog=Brobet;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
-</parameters>
