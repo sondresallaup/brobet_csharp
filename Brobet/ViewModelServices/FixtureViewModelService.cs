@@ -11,12 +11,13 @@ namespace Brobet.ViewModelServices
     {
         public FixtureViewModelService() { }
 
-        public IndexViewModel GetIndexViewModel()
+        public IndexViewModel GetIndexViewModel(int daysFromNow = 0)
         {
             var model = new IndexViewModel();
             var fixtureService = new FixtureService();
             var accountService = new AccountServices();
-            model.fixtures = fixtureService.GetFixtures();
+            model.daysFromNow = daysFromNow;
+            model.fixtures = fixtureService.GetFixtures(daysFromNow);
             model.friends = accountService.GetFriends().Select(fr => new IndexViewModel.Friend
             {
                 userId = fr.userId,
