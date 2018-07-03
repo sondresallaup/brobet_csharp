@@ -8,6 +8,8 @@ namespace Brobet.ViewModels
 {
     public class IndexViewModel
     {
+        public int daysFromNow { get; set; }
+
         public Dictionary<int, FixtureViewModel> fixtures { get; set; }
         public List<Friend> friends { get; set; }
 

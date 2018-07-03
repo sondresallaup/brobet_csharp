@@ -17,7 +17,7 @@ namespace Brobet.Controllers
     {
         private Entities db = new Entities();
 
-        public ActionResult Index()
+        public ActionResult Index(int daysFromNow = 0)
         {
             var accountServices = new AccountServices();
             if (!accountServices.isLoggedIn())
@@ -26,7 +26,7 @@ namespace Brobet.Controllers
             }
 
             var vmService = new FixtureViewModelService();
-            var model = vmService.GetIndexViewModel();
+            var model = vmService.GetIndexViewModel(daysFromNow);
 
 
             return View(model);
@@ -56,10 +56,10 @@ namespace Brobet.Controllers
             return View();
         }
 
-        public string GetFixturesJson()
+        public string GetFixturesJson(int daysFromNow = 0)
         {
             var fixtureService = new FixtureService();
-            var fixtures = fixtureService.GetFixtures();
+            var fixtures = fixtureService.GetFixtures(daysFromNow);
 
             return JsonConvert.SerializeObject(fixtures);
         }

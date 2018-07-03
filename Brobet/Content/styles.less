@@ -153,6 +153,31 @@ body {
         padding: 30px;
         border: 1px solid @box-border-color;
 
+        .day-arrows {
+            display: inline-block;
+            width: 100%;
+            font-size: 30px;
+
+            a {
+                color: @text-color-light;
+                width: 80px;
+
+                &.disabled {
+                    visibility: hidden;
+                }
+
+                &.previous {
+                    float: left;
+                    text-align: left;
+                }
+
+                &.next {
+                    float: right;
+                    text-align: right;
+                }
+            }
+        }
+
         .fixture {
             cursor: pointer;
             border-bottom: 1px solid @box-border-color;

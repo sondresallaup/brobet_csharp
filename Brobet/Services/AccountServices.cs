@@ -18,7 +18,7 @@ namespace Brobet.Services
 
         public bool isLoggedIn()
         {
-            return WebSecurity.IsAuthenticated;
+            return WebSecurity.IsAuthenticated && this.GetCurrentUserId() > 0;
         }
 
         public int GetCurrentUserId()

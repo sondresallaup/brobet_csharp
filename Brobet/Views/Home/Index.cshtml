@@ -5,6 +5,10 @@
 @Html.Partial("_NavbarPartial")
 
 <div class="body-container">
+    <div class="day-arrows">
+        <a class="previous disabled" href="javascript:void(0);"><i class="fas fa-arrow-left"></i></a>
+        <a class="next" href="javascript:void(0);"><i class="fas fa-arrow-right"></i></a>
+    </div>
     @{
         foreach (var fixtureD in Model.fixtures)
         {
@@ -69,6 +73,8 @@
 
 
 <script>
+    var daysFromNow = @Model.daysFromNow;
+
     $(function () {
         window.setInterval(function () {
             updateFixtures();
@@ -77,7 +83,7 @@
         var fixtures;
 
         function updateFixtures() {
-            $.get('/Home/GetFixturesJson', function (data) {
+            $.get('/Home/GetFixturesJson?daysFromNow=@Model.daysFromNow', function (data) {
                 fixtures = JSON.parse(data);
                 console.log(fixtures);
 
@@ -102,6 +108,24 @@
         }
         updateFixtures();
 
+        if (daysFromNow > 0) {
+            $('.day-arrows a.previous').removeClass('disabled');
+        }
+
+
+        $('.day-arrows a').click(function () {
+            var $arrow = $(this);
+            if ($arrow.hasClass('disabled')) return;
+
+            if ($arrow.hasClass('next')) {
+                daysFromNow++;
+            }
+            else {
+                daysFromNow--;
+            }
+            location.href = '/?daysFromNow=' + daysFromNow;
+        })
+
         $('.fixture').click(function () {
             var fixtureId = $(this).data('fixture-id');
             showModal();
@@ -111,9 +135,6 @@
             if (e.target !== e.currentTarget) return;
             hideModal();
         });
-
-
-
         function showModal() {
             var $this = $('.modal-background');
             $this.removeClass('hidden');
