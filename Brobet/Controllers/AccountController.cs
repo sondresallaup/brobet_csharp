@@ -78,6 +78,7 @@ namespace Brobet.Controllers
                 });
             }
             accountServices.createUserLogin(username, password);
+            Response.Cookies[0].Expires = DateTime.Now.AddDays(30);
             return Json(new
             {
                 response = "SUCCESS"
@@ -89,6 +90,7 @@ namespace Brobet.Controllers
         {
             var accountServices = new AccountServices();
             accountServices.Login(username, password);
+            Response.Cookies[0].Expires = DateTime.Now.AddDays(30);
             return Json(new
             {
                 response = "SUCCESS"

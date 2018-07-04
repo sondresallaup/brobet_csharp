@@ -22,6 +22,11 @@ namespace Brobet.Models
             this.webpages_Roles = new HashSet<webpages_Roles>();
             this.SentFriendships = new HashSet<Friendship>();
             this.ReceivedFriendships = new HashSet<Friendship>();
+            this.SentBetRequests = new HashSet<BetRequest>();
+            this.ReceivedBetRequests = new HashSet<BetRequest>();
+            this.SentBets = new HashSet<Bet>();
+            this.ReceivedBets = new HashSet<Bet>();
+            this.WonBets = new HashSet<Bet>();
         }
     
         public int userId { get; set; }
@@ -37,5 +42,15 @@ namespace Brobet.Models
         public virtual ICollection<Friendship> SentFriendships { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Friendship> ReceivedFriendships { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BetRequest> SentBetRequests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BetRequest> ReceivedBetRequests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bet> SentBets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bet> ReceivedBets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bet> WonBets { get; set; }
     }
 }

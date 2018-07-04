@@ -5,6 +5,35 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BrobetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fromUserId" Type="int" Nullable="false" />
+          <Property Name="toUserId" Type="int" Nullable="false" />
+          <Property Name="fixtureId" Type="int" Nullable="false" />
+          <Property Name="initiatorBet" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="homeAmount" Type="int" Nullable="false" />
+          <Property Name="awayAmount" Type="int" Nullable="false" />
+          <Property Name="date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="winnerId" Type="int" />
+        </EntityType>
+        <EntityType Name="BetRequest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fromUserId" Type="int" Nullable="false" />
+          <Property Name="toUserId" Type="int" Nullable="false" />
+          <Property Name="fixtureId" Type="int" Nullable="false" />
+          <Property Name="initiatorBet" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="homeAmount" Type="int" Nullable="false" />
+          <Property Name="awayAmount" Type="int" Nullable="false" />
+          <Property Name="accepted" Type="bit" Nullable="false" />
+          <Property Name="date" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="Fixture">
           <Key>
             <PropertyRef Name="id" />
@@ -105,6 +134,90 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Bet_Fixture">
+          <End Role="Fixture" Type="Self.Fixture" Multiplicity="1" />
+          <End Role="Bet" Type="Self.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fixture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="fixtureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bet_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Bet" Type="Self.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="fromUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bet_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Bet" Type="Self.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="toUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bet_Users2">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Bet" Type="Self.Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="winnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BetRequest_Fixture">
+          <End Role="Fixture" Type="Self.Fixture" Multiplicity="1" />
+          <End Role="BetRequest" Type="Self.BetRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fixture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BetRequest">
+              <PropertyRef Name="fixtureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BetRequest_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="BetRequest" Type="Self.BetRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="BetRequest">
+              <PropertyRef Name="fromUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BetRequest_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="BetRequest" Type="Self.BetRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="BetRequest">
+              <PropertyRef Name="toUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Fixture_LocalTeam">
           <End Role="Team" Type="Self.Team" Multiplicity="1" />
           <End Role="Fixture" Type="Self.Fixture" Multiplicity="*" />
@@ -202,6 +315,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BrobetModelStoreContainer">
+          <EntitySet Name="Bet" EntityType="Self.Bet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BetRequest" EntityType="Self.BetRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fixture" EntityType="Self.Fixture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FriendRequest" EntityType="Self.FriendRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
@@ -211,6 +326,34 @@
           <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bet_Fixture" Association="Self.FK_Bet_Fixture">
+            <End Role="Fixture" EntitySet="Fixture" />
+            <End Role="Bet" EntitySet="Bet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bet_Users" Association="Self.FK_Bet_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bet" EntitySet="Bet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bet_Users1" Association="Self.FK_Bet_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bet" EntitySet="Bet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bet_Users2" Association="Self.FK_Bet_Users2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Bet" EntitySet="Bet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BetRequest_Fixture" Association="Self.FK_BetRequest_Fixture">
+            <End Role="Fixture" EntitySet="Fixture" />
+            <End Role="BetRequest" EntitySet="BetRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BetRequest_Users" Association="Self.FK_BetRequest_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BetRequest" EntitySet="BetRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BetRequest_Users1" Association="Self.FK_BetRequest_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BetRequest" EntitySet="BetRequest" />
+          </AssociationSet>
           <AssociationSet Name="FK_Fixture_LocalTeam" Association="Self.FK_Fixture_LocalTeam">
             <End Role="Team" EntitySet="Team" />
             <End Role="Fixture" EntitySet="Fixture" />
@@ -285,6 +428,36 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Friendship" EntitySet="Friendships" />
           </AssociationSet>
+          <EntitySet Name="BetRequests" EntityType="BrobetModel.BetRequest" />
+          <AssociationSet Name="FK_BetRequest_Fixture" Association="BrobetModel.FK_BetRequest_Fixture">
+            <End Role="Fixture" EntitySet="Fixtures" />
+            <End Role="BetRequest" EntitySet="BetRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BetRequest_Users" Association="BrobetModel.FK_BetRequest_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BetRequest" EntitySet="BetRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BetRequest_Users1" Association="BrobetModel.FK_BetRequest_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BetRequest" EntitySet="BetRequests" />
+          </AssociationSet>
+          <EntitySet Name="Bets" EntityType="BrobetModel.Bet" />
+          <AssociationSet Name="FK_Bet_Fixture" Association="BrobetModel.FK_Bet_Fixture">
+            <End Role="Fixture" EntitySet="Fixtures" />
+            <End Role="Bet" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bet_Users" Association="BrobetModel.FK_Bet_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Bet" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bet_Users1" Association="BrobetModel.FK_Bet_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Bet" EntitySet="Bets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bet_Users2" Association="BrobetModel.FK_Bet_Users2">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Bet" EntitySet="Bets" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Team">
           <Key>
@@ -323,6 +496,8 @@
           <Property Name="startingAt" Type="DateTime" Precision="7" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="BetRequests" Relationship="BrobetModel.FK_BetRequest_Fixture" FromRole="Fixture" ToRole="BetRequest" />
+          <NavigationProperty Name="Bets" Relationship="BrobetModel.FK_Bet_Fixture" FromRole="Fixture" ToRole="Bet" />
         </EntityType>
         <Association Name="FK_Fixture_LocalTeam">
           <End Type="BrobetModel.Team" Role="Team" Multiplicity="1" />
@@ -404,6 +579,11 @@
           <NavigationProperty Name="webpages_Roles" Relationship="BrobetModel.webpages_UsersInRoles" FromRole="User" ToRole="webpages_Roles" />
           <NavigationProperty Name="SentFriendships" Relationship="BrobetModel.FK_Friendship_Users" FromRole="User" ToRole="Friendship" />
           <NavigationProperty Name="ReceivedFriendships" Relationship="BrobetModel.FK_Friendship_Users1" FromRole="User" ToRole="Friendship" />
+          <NavigationProperty Name="SentBetRequests" Relationship="BrobetModel.FK_BetRequest_Users" FromRole="User" ToRole="BetRequest" />
+          <NavigationProperty Name="ReceivedBetRequests" Relationship="BrobetModel.FK_BetRequest_Users1" FromRole="User" ToRole="BetRequest" />
+          <NavigationProperty Name="SentBets" Relationship="BrobetModel.FK_Bet_Users" FromRole="User" ToRole="Bet" />
+          <NavigationProperty Name="ReceivedBets" Relationship="BrobetModel.FK_Bet_Users1" FromRole="User" ToRole="Bet" />
+          <NavigationProperty Name="WonBets" Relationship="BrobetModel.FK_Bet_Users2" FromRole="User" ToRole="Bet" />
         </EntityType>
         <Association Name="FK_FriendRequest_Users">
           <End Type="BrobetModel.User" Role="User" Multiplicity="1" />
@@ -465,6 +645,126 @@
             </Principal>
             <Dependent Role="Friendship">
               <PropertyRef Name="toUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BetRequest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fromUserId" Type="Int32" Nullable="false" />
+          <Property Name="toUserId" Type="Int32" Nullable="false" />
+          <Property Name="fixtureId" Type="Int32" Nullable="false" />
+          <Property Name="initiatorBet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="homeAmount" Type="Int32" Nullable="false" />
+          <Property Name="awayAmount" Type="Int32" Nullable="false" />
+          <Property Name="accepted" Type="Boolean" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Fixture" Relationship="BrobetModel.FK_BetRequest_Fixture" FromRole="BetRequest" ToRole="Fixture" />
+          <NavigationProperty Name="FromUser" Relationship="BrobetModel.FK_BetRequest_Users" FromRole="BetRequest" ToRole="User" />
+          <NavigationProperty Name="ToUser" Relationship="BrobetModel.FK_BetRequest_Users1" FromRole="BetRequest" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_BetRequest_Fixture">
+          <End Type="BrobetModel.Fixture" Role="Fixture" Multiplicity="1" />
+          <End Type="BrobetModel.BetRequest" Role="BetRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fixture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="BetRequest">
+              <PropertyRef Name="fixtureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BetRequest_Users">
+          <End Type="BrobetModel.User" Role="User" Multiplicity="1" />
+          <End Type="BrobetModel.BetRequest" Role="BetRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="BetRequest">
+              <PropertyRef Name="fromUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BetRequest_Users1">
+          <End Type="BrobetModel.User" Role="User" Multiplicity="1" />
+          <End Type="BrobetModel.BetRequest" Role="BetRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="BetRequest">
+              <PropertyRef Name="toUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Bet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fromUserId" Type="Int32" Nullable="false" />
+          <Property Name="toUserId" Type="Int32" Nullable="false" />
+          <Property Name="fixtureId" Type="Int32" Nullable="false" />
+          <Property Name="homeAmount" Type="Int32" Nullable="false" />
+          <Property Name="awayAmount" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="winnerId" Type="Int32" />
+          <NavigationProperty Name="Fixture" Relationship="BrobetModel.FK_Bet_Fixture" FromRole="Bet" ToRole="Fixture" />
+          <NavigationProperty Name="FromUser" Relationship="BrobetModel.FK_Bet_Users" FromRole="Bet" ToRole="User" />
+          <NavigationProperty Name="ToUser" Relationship="BrobetModel.FK_Bet_Users1" FromRole="Bet" ToRole="User" />
+          <NavigationProperty Name="Winner" Relationship="BrobetModel.FK_Bet_Users2" FromRole="Bet" ToRole="User" />
+          <Property Name="initiatorBet" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Bet_Fixture">
+          <End Type="BrobetModel.Fixture" Role="Fixture" Multiplicity="1" />
+          <End Type="BrobetModel.Bet" Role="Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fixture">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="fixtureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bet_Users">
+          <End Type="BrobetModel.User" Role="User" Multiplicity="1" />
+          <End Type="BrobetModel.Bet" Role="Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="fromUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bet_Users1">
+          <End Type="BrobetModel.User" Role="User" Multiplicity="1" />
+          <End Type="BrobetModel.Bet" Role="Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="toUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bet_Users2">
+          <End Type="BrobetModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="BrobetModel.Bet" Role="Bet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="Bet">
+              <PropertyRef Name="winnerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -575,6 +875,37 @@
             <EntityTypeMapping TypeName="BrobetModel.Friendship">
               <MappingFragment StoreEntitySet="Friendship">
                 <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="toUserId" ColumnName="toUserId" />
+                <ScalarProperty Name="fromUserId" ColumnName="fromUserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BetRequests">
+            <EntityTypeMapping TypeName="BrobetModel.BetRequest">
+              <MappingFragment StoreEntitySet="BetRequest">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="accepted" ColumnName="accepted" />
+                <ScalarProperty Name="awayAmount" ColumnName="awayAmount" />
+                <ScalarProperty Name="homeAmount" ColumnName="homeAmount" />
+                <ScalarProperty Name="initiatorBet" ColumnName="initiatorBet" />
+                <ScalarProperty Name="fixtureId" ColumnName="fixtureId" />
+                <ScalarProperty Name="toUserId" ColumnName="toUserId" />
+                <ScalarProperty Name="fromUserId" ColumnName="fromUserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bets">
+            <EntityTypeMapping TypeName="BrobetModel.Bet">
+              <MappingFragment StoreEntitySet="Bet">
+                <ScalarProperty Name="initiatorBet" ColumnName="initiatorBet" />
+                <ScalarProperty Name="winnerId" ColumnName="winnerId" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="awayAmount" ColumnName="awayAmount" />
+                <ScalarProperty Name="homeAmount" ColumnName="homeAmount" />
+                <ScalarProperty Name="fixtureId" ColumnName="fixtureId" />
                 <ScalarProperty Name="toUserId" ColumnName="toUserId" />
                 <ScalarProperty Name="fromUserId" ColumnName="fromUserId" />
                 <ScalarProperty Name="id" ColumnName="id" />

@@ -33,5 +33,7 @@ namespace Brobet.Models
         public virtual DbSet<FriendRequest> FriendRequests { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Friendship> Friendships { get; set; }
+        public virtual DbSet<BetRequest> BetRequests { get; set; }
+        public virtual DbSet<Bet> Bets { get; set; }
     }
 }

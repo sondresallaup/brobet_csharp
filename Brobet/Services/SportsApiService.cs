@@ -20,7 +20,7 @@ namespace Brobet.Services
 
         }
 
-        public void SaveFixtures(int apiSeasonUrl)
+        public void UpdateFixtures(int apiSeasonUrl)
         {
             string URL = baseUrl + "seasons/" + apiSeasonUrl;
             string urlParameters = sportmonksApiToken + "&include=fixtures";
@@ -66,12 +66,52 @@ namespace Brobet.Services
                         db.Fixtures.Add(fixture);
                     }
                     fixture.date = DateTime.Parse(apiFixture.time.starting_at.date);
-                    fixture.status = apiFixture.time.status;
                     fixture.startingAt = DateTime.Parse(apiFixture.time.starting_at.date_time);
                     fixture.updatedAt = DateTime.Now;
                     fixture.scores = new JavaScriptSerializer().Serialize(apiFixture.scores);
                     fixture.time = new JavaScriptSerializer().Serialize(apiFixture.time);
                     fixture.standings = new JavaScriptSerializer().Serialize(apiFixture.standings);
+
+                    var homeScore = apiFixture.scores.localteam_score;
+                    var awayScore = apiFixture.scores.visitorteam_score;
+
+                    // Update bets if finished
+                    if (fixture.status != "FT" && apiFixture.time.status == "FT")
+                    {
+                        foreach(var bet in fixture.Bets)
+                        {
+                            bet.status = "FINISHED";
+
+                            if(homeScore == awayScore) // Tie
+                            {
+                                continue; // Ties are not yet implemented
+                            }
+                            else if(homeScore > awayScore) // Home win
+                            {
+                                if(bet.initiatorBet == "HOME") // From user has won
+                                {
+                                    bet.winnerId = bet.fromUserId;
+                                }
+                                else if(bet.initiatorBet == "AWAY") // To user has won
+                                {
+                                    bet.winnerId = bet.toUserId;
+                                }
+                            }
+                            else if(homeScore < awayScore) // Away win
+                            {
+                                if (bet.initiatorBet == "HOME") // To user has won
+                                {
+                                    bet.winnerId = bet.toUserId;
+                                }
+                                else if (bet.initiatorBet == "AWAY") // From user has won
+                                {
+                                    bet.winnerId = bet.fromUserId;
+                                }
+                            }
+                        }
+                    }
+
+                    fixture.status = apiFixture.time.status;
 
                 }
                 db.SaveChanges();

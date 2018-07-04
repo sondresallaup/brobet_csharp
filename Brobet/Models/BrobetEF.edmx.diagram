@@ -20,6 +20,15 @@
         <EntityTypeShape EntityType="BrobetModel.Friendship" Width="1.5" PointX="8.375" PointY="6.125" />
         <AssociationConnector Association="BrobetModel.FK_Friendship_Users" />
         <AssociationConnector Association="BrobetModel.FK_Friendship_Users1" />
+        <EntityTypeShape EntityType="BrobetModel.BetRequest" Width="1.5" PointX="13.75" PointY="3.875" />
+        <AssociationConnector Association="BrobetModel.FK_BetRequest_Fixture" />
+        <AssociationConnector Association="BrobetModel.FK_BetRequest_Users" />
+        <AssociationConnector Association="BrobetModel.FK_BetRequest_Users1" />
+        <EntityTypeShape EntityType="BrobetModel.Bet" Width="1.5" PointX="16" PointY="4.125" />
+        <AssociationConnector Association="BrobetModel.FK_Bet_Fixture" />
+        <AssociationConnector Association="BrobetModel.FK_Bet_Users" />
+        <AssociationConnector Association="BrobetModel.FK_Bet_Users1" />
+        <AssociationConnector Association="BrobetModel.FK_Bet_Users2" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -186,7 +186,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\Bet.cs">
+      <DependentUpon>BrobetEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BetRequest.cs">
+      <DependentUpon>BrobetEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Fixture.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
@@ -211,8 +218,10 @@
     <Compile Include="Models\webpages_Roles.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\BetService.cs" />
     <Compile Include="Services\FixtureService.cs" />
     <Compile Include="ViewModelServices\AccountViewModelService.cs" />
+    <Compile Include="ViewModelServices\BetViewModelService.cs" />
     <Compile Include="ViewModelServices\FixtureViewModelService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -243,6 +252,7 @@
     <Compile Include="Services\AccountServices.cs" />
     <Compile Include="Services\SportsApiService.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\BetListViewModel.cs" />
     <Compile Include="ViewModels\FixtureViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
   </ItemGroup>
@@ -320,6 +330,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
     <Content Include="Views\Account\User.cshtml" />
+    <Content Include="Views\Bet\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

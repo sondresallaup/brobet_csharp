@@ -13,10 +13,10 @@ namespace Brobet.Jobs
         public void Execute(IJobExecutionContext context)
         {
             var apiservice = new SportsApiService();
-            apiservice.SaveFixtures(11983); // Eliterien
-            apiservice.SaveFixtures(12962); // Premier League
-            apiservice.SaveFixtures(12950); // Champions League
-            apiservice.SaveFixtures(12945); // Europa League
+            apiservice.UpdateFixtures(11983); // Eliterien
+            apiservice.UpdateFixtures(12962); // Premier League
+            apiservice.UpdateFixtures(12950); // Champions League
+            apiservice.UpdateFixtures(12945); // Europa League
         }
     }
 }

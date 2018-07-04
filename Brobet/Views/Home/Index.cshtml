@@ -53,11 +53,12 @@
 </div>
 
 
-<div class="modal-background hidden">
+<div class="modal-background hidden" id="friends-list-modal">
     <div class="modal">
         <div class="friends-list-modal">
             <ul>
-                @foreach(var friend in Model.friends)
+                <li><b>Choose a bro to bet👊</b></li>
+                @foreach (var friend in Model.friends)
                 {
                     <li class="friend" data-friend-id="@friend.userId">
                         @friend.username
@@ -71,9 +72,47 @@
     </div>
 </div>
 
+<div class="modal-background hidden" id="bet-modal">
+    <div class="modal">
+        <div class="friends-list-modal">
+            <ul>
+                <li><b>Choose a bet🍀</b></li>
+                <li class="bet" data-value="HOME">Home</li>
+                <li class="bet" data-value="AWAY">Away</li>
+                <li>
+                    <a href="javascript:void(0);" class="cancel">Cancel</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-background hidden" id="amount-modal">
+    <div class="modal">
+        <div class="friends-list-modal">
+            <ul>
+                <li><b>Choose the cash🤑</b></li>
+                <li class="amount" data-value="HOME">
+                    <input type="tel" class="home-amount" placeholder="Home bet" />
+                </li>
+                <li class="amount" data-value="AWAY">
+                    <input type="tel" class="away-amount" placeholder="Away bet"/>
+                </li>
+                <li class="place-bet">
+                    <a href="javascript:void(0);" class="place-bet-button">Place bet🤞🙈</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="cancel">Cancel</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 
 <script>
     var daysFromNow = @Model.daysFromNow;
+    var fixtureId, friendId, bet;
 
     $(function () {
         window.setInterval(function () {
@@ -127,21 +166,60 @@
         })
 
         $('.fixture').click(function () {
-            var fixtureId = $(this).data('fixture-id');
-            showModal();
+            fixtureId = $(this).data('fixture-id');
+            showModal('friends-list-modal');
         });
 
         $('.modal-background, .modal .friends-list-modal .cancel').click(function (e) {
             if (e.target !== e.currentTarget) return;
-            hideModal();
+            hideModal(null);
         });
-        function showModal() {
-            var $this = $('.modal-background');
+
+        $('.friend').click(function () {
+            friendId = $(this).data('friend-id');
+            console.log(friendId);
+            hideModal('friends-list-modal');
+            showModal('bet-modal');
+        });
+
+        $('.bet').click(function () {
+            bet = $(this).data('value');
+            console.log(bet);
+            hideModal('bet-modal');
+            showModal('amount-modal');
+        });
+
+        $('.place-bet-button').click(function () {
+            var $modal = $('#amount-modal');
+            var homeAmount = $modal.find('.home-amount').val();
+            var awayAmount = $modal.find('.away-amount').val();
+            if (homeAmount.length === 0 || awayAmount.length === 0) {
+                return;
+            }
+            var data = {
+                toUserId: friendId,
+                fixtureId: fixtureId,
+                initiatorBet: bet,
+                homeAmount: homeAmount,
+                awayAmount: awayAmount
+            }
+            $.post('/Bet/Place', data, function (response) {
+                console.log(response);
+                location.href = '/Bet/List';
+            });
+            hideModal(null);
+        });
+
+        function showModal(selector) {
+            var $this = $('#' + selector + '.modal-background');
             $this.removeClass('hidden');
         }
 
-        function hideModal() {
+        function hideModal(selector) {
             var $this = $('.modal-background');
+            if (selector != null) {
+                $this = $('#' + selector + '.modal-background');
+            }
             $this.addClass('hidden');
         }
     });

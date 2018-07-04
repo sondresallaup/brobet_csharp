@@ -14,6 +14,13 @@ namespace Brobet.Models
     
     public partial class Fixture
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Fixture()
+        {
+            this.BetRequests = new HashSet<BetRequest>();
+            this.Bets = new HashSet<Bet>();
+        }
+    
         public int id { get; set; }
         public Nullable<int> apiId { get; set; }
         public Nullable<int> seasonId { get; set; }
@@ -36,5 +43,9 @@ namespace Brobet.Models
     
         public virtual Team LocalTeam { get; set; }
         public virtual Team VisitorTeam { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BetRequest> BetRequests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bet> Bets { get; set; }
     }
 }

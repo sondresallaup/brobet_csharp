@@ -1,0 +1,85 @@
+﻿@model Brobet.ViewModels.BetListViewModel
+
+@{
+    ViewBag.Title = "Bets";
+}
+
+@Html.Partial("_NavbarPartial")
+
+
+@if (Model.receivedBetRequests.Any())
+{
+    <div class="body-container">
+        <h1>Received bet requests</h1>
+        <ul>
+            @foreach (var request in Model.receivedBetRequests)
+            {
+                <li>
+                    <b>From: </b> @request.friendName <br />
+                    @request.fixtureTitle <br />
+                    <b>Your bet: </b> @request.bet <br />
+                    <b>Home amount: </b> @request.homeAmount <br />
+                    <b>Away amount: </b> @request.awayAmount <br />
+                    <br />
+                    <a href="javacript:void(0);" data-id="@request.id" class="accept-bet-request">Accept bet</a>
+                    <br /><br />
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@if (Model.bets.Any())
+{
+    <div class="body-container">
+        <h1>Bets</h1>
+        <ul>
+            @foreach (var bet in Model.bets)
+            {
+                <li>
+                    <b>With: </b> @bet.friendName <br />
+                    @bet.fixtureTitle <br />
+                    <b>Your bet: </b> @bet.bet <br />
+                    <b>Home amount: </b> @bet.homeAmount <br />
+                    <b>Away amount: </b> @bet.awayAmount <br />
+                    <b>Status: </b> @bet.status <br/>
+                    <b>Has won: </b> @bet.hasWon
+                    <br /><br />
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@if (Model.sentBetRequests.Any())
+{
+    <div class="body-container">
+        <h1>Sent bet requests</h1>
+        <ul>
+            @foreach (var request in Model.sentBetRequests)
+            {
+                <li>
+                    <b>To: </b> @request.friendName <br />
+                    @request.fixtureTitle <br />
+                    <b>Your bet: </b> @request.bet <br />
+                    <b>Home amount: </b> @request.homeAmount <br />
+                    <b>Away amount: </b> @request.awayAmount
+                    <br /><br />
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+<script>
+    $(function () {
+        $('.accept-bet-request').click(function () {
+            var requestId = $(this).data('id');
+            $.post('/Bet/AcceptRequest/' + requestId, function (response) {
+                if (response.response === 'SUCCESS') {
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
