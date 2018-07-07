@@ -65,6 +65,19 @@ namespace Brobet.Controllers
             return View("User", vm);
         }
 
+        public ActionResult Transactions()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+            var vmService = new AccountViewModelService();
+            var vm = vmService.GetTransactionsViewModel();
+
+            return View(vm);
+        }
+
         [HttpPost]
         public ActionResult Register(string username, string password)
         {

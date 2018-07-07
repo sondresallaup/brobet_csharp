@@ -46,6 +46,15 @@ namespace Brobet.Services
         {
             WebSecurity.CreateUserAndAccount(username, password);
             var userId = WebSecurity.GetUserId(username);
+            // 1000 kr sign up bonus
+            var transaction = new Transaction
+            {
+                userId = userId,
+                amount = 1000,
+                date = DateTime.Now,
+                description = "Sign up bonus"
+            };
+            db.Transactions.Add(transaction);
             db.SaveChanges();
             this.Login(username, password);
             return userId;
@@ -151,6 +160,19 @@ namespace Brobet.Services
         {
             var user = this.GetCurrentUser();
             return user.ReceivedFriendRequests.Where(fr => !fr.accepted).ToList();
+        }
+
+        public List<Transaction> GetTransactions()
+        {
+            var user = this.GetCurrentUser();
+            return user.Transactions.OrderByDescending(t => t.date).ToList();
+        }
+
+        public decimal GetAccountBalance()
+        {
+            var transactions = this.GetTransactions();
+            var balance = transactions.Sum(t => t.amount);
+            return balance;
         }
     }
 }

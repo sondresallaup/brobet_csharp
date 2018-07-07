@@ -48,5 +48,22 @@ namespace Brobet.ViewModelServices
                 username = user.username
             };
         }
+
+        public AccountViewModel GetTransactionsViewModel()
+        {
+            var service = new AccountServices();
+            var balance = service.GetAccountBalance();
+            return new AccountViewModel
+            {
+                accountBalance = balance,
+                transactions = service.GetTransactions().Select(t => new AccountViewModel.Transaction
+                {
+                    id = t.id,
+                    amount = t.amount,
+                    description = t.description,
+                    dateString = t.date.ToLongDateString() + " " + t.date.ToLongTimeString()
+                }).ToList()
+            };
+        }
     }
 }

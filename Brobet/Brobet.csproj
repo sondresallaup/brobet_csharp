@@ -206,6 +206,9 @@
     <Compile Include="Models\Team.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Transaction.cs">
+      <DependentUpon>BrobetEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
@@ -331,6 +334,7 @@
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
     <Content Include="Views\Account\User.cshtml" />
     <Content Include="Views\Bet\List.cshtml" />
+    <Content Include="Views\Account\Transactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -369,7 +373,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53556</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost</IISUrl>
+          <IISUrl>http://localhost/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

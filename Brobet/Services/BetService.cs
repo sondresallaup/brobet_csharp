@@ -79,13 +79,14 @@ namespace Brobet.Services
         {
             // Take money from acceptor
             var accountService = new AccountServices();
-            var fromUserId = accountService.GetCurrentUserId();
+            var currentUserId = accountService.GetCurrentUserId();
 
             var request = db.BetRequests.SingleOrDefault(br => br.id == requestId);
-            if(request.toUserId != fromUserId)
+            if(request.toUserId != currentUserId)
             {
                 return "UNAUTHORIZED";
             }
+            // TODO: Check if user has enough money
             request.accepted = true;
 
             var bet = new Bet
@@ -100,6 +101,24 @@ namespace Brobet.Services
                 status = "NS"
             };
             db.Bets.Add(bet);
+
+            // Get fromuser's transaction
+            var fromUserTransaction = request.Transactions.SingleOrDefault(t => t.userId == request.fromUserId);
+            fromUserTransaction.betRequestId = null;
+            fromUserTransaction.Bet = bet;
+
+            var currentUserBet = this.OppositeBet(request.initiatorBet);
+            var currentUserAmount = this.UserBetAmount(currentUserBet, request.homeAmount, request.awayAmount);
+
+            var currentUserTransaction = new Transaction
+            {
+                userId = currentUserId,
+                amount = (currentUserAmount * -1),
+                date = DateTime.Now,
+                Bet = bet
+            };
+            db.Transactions.Add(currentUserTransaction);
+
             db.SaveChanges();
 
 
@@ -108,9 +127,14 @@ namespace Brobet.Services
 
         public string CreateBetRequest(int toUserId, int fixtureId, string initiatorBet, int homeAmount, int awayAmount)
         {
-            // TODO: Take money from initiator
             var accountService = new AccountServices();
             var fromUserId = accountService.GetCurrentUserId();
+
+            var fixture = db.Fixtures.SingleOrDefault(f => f.id == fixtureId);
+            if(fixture.status != "NS")
+            {
+                return "LIVEBET_NOT_SUPPORTED";
+            }
 
             if(initiatorBet != "HOME" && initiatorBet != "AWAY")
             {
@@ -129,9 +153,36 @@ namespace Brobet.Services
                 date = DateTime.Now
             };
             db.BetRequests.Add(betRequest);
+
+
+            var fromUserAmount = this.UserBetAmount(initiatorBet, homeAmount, awayAmount);
+
+            // TODO: Check if user has enough money
+            var transaction = new Transaction
+            {
+                userId = fromUserId,
+                amount = (fromUserAmount * -1),
+                date = DateTime.Now,
+                BetRequest = betRequest
+            };
+            db.Transactions.Add(transaction);
+
             db.SaveChanges();
 
             return "SUCCESS";
+        }
+
+        public int UserBetAmount(string bet, int homeAmount, int awayAmount)
+        {
+            if (bet == "HOME")
+            {
+                return homeAmount;
+            }
+            else if (bet == "AWAY")
+            {
+                return awayAmount;
+            }
+            return 0;
         }
 
         public string OppositeBet(string initiatorBet)

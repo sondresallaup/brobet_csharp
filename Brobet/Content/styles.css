@@ -162,6 +162,9 @@ body .body-container .fixture.status-NS td.time .scheduled {
 body .body-container .fixture.status-NS td.score .score-span {
   display: none;
 }
+body .body-container .fixture.status-TBA td.score .score-span {
+  display: none;
+}
 body .body-container .fixture.status-LIVE td.time .status,
 body .body-container .fixture.status-LIVE td.time .scheduled {
   display: none;
