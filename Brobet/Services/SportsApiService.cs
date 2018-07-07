@@ -85,6 +85,30 @@ namespace Brobet.Services
                             var winner = "NONE";
                             if(homeScore == awayScore) // Tie
                             {
+                                // Tranfer money back to both users
+                                var fromBet = bet.initiatorBet;
+                                var fromAmount = betservice.UserBetAmount(fromBet, bet.homeAmount, bet.awayAmount);
+                                var fromTransaction = new Transaction
+                                {
+                                    userId = bet.fromUserId,
+                                    amount = fromAmount,
+                                    date = DateTime.Now,
+                                    description = "It was a tie :/",
+                                    betId = bet.id
+                                };
+                                db.Transactions.Add(fromTransaction);
+
+                                var toBet = betservice.OppositeBet(bet.initiatorBet);
+                                var toAmount = betservice.UserBetAmount(toBet, bet.homeAmount, bet.awayAmount);
+                                var toTransaction = new Transaction
+                                {
+                                    userId = bet.toUserId,
+                                    amount = toAmount,
+                                    date = DateTime.Now,
+                                    description = "It was a tie :/",
+                                    betId = bet.id
+                                };
+                                db.Transactions.Add(toTransaction);
                                 continue; // Ties are not yet implemented
                             }
                             else if(homeScore > awayScore) // Home win
@@ -113,8 +137,7 @@ namespace Brobet.Services
                             {
                                 bet.winnerId = bet.fromUserId;
                                 // Tranfer money to from user
-                                var betStr = bet.initiatorBet;
-                                var amount = betservice.UserBetAmount(betStr, bet.homeAmount, bet.awayAmount);
+                                var amount = bet.homeAmount + bet.awayAmount;
                                 var transaction = new Transaction
                                 {
                                     userId = bet.fromUserId,
@@ -129,8 +152,7 @@ namespace Brobet.Services
                             {
                                 bet.winnerId = bet.toUserId;
                                 // Tranfer money to to user
-                                var betStr = betservice.OppositeBet(bet.initiatorBet);
-                                var amount = betservice.UserBetAmount(betStr, bet.homeAmount, bet.awayAmount);
+                                var amount = bet.homeAmount + bet.awayAmount;
                                 var transaction = new Transaction
                                 {
                                     userId = bet.toUserId,
