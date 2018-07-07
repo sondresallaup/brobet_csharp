@@ -29,6 +29,10 @@
         <AssociationConnector Association="BrobetModel.FK_Bet_Users" />
         <AssociationConnector Association="BrobetModel.FK_Bet_Users1" />
         <AssociationConnector Association="BrobetModel.FK_Bet_Users2" />
+        <EntityTypeShape EntityType="BrobetModel.Transaction" Width="1.5" PointX="1" PointY="8.25" />
+        <AssociationConnector Association="BrobetModel.FK_Transaction_Bet" />
+        <AssociationConnector Association="BrobetModel.FK_Transaction_Users" />
+        <AssociationConnector Association="BrobetModel.FK_Transaction_BetRequest" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

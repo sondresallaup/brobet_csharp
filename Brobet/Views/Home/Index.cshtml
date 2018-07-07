@@ -13,7 +13,7 @@
         foreach (var fixtureD in Model.fixtures)
         {
             var fixture = fixtureD.Value;
-            <div class="fixture status-@fixture.status" data-fixture-id="@fixture.id">
+            <div class="fixture status-@fixture.status" data-fixture-id="@fixture.id" data-status="@fixture.status">
                 <table>
                     <tr class="local-team">
                         <td class="score">
@@ -131,6 +131,7 @@
                     var $fixture = $(".body-container").find(`.fixture[data-fixture-id='${fixture.id}']`);
                     $fixture.attr('class', 'fixture');
                     $fixture.addClass('status-' + fixture.status);
+                    $fixture.data('status', fixture.status);
 
                     // Local team
                     var $localTeam = $fixture.find('.local-team');
@@ -166,6 +167,7 @@
         })
 
         $('.fixture').click(function () {
+            if ($(this).data('status') !== 'NS') return;
             fixtureId = $(this).data('fixture-id');
             showModal('friends-list-modal');
         });

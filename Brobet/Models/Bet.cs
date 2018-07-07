@@ -14,6 +14,12 @@ namespace Brobet.Models
     
     public partial class Bet
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Bet()
+        {
+            this.Transactions = new HashSet<Transaction>();
+        }
+    
         public int id { get; set; }
         public int fromUserId { get; set; }
         public int toUserId { get; set; }
@@ -29,5 +35,7 @@ namespace Brobet.Models
         public virtual User FromUser { get; set; }
         public virtual User ToUser { get; set; }
         public virtual User Winner { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace Brobet.Services
 
         public void UpdateFixtures(int apiSeasonUrl)
         {
+            var betservice = new BetService();
             string URL = baseUrl + "seasons/" + apiSeasonUrl;
             string urlParameters = sportmonksApiToken + "&include=fixtures";
 
@@ -81,7 +82,7 @@ namespace Brobet.Services
                         foreach(var bet in fixture.Bets)
                         {
                             bet.status = "FINISHED";
-
+                            var winner = "NONE";
                             if(homeScore == awayScore) // Tie
                             {
                                 continue; // Ties are not yet implemented
@@ -90,27 +91,77 @@ namespace Brobet.Services
                             {
                                 if(bet.initiatorBet == "HOME") // From user has won
                                 {
-                                    bet.winnerId = bet.fromUserId;
+                                    winner = "FROM_USER";
                                 }
                                 else if(bet.initiatorBet == "AWAY") // To user has won
                                 {
-                                    bet.winnerId = bet.toUserId;
+                                    winner = "TO_USER";
                                 }
                             }
                             else if(homeScore < awayScore) // Away win
                             {
                                 if (bet.initiatorBet == "HOME") // To user has won
                                 {
-                                    bet.winnerId = bet.toUserId;
+                                    winner = "TO_USER";
                                 }
                                 else if (bet.initiatorBet == "AWAY") // From user has won
                                 {
-                                    bet.winnerId = bet.fromUserId;
+                                    winner = "FROM_USER";
                                 }
+                            }
+                            if(winner == "FROM_USER")
+                            {
+                                bet.winnerId = bet.fromUserId;
+                                // Tranfer money to from user
+                                var betStr = bet.initiatorBet;
+                                var amount = betservice.UserBetAmount(betStr, bet.homeAmount, bet.awayAmount);
+                                var transaction = new Transaction
+                                {
+                                    userId = bet.fromUserId,
+                                    amount = amount,
+                                    date = DateTime.Now,
+                                    description = "You have won!",
+                                    betId = bet.id
+                                };
+                                db.Transactions.Add(transaction);
+                            }
+                            else if(winner == "TO_USER")
+                            {
+                                bet.winnerId = bet.toUserId;
+                                // Tranfer money to to user
+                                var betStr = betservice.OppositeBet(bet.initiatorBet);
+                                var amount = betservice.UserBetAmount(betStr, bet.homeAmount, bet.awayAmount);
+                                var transaction = new Transaction
+                                {
+                                    userId = bet.toUserId,
+                                    amount = amount,
+                                    date = DateTime.Now,
+                                    description = "You have won!",
+                                    betId = bet.id
+                                };
+                                db.Transactions.Add(transaction);
                             }
                         }
                     }
 
+                    // Return money for unaccepted bet requests
+                    if(fixture.status != "LIVE" && apiFixture.time.status == "LIVE")
+                    {
+                        foreach(var request in fixture.BetRequests.Where(br => !br.accepted))
+                        {
+                            var requestTransaction = request.Transactions.SingleOrDefault();
+                            requestTransaction.description = "Bet request not accpeted. Money is returned";
+                            var returnTransaction = new Transaction
+                            {
+                                userId = requestTransaction.userId,
+                                amount = (requestTransaction.amount * -1),
+                                date = DateTime.Now,
+                                betRequestId = requestTransaction.betRequestId,
+                                description = "Returned money ref. transaction id: " + requestTransaction.id
+                            };
+                            db.Transactions.Add(returnTransaction);
+                        }
+                    }
                     fixture.status = apiFixture.time.status;
 
                 }
