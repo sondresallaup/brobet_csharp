@@ -5,9 +5,15 @@
 @secondary-color: #2ecc71;
 @box-border-color: #e6e6e6;
 @text-color-light: #999;
+@disabled-button-color: #ececec;
 
 * {
     -webkit-appearance: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
 }
 
 body {
@@ -15,10 +21,18 @@ body {
     background-color: @background-color;
     margin: 0;
 
+    .body-content {
+        margin-top: 115px;
+    }
+
     .navbar {
+        position: fixed;
+        width: 100%;
         height: 75px;
+        top: 0;
         background-color: @light-color;
         border-bottom: 1px solid @box-border-color;
+        z-index: 99;
 
         .content {
             max-width: 460px;
@@ -28,11 +42,25 @@ body {
 
             .logo {
                 font-family: 'Press Start 2P', cursive;
+                z-index: 9999;
+                position: relative;
 
                 a {
                     color: black;
                     text-decoration: none;
                 }
+
+                &.back {
+                    font-size: 30px;
+                }
+            }
+
+            .title {
+                width: 100%;
+                text-align: center;
+                display: inline-block;
+                position: absolute;
+                left: 0;
             }
 
             .icons {
@@ -159,6 +187,25 @@ body {
         margin-top: 50px;
         padding: 30px;
         border: 1px solid @box-border-color;
+
+
+
+        input:not(.submit) {
+            -webkit-appearance: none;
+            display: block;
+            text-align: left;
+            width: calc(~"100% - 20px");
+            font-size: 12px;
+            border: 1px solid @box-border-color;
+            border-radius: 3px;
+            height: 36px;
+            background-color: @background-color;
+            padding: 0px 10px;
+
+            &.error {
+                border-color: darkred;
+            }
+        }
 
         .day-arrows {
             display: inline-block;
@@ -308,6 +355,268 @@ body {
                     border-radius: 3px;
                     font-weight: 600;
                     margin-bottom: 20px;
+                }
+            }
+        }
+    }
+
+
+    .create-bet-request {
+        h1 {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 30px;
+            color: #999999;
+            text-align: center;
+        }
+
+        .send-bet-container {
+            max-width: 462px;
+            margin: 0 auto;
+
+            @media(max-width: 462px) {
+                text-align: center;
+                margin-bottom: 60px;
+            }
+
+            .info {
+                font-size: 13px;
+                color: #9a9a9a;
+                position: relative;
+                top: 20px;
+            }
+
+            #send-bet-button,
+            #accept-bet-button {
+                -webkit-appearance: none;
+                margin-top: 14px;
+                cursor: pointer;
+                border: none;
+                color: @light-color;
+                background-color: @primary-color;
+                padding: 10px 10px;
+                font-size: 14px;
+                text-align: center;
+                border-radius: 3px;
+                font-weight: 600;
+                margin-bottom: 20px;
+                text-decoration: none;
+                float: right;
+
+                &.disabled {
+                    background-color: @disabled-button-color;
+                }
+
+                @media(max-width: 462px) {
+                    float: none;
+                }
+            }
+        }
+
+        .bet-containers {
+            .bet-container {
+                &.from {
+                    border-right: 1px solid @box-border-color;
+                    padding-right: 10px;
+                }
+
+                &.to {
+                    padding-left: 5px;
+                }
+
+                display: inline-block;
+                width: calc(~"50% - 11px");
+
+                .bet-buttons {
+                    .bet-button {
+                        display: inline-block;
+                        width: calc(~"33% - 23px");
+                        -webkit-appearance: none;
+                        margin-top: 14px;
+                        cursor: pointer;
+                        border: none;
+                        color: #fff;
+                        background-color: @text-color-light;
+                        padding: 4px 10px;
+                        font-size: 14px;
+                        text-align: center;
+                        border-radius: 3px;
+                        font-weight: 600;
+                        margin-bottom: 20px;
+
+                        &.disabled {
+                            background-color: @disabled-button-color;
+                        }
+
+                        &.selected {
+                            background-color: @primary-color;
+                        }
+                    }
+                }
+            }
+        }
+
+        .friends-list {
+            ul {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    a {
+                        color: @dark-color;
+                        text-decoration: none;
+
+                        i.fas {
+                            width: 25px;
+                            visibility: hidden;
+                        }
+
+                        &.selected {
+                            i.fas {
+                                width: 25px;
+                                visibility: visible;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .message-list {
+        .body-container {
+            padding: 0;
+            max-width: 460px;
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+
+                li {
+                    a {
+                        color: #333;
+                        text-decoration: none;
+                        display: block;
+                        padding: 0 10px;
+
+                        .profile-image {
+                            display: inline-block;
+                            font-size: 45px;
+                            margin-right: 10px;
+                        }
+
+                        .username {
+                            display: inline-block;
+                            vertical-align: top;
+                            height: 61px;
+                            font-size: 15px;
+                            font-weight: 600;
+
+                            .text {
+                                display: inline-block;
+                                line-height: 61px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .friendship-message-list {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        top: 25px;
+
+        .body-container {
+            padding: 0;
+            max-width: 460px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: calc(~"100% - 2px");
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+
+            #messages-partial {
+                height: 100%;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: column;
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                margin-top: auto;
+                margin-bottom: 90px;
+
+                a {
+                    display: block;
+                }
+
+                li {
+                    padding: 5px 20px;
+
+                    .profile-image {
+                        display: inline-block;
+                        font-size: 25px;
+                        margin-right: 15px;
+                    }
+
+                    .message-content {
+                        position: relative;
+                        text-align: left;
+                        display: inline-block;
+                        min-height: 34px;
+                        vertical-align: top;
+                        border: 1px solid @box-border-color;
+                        border-radius: 17px;
+                        padding: 0 20px;
+                        max-width: calc(~"100% - 86px");
+
+                        .fa-futbol {
+                            position: absolute;
+                            top: 10px;
+                            right: -20px;
+                        }
+
+                        .text {
+                            line-height: 34px;
+                        }
+                    }
+
+                    &.current-user {
+                        text-align: right;
+
+                        .message-content {
+                            background-color: @box-border-color;
+                        }
+                    }
+                }
+            }
+
+            .compose-message-container {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                padding: 10px 10px 30px 10px;
+                background-color: white;
+
+                input {
+                    background-color: transparent;
+                    width: calc(~"100% - 42px");
+                    border-radius: 19px;
+
+                    &:focus {
+                        outline: none;
+                    }
                 }
             }
         }

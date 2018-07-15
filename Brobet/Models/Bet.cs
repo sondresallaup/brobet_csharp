@@ -18,18 +18,19 @@ namespace Brobet.Models
         public Bet()
         {
             this.Transactions = new HashSet<Transaction>();
+            this.FromBetObjects = new HashSet<BetObject>();
+            this.ToBetObjects = new HashSet<BetObject>();
         }
     
         public int id { get; set; }
         public int fromUserId { get; set; }
         public int toUserId { get; set; }
         public int fixtureId { get; set; }
-        public int homeAmount { get; set; }
-        public int awayAmount { get; set; }
         public System.DateTime date { get; set; }
         public string status { get; set; }
         public Nullable<int> winnerId { get; set; }
-        public string initiatorBet { get; set; }
+        public int fromAmount { get; set; }
+        public int toAmount { get; set; }
     
         public virtual Fixture Fixture { get; set; }
         public virtual User FromUser { get; set; }
@@ -37,5 +38,9 @@ namespace Brobet.Models
         public virtual User Winner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BetObject> FromBetObjects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BetObject> ToBetObjects { get; set; }
     }
 }

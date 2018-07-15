@@ -18,8 +18,8 @@ namespace Brobet.ViewModels
             public string bet { get; set; }
             public string status { get; set; }
             public string friendName { get; set; }
-            public int homeAmount { get; set; }
-            public int awayAmount { get; set; }
+            public int fromAmount { get; set; }
+            public int toAmount { get; set; }
             public bool? hasWon { get; set; }
         }
     }

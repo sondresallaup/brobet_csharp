@@ -28,6 +28,7 @@ namespace Brobet.Models
             this.ReceivedBets = new HashSet<Bet>();
             this.WonBets = new HashSet<Bet>();
             this.Transactions = new HashSet<Transaction>();
+            this.Messages = new HashSet<Message>();
         }
     
         public int userId { get; set; }
@@ -55,5 +56,7 @@ namespace Brobet.Models
         public virtual ICollection<Bet> WonBets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

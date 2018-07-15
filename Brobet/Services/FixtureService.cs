@@ -20,5 +20,10 @@ namespace Brobet.Services
             return fixtures;
         }
 
+        public FixtureViewModel GetFixture(int id)
+        {
+            var fixture = db.Fixtures.SingleOrDefault(f => f.id == id);
+            return new FixtureViewModel(fixture);
+        }
     }
 }

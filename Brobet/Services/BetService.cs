@@ -15,6 +15,44 @@ namespace Brobet.Services
 
         }
 
+        public BetViewModel GetBet(int id)
+        {
+            var accountService = new AccountServices();
+            var currentUser = accountService.GetCurrentUser();
+            var bet = db.Bets.SingleOrDefault(b => b.id == id);
+            return new BetViewModel
+            {
+                id = bet.id,
+                Fixture = bet.Fixture,
+                Friend = currentUser.userId == bet.fromUserId ? bet.ToUser : bet.FromUser,
+                FromUser = bet.FromUser,
+                ToUser = bet.ToUser,
+                fromAmount = bet.fromAmount,
+                toAmount = bet.toAmount,
+                fromBetObjects = bet.FromBetObjects.ToList(),
+                toBetObjects = bet.ToBetObjects.ToList()
+            };
+        }
+
+        public BetViewModel GetBetRequest(int id)
+        {
+            var accountService = new AccountServices();
+            var currentUser = accountService.GetCurrentUser();
+            var betRequest = db.BetRequests.SingleOrDefault(b => b.id == id);
+            return new BetViewModel
+            {
+                id = betRequest.id,
+                Fixture = betRequest.Fixture,
+                Friend = currentUser.userId == betRequest.fromUserId ? betRequest.ToUser : betRequest.FromUser,
+                FromUser = betRequest.FromUser,
+                ToUser = betRequest.ToUser,
+                fromAmount = betRequest.fromAmount,
+                toAmount = betRequest.toAmount,
+                fromBetObjects = betRequest.FromBetObjects.ToList(),
+                toBetObjects = betRequest.ToBetObjects.ToList()
+            };
+        }
+
         public List<BetViewModel> GetBets()
         {
             var accountService = new AccountServices();
@@ -22,12 +60,13 @@ namespace Brobet.Services
             var sent = currentUser.SentBets.Select(b => new BetViewModel
             {
                 id = b.id,
-                homeAmount = b.homeAmount,
-                awayAmount = b.awayAmount,
+                fromAmount = b.fromAmount,
+                toAmount = b.toAmount,
                 status = b.status,
                 Fixture = b.Fixture,
                 Friend = b.ToUser,
-                bet = b.initiatorBet,
+                date = b.date,
+                //bet = b.initiatorBet,
                 hasWon = b.winnerId != null ? b.winnerId == currentUser.userId : false
             }).ToList();
 
@@ -35,12 +74,13 @@ namespace Brobet.Services
             var received = currentUser.ReceivedBets.Select(b => new BetViewModel
             {
                 id = b.id,
-                homeAmount = b.homeAmount,
-                awayAmount = b.awayAmount,
+                fromAmount = b.fromAmount,
+                toAmount = b.toAmount,
                 status = b.status,
                 Fixture = b.Fixture,
                 Friend = b.FromUser,
-                bet = this.OppositeBet(b.initiatorBet),
+                date = b.date,
+                //bet = this.OppositeBet(b.initiatorBet),
                 hasWon = b.winnerId != null ? b.winnerId == currentUser.userId : false
             }).ToList();
 
@@ -52,13 +92,18 @@ namespace Brobet.Services
         public class BetViewModel
         {
             public int id { get; set; }
-            public int homeAmount { get; set; }
-            public int awayAmount { get; set; }
+            public int fromAmount { get; set; }
+            public int toAmount { get; set; }
             public string status { get; set; }
             public string bet { get; set; }
+            public DateTime date { get; set; }
             public Fixture Fixture { get; set; }
             public User Friend { get; set; }
+            public User FromUser { get; set; }
+            public User ToUser { get; set; }
             public bool hasWon { get; set; }
+            public List<BetObject> fromBetObjects { get; set; }
+            public List<BetObject> toBetObjects { get; set; }
         }
 
         public List<BetRequest> GetSentBetRequests()
@@ -77,7 +122,6 @@ namespace Brobet.Services
 
         public string AcceptRequest(int requestId)
         {
-            // Take money from acceptor
             var accountService = new AccountServices();
             var currentUserId = accountService.GetCurrentUserId();
 
@@ -86,7 +130,10 @@ namespace Brobet.Services
             {
                 return "UNAUTHORIZED";
             }
-            // TODO: Check if user has enough money
+            if(request.Fixture.status != "NS")
+            {
+                return "LIVEBET_NOT_SUPPORTED";
+            }
             request.accepted = true;
 
             var bet = new Bet
@@ -94,30 +141,15 @@ namespace Brobet.Services
                 fromUserId = request.fromUserId,
                 toUserId = request.toUserId,
                 fixtureId = request.fixtureId,
-                initiatorBet = request.initiatorBet,
-                homeAmount = request.homeAmount,
-                awayAmount = request.awayAmount,
+                FromBetObjects = request.FromBetObjects,
+                ToBetObjects = request.ToBetObjects,
+                fromAmount = request.fromAmount,
+                toAmount = request.toAmount,
                 date = DateTime.Now,
                 status = "NS"
             };
             db.Bets.Add(bet);
 
-            // Get fromuser's transaction
-            var fromUserTransaction = request.Transactions.SingleOrDefault(t => t.userId == request.fromUserId);
-            fromUserTransaction.betRequestId = null;
-            fromUserTransaction.Bet = bet;
-
-            var currentUserBet = this.OppositeBet(request.initiatorBet);
-            var currentUserAmount = this.UserBetAmount(currentUserBet, request.homeAmount, request.awayAmount);
-
-            var currentUserTransaction = new Transaction
-            {
-                userId = currentUserId,
-                amount = (currentUserAmount * -1),
-                date = DateTime.Now,
-                Bet = bet
-            };
-            db.Transactions.Add(currentUserTransaction);
 
             db.SaveChanges();
 
@@ -125,7 +157,7 @@ namespace Brobet.Services
             return "SUCCESS";
         }
 
-        public string CreateBetRequest(int toUserId, int fixtureId, string initiatorBet, int homeAmount, int awayAmount)
+        public string CreateBetRequest(int toUserId, int fixtureId, int fromAmount, int toAmount, string[] fromBets, string[] toBets)
         {
             var accountService = new AccountServices();
             var fromUserId = accountService.GetCurrentUserId();
@@ -136,66 +168,44 @@ namespace Brobet.Services
                 return "LIVEBET_NOT_SUPPORTED";
             }
 
-            if(initiatorBet != "HOME" && initiatorBet != "AWAY")
-            {
-                return "ILLEGAL_BET";
-            }
-
             var betRequest = new BetRequest
             {
                 fromUserId = fromUserId,
                 toUserId = toUserId,
                 fixtureId = fixtureId,
-                initiatorBet = initiatorBet,
-                homeAmount = homeAmount,
-                awayAmount = awayAmount,
+                fromAmount = fromAmount,
+                toAmount = toAmount,
                 accepted = false,
                 date = DateTime.Now
             };
             db.BetRequests.Add(betRequest);
 
-
-            var fromUserAmount = this.UserBetAmount(initiatorBet, homeAmount, awayAmount);
-
-            // TODO: Check if user has enough money
-            var transaction = new Transaction
+            var betType = db.BetTypes.SingleOrDefault(bt => bt.type == "FULL_TIME");
+            foreach (var betValue in fromBets)
             {
-                userId = fromUserId,
-                amount = (fromUserAmount * -1),
-                date = DateTime.Now,
-                BetRequest = betRequest
-            };
-            db.Transactions.Add(transaction);
+                var betObject = new BetObject
+                {
+                    BetType = betType,
+                    FromBetRequest = betRequest,
+                    value = betValue
+                };
+                db.BetObjects.Add(betObject);
+            }
+            foreach (var betValue in toBets)
+            {
+                var betObject = new BetObject
+                {
+                    BetType = betType,
+                    ToBetRequest = betRequest,
+                    value = betValue
+                };
+                db.BetObjects.Add(betObject);
+            }
+
 
             db.SaveChanges();
 
             return "SUCCESS";
-        }
-
-        public int UserBetAmount(string bet, int homeAmount, int awayAmount)
-        {
-            if (bet == "HOME")
-            {
-                return homeAmount;
-            }
-            else if (bet == "AWAY")
-            {
-                return awayAmount;
-            }
-            return 0;
-        }
-
-        public string OppositeBet(string initiatorBet)
-        {
-            if (initiatorBet == "HOME")
-            {
-                return "AWAY";
-            }
-            else if (initiatorBet == "AWAY")
-            {
-                return "HOME";
-            }
-            return null;
         }
     }
 }

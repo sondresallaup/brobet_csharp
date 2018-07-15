@@ -83,85 +83,50 @@ namespace Brobet.Services
                         {
                             bet.status = "FINISHED";
                             var winner = "NONE";
+                            var winnerValue = "";
                             if(homeScore == awayScore) // Tie
                             {
-                                // Tranfer money back to both users
-                                var fromBet = bet.initiatorBet;
-                                var fromAmount = betservice.UserBetAmount(fromBet, bet.homeAmount, bet.awayAmount);
-                                var fromTransaction = new Transaction
-                                {
-                                    userId = bet.fromUserId,
-                                    amount = fromAmount,
-                                    date = DateTime.Now,
-                                    description = "It was a tie :/",
-                                    betId = bet.id
-                                };
-                                db.Transactions.Add(fromTransaction);
-
-                                var toBet = betservice.OppositeBet(bet.initiatorBet);
-                                var toAmount = betservice.UserBetAmount(toBet, bet.homeAmount, bet.awayAmount);
-                                var toTransaction = new Transaction
-                                {
-                                    userId = bet.toUserId,
-                                    amount = toAmount,
-                                    date = DateTime.Now,
-                                    description = "It was a tie :/",
-                                    betId = bet.id
-                                };
-                                db.Transactions.Add(toTransaction);
-                                continue; // Ties are not yet implemented
+                                winnerValue = "x";
                             }
                             else if(homeScore > awayScore) // Home win
                             {
-                                if(bet.initiatorBet == "HOME") // From user has won
-                                {
-                                    winner = "FROM_USER";
-                                }
-                                else if(bet.initiatorBet == "AWAY") // To user has won
-                                {
-                                    winner = "TO_USER";
-                                }
+                                winnerValue = "h";
                             }
                             else if(homeScore < awayScore) // Away win
                             {
-                                if (bet.initiatorBet == "HOME") // To user has won
+                                winnerValue = "a";
+                            }
+                            foreach (var betObject in bet.FromBetObjects)
+                            {
+                                if(betObject.value == winnerValue)
                                 {
-                                    winner = "TO_USER";
-                                }
-                                else if (bet.initiatorBet == "AWAY") // From user has won
-                                {
+                                    betObject.status = "WON";
                                     winner = "FROM_USER";
                                 }
+                                else
+                                {
+                                    betObject.status = "LOST";
+                                }
                             }
-                            if(winner == "FROM_USER")
+                            foreach (var betObject in bet.ToBetObjects)
+                            {
+                                if (betObject.value == winnerValue)
+                                {
+                                    betObject.status = "WON";
+                                    winner = "TO_USER";
+                                }
+                                else
+                                {
+                                    betObject.status = "LOST";
+                                }
+                            }
+                            if (winner == "FROM_USER")
                             {
                                 bet.winnerId = bet.fromUserId;
-                                // Tranfer money to from user
-                                var amount = bet.homeAmount + bet.awayAmount;
-                                var transaction = new Transaction
-                                {
-                                    userId = bet.fromUserId,
-                                    amount = amount,
-                                    date = DateTime.Now,
-                                    description = "You have won!",
-                                    betId = bet.id
-                                };
-                                db.Transactions.Add(transaction);
                             }
                             else if(winner == "TO_USER")
                             {
                                 bet.winnerId = bet.toUserId;
-                                // Tranfer money to to user
-                                var amount = bet.homeAmount + bet.awayAmount;
-                                var transaction = new Transaction
-                                {
-                                    userId = bet.toUserId,
-                                    amount = amount,
-                                    date = DateTime.Now,
-                                    description = "You have won!",
-                                    betId = bet.id
-                                };
-                                db.Transactions.Add(transaction);
                             }
                         }
                     }

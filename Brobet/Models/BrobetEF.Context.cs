@@ -36,5 +36,8 @@ namespace Brobet.Models
         public virtual DbSet<BetRequest> BetRequests { get; set; }
         public virtual DbSet<Bet> Bets { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<BetObject> BetObjects { get; set; }
+        public virtual DbSet<BetType> BetTypes { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
     }
 }

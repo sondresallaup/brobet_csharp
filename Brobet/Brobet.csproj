@@ -188,10 +188,17 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BetController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Models\Bet.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BetObject.cs">
+      <DependentUpon>BrobetEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BetRequest.cs">
+      <DependentUpon>BrobetEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BetType.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Fixture.cs">
@@ -201,6 +208,9 @@
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Friendship.cs">
+      <DependentUpon>BrobetEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Message.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Team.cs">
@@ -223,6 +233,7 @@
     </Compile>
     <Compile Include="Services\BetService.cs" />
     <Compile Include="Services\FixtureService.cs" />
+    <Compile Include="Services\MessageService.cs" />
     <Compile Include="ViewModelServices\AccountViewModelService.cs" />
     <Compile Include="ViewModelServices\BetViewModelService.cs" />
     <Compile Include="ViewModelServices\FixtureViewModelService.cs" />
@@ -254,10 +265,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountServices.cs" />
     <Compile Include="Services\SportsApiService.cs" />
+    <Compile Include="ViewModelServices\MessageViewModelService.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BetListViewModel.cs" />
+    <Compile Include="ViewModels\BetRequestViewModel.cs" />
     <Compile Include="ViewModels\FixtureViewModel.cs" />
+    <Compile Include="ViewModels\FriendshipViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\MessageListViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -335,6 +351,10 @@
     <Content Include="Views\Account\User.cshtml" />
     <Content Include="Views\Bet\List.cshtml" />
     <Content Include="Views\Account\Transactions.cshtml" />
+    <Content Include="Views\Bet\BetRequest.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Message\Friendship.cshtml" />
+    <Content Include="Views\Message\_MessagesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -373,7 +393,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53556</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/</IISUrl>
+          <IISUrl>http://localhost</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

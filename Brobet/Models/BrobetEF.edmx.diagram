@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="44c98203851545e595b975ff55408556" Name="Diagram1" >
         <EntityTypeShape EntityType="BrobetModel.Team" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="BrobetModel.Fixture" Width="1.5" PointX="11.75" PointY="3.125" />
+        <EntityTypeShape EntityType="BrobetModel.Fixture" Width="1.5" PointX="7.875" PointY="0.75" />
         <AssociationConnector Association="BrobetModel.FK_Fixture_LocalTeam" />
         <AssociationConnector Association="BrobetModel.FK_Fixture_VisitorTeam" />
         <EntityTypeShape EntityType="BrobetModel.webpages_Membership" Width="1.5" PointX="0.75" PointY="0.75" />
@@ -17,14 +17,14 @@
         <AssociationConnector Association="BrobetModel.FK_FriendRequest_Users" />
         <AssociationConnector Association="BrobetModel.FK_FriendRequest_Users1" />
         <AssociationConnector Association="BrobetModel.webpages_UsersInRoles" />
-        <EntityTypeShape EntityType="BrobetModel.Friendship" Width="1.5" PointX="8.375" PointY="6.125" />
+        <EntityTypeShape EntityType="BrobetModel.Friendship" Width="1.5" PointX="6.5" PointY="7.5" />
         <AssociationConnector Association="BrobetModel.FK_Friendship_Users" />
         <AssociationConnector Association="BrobetModel.FK_Friendship_Users1" />
-        <EntityTypeShape EntityType="BrobetModel.BetRequest" Width="1.5" PointX="13.75" PointY="3.875" />
+        <EntityTypeShape EntityType="BrobetModel.BetRequest" Width="1.5" PointX="10.125" PointY="1.875" />
         <AssociationConnector Association="BrobetModel.FK_BetRequest_Fixture" />
         <AssociationConnector Association="BrobetModel.FK_BetRequest_Users" />
         <AssociationConnector Association="BrobetModel.FK_BetRequest_Users1" />
-        <EntityTypeShape EntityType="BrobetModel.Bet" Width="1.5" PointX="16" PointY="4.125" />
+        <EntityTypeShape EntityType="BrobetModel.Bet" Width="1.5" PointX="12.25" PointY="2" />
         <AssociationConnector Association="BrobetModel.FK_Bet_Fixture" />
         <AssociationConnector Association="BrobetModel.FK_Bet_Users" />
         <AssociationConnector Association="BrobetModel.FK_Bet_Users1" />
@@ -33,6 +33,19 @@
         <AssociationConnector Association="BrobetModel.FK_Transaction_Bet" />
         <AssociationConnector Association="BrobetModel.FK_Transaction_Users" />
         <AssociationConnector Association="BrobetModel.FK_Transaction_BetRequest" />
+        <EntityTypeShape EntityType="BrobetModel.BetObject" Width="1.5" PointX="18.25" PointY="5.125" />
+        <EntityTypeShape EntityType="BrobetModel.BetType" Width="1.5" PointX="16" PointY="1.375" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_Bet" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_BetType" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_Bet" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_BetRequest" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_FromBet" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_ToBet" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_FromBetRequest" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_ToBetRequest" />
+        <EntityTypeShape EntityType="BrobetModel.Message" Width="1.5" PointX="8.75" PointY="7.125" />
+        <AssociationConnector Association="BrobetModel.FK_Message_Friendship" />
+        <AssociationConnector Association="BrobetModel.FK_Message_Users" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

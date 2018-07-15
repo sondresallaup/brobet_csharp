@@ -15,14 +15,10 @@
             @foreach (var request in Model.receivedBetRequests)
             {
                 <li>
-                    <b>From: </b> @request.friendName <br />
-                    @request.fixtureTitle <br />
-                    <b>Your bet: </b> @request.bet <br />
-                    <b>Home amount: </b> @request.homeAmount <br />
-                    <b>Away amount: </b> @request.awayAmount <br />
-                    <br />
-                    <a href="javacript:void(0);" data-id="@request.id" class="accept-bet-request">Accept bet</a>
-                    <br /><br />
+                    <a href="/Bet/ReceivedBetRequest/@request.id">
+                        <b>From: </b> @request.friendName <br />
+                        @request.fixtureTitle
+                    </a><br /><br />
                 </li>
             }
         </ul>
@@ -37,14 +33,12 @@
             @foreach (var bet in Model.bets)
             {
                 <li>
-                    <b>With: </b> @bet.friendName <br />
-                    @bet.fixtureTitle <br />
-                    <b>Your bet: </b> @bet.bet <br />
-                    <b>Home amount: </b> @bet.homeAmount <br />
-                    <b>Away amount: </b> @bet.awayAmount <br />
-                    <b>Status: </b> @bet.status <br/>
-                    <b>Has won: </b> @bet.hasWon
-                    <br /><br />
+                    <a href="/Bet/BetDetails/@bet.id">
+                        <b>With: </b> @bet.friendName <br />
+                        @bet.fixtureTitle <br />
+                        <b>Status: </b> @bet.status <br />
+                        <b>Has won: </b> @bet.hasWon
+                    </a><br /><br />
                 </li>
             }
         </ul>
@@ -59,12 +53,10 @@
             @foreach (var request in Model.sentBetRequests)
             {
                 <li>
-                    <b>To: </b> @request.friendName <br />
-                    @request.fixtureTitle <br />
-                    <b>Your bet: </b> @request.bet <br />
-                    <b>Home amount: </b> @request.homeAmount <br />
-                    <b>Away amount: </b> @request.awayAmount
-                    <br /><br />
+                    <a href="/Bet/SentBetRequest/@request.id">
+                        <b>To: </b> @request.friendName <br />
+                        @request.fixtureTitle
+                    </a><br/><br/>
                 </li>
             }
         </ul>

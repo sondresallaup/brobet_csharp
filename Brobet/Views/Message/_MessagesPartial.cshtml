@@ -1,0 +1,41 @@
+﻿@model Brobet.ViewModels.FriendshipViewModel
+<ul>
+    @foreach (var message in Model.messages)
+    {
+    <li class="@(message.isCurrentUser ? "current-user" : "friend-user")">
+        @if (!message.isBet)
+        {
+            <a>
+                @if (!message.isCurrentUser)
+                {
+                    <div class="profile-image">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                }
+                <div class="message-content">
+                    <div class="text">
+                        @message.messageContent
+                    </div>
+                </div>
+            </a>
+        }
+        else // This is a bet
+        {
+            <a class="bet" href="@message.url">
+                @if (!message.isCurrentUser)
+                {
+                    <div class="profile-image">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                }
+                    <div class="message-content">
+                        <i class="fas fa-futbol"></i>
+                        <div class="text">
+                            @message.fixtureName
+                        </div>
+                    </div>
+            </a>
+        }
+    </li>
+    }
+</ul>

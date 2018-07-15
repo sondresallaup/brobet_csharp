@@ -12,22 +12,18 @@ namespace Brobet.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Friendship
+    public partial class BetType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Friendship()
+        public BetType()
         {
-            this.Messages = new HashSet<Message>();
+            this.BetObjects = new HashSet<BetObject>();
         }
     
         public int id { get; set; }
-        public int fromUserId { get; set; }
-        public int toUserId { get; set; }
-        public System.DateTime date { get; set; }
+        public string type { get; set; }
     
-        public virtual User FromUser { get; set; }
-        public virtual User ToUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<BetObject> BetObjects { get; set; }
     }
 }

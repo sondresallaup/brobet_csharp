@@ -23,11 +23,63 @@ namespace Brobet.Controllers
             return View(vm);
         }
 
+        public ActionResult CreateRequest(int id)
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var vms = new BetViewModelService();
+            var vm = vms.GetCreateBetRequestViewModel(id);
+            return View("BetRequest", vm);
+        }
+
+        public ActionResult BetDetails(int id)
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var vms = new BetViewModelService();
+            var vm = vms.GetBetDetailsViewModel(id);
+            return View("BetRequest", vm);
+        }
+
+        public ActionResult SentBetRequest(int id)
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var vms = new BetViewModelService();
+            var vm = vms.GetSentBetRequestViewModel(id);
+            return View("BetRequest", vm);
+        }
+
+        public ActionResult ReceivedBetRequest(int id)
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var vms = new BetViewModelService();
+            var vm = vms.GetReceivedBetRequestViewModel(id);
+            return View("BetRequest", vm);
+        }
+
         [HttpPost]
-        public ActionResult Place(int toUserId, int fixtureId, string initiatorBet, int homeAmount, int awayAmount)
+        public ActionResult Place(int toUserId, int fixtureId, int fromAmount, int toAmount, string[] fromBets, string[] toBets)
         {
             var betService = new BetService();
-            var result = betService.CreateBetRequest(toUserId, fixtureId, initiatorBet, homeAmount, awayAmount);
+            var result = betService.CreateBetRequest(toUserId, fixtureId, fromAmount, toAmount, fromBets, toBets);
             return Json(new
             {
                 response = result
