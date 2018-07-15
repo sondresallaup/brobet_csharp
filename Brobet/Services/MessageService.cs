@@ -38,6 +38,7 @@ namespace Brobet.Services
             var currentUser = accountService.GetCurrentUser();
             var friendship = this.GetFriendship(friendshipId);
             if (friendship == null) return null;
+            var friendId = friendship.fromUserId == currentUser.userId ? friendship.toUserId : friendship.fromUserId;
             var extendedMessages = new List<ExtendedMessage>();
             var messages = friendship.Messages.Select(m => new ExtendedMessage
             {
@@ -48,7 +49,7 @@ namespace Brobet.Services
                 date = m.date
             }).ToList();
 
-            var sentBetRequests = currentUser.SentBetRequests.Where(b => !b.accepted).Select(m => new ExtendedMessage
+            var sentBetRequests = currentUser.SentBetRequests.Where(b => b.toUserId == friendId && !b.accepted).Select(m => new ExtendedMessage
             {
                 id = m.id,
                 isBet = true,
@@ -59,7 +60,7 @@ namespace Brobet.Services
                 url = "/Bet/SentBetRequest/" + m.id
             }).ToList();
 
-            var receivedBetRequests = currentUser.ReceivedBetRequests.Where(b => !b.accepted).Select(m => new ExtendedMessage
+            var receivedBetRequests = currentUser.ReceivedBetRequests.Where(b => b.fromUserId == friendId && !b.accepted).Select(m => new ExtendedMessage
             {
                 id = m.id,
                 isBet = true,
@@ -70,7 +71,7 @@ namespace Brobet.Services
                 url = "/Bet/ReceivedBetRequest/" + m.id
             }).ToList();
 
-            var sentBets = currentUser.SentBets.Select(m => new ExtendedMessage
+            var sentBets = currentUser.SentBets.Where(b => b.toUserId == friendId).Select(m => new ExtendedMessage
             {
                 id = m.id,
                 isBet = true,
@@ -81,7 +82,7 @@ namespace Brobet.Services
                 url = "/Bet/BetDetails/" + m.id
             }).ToList();
 
-            var receivedBets = currentUser.ReceivedBets.Select(m => new ExtendedMessage
+            var receivedBets = currentUser.ReceivedBets.Where(b => b.fromUserId == friendId).Select(m => new ExtendedMessage
             {
                 id = m.id,
                 isBet = true,

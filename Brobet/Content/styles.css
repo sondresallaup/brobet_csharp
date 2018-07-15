@@ -309,6 +309,8 @@ body .create-bet-request .send-bet-container #accept-bet-button {
   margin-bottom: 20px;
   text-decoration: none;
   float: right;
+  z-index: 9;
+  position: relative;
 }
 body .create-bet-request .send-bet-container #send-bet-button.disabled,
 body .create-bet-request .send-bet-container #accept-bet-button.disabled {
@@ -462,11 +464,22 @@ body .friendship-message-list .body-container ul li .message-content .fa-futbol 
 body .friendship-message-list .body-container ul li .message-content .text {
   line-height: 34px;
 }
+body .friendship-message-list .body-container ul li .message-content .accepted-text {
+  position: absolute;
+  right: -85px;
+  bottom: 9px;
+  font-size: 12px;
+  color: #077307;
+}
 body .friendship-message-list .body-container ul li.current-user {
   text-align: right;
 }
 body .friendship-message-list .body-container ul li.current-user .message-content {
   background-color: #e6e6e6;
+}
+body .friendship-message-list .body-container ul li.current-user .accepted-text {
+  left: -65px;
+  right: unset;
 }
 body .friendship-message-list .body-container .compose-message-container {
   position: absolute;

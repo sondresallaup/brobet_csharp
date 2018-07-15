@@ -160,8 +160,7 @@
             }
 
             $.post('/Bet/Place', data, function (response) {
-                console.log(response);
-                location.href = '/Bet/List';
+                window.history.back();
             });
         });
 
@@ -171,7 +170,7 @@
             };
             $.post('/Bet/AcceptRequest/', data, function (response) {
                 if (response.response === 'SUCCESS') {
-                    location.href = '/Bet/List';
+                    window.history.back();
                 }
             });
         });

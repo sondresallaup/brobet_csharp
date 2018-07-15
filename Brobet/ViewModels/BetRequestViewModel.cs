@@ -27,6 +27,7 @@ namespace Brobet.ViewModels
         public string backUrl { get; set; }
 
         public Friend friend { get; set; }
+        public Friendship friendship { get; set; }
 
         public class Friend
         {
