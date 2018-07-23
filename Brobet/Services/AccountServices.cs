@@ -26,6 +26,11 @@ namespace Brobet.Services
             return WebSecurity.CurrentUserId;
         }
 
+        public int GetUserId(string username)
+        {
+            return WebSecurity.GetUserId(username);
+        }
+
         public string GetCurrentUserName()
         {
             return WebSecurity.CurrentUserName;

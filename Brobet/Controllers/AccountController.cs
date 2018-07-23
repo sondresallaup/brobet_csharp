@@ -91,10 +91,12 @@ namespace Brobet.Controllers
                 });
             }
             accountServices.createUserLogin(username, password);
-            Response.Cookies[0].Expires = DateTime.Now.AddDays(30);
+            Response.Cookies[0].Expires = DateTime.Now.AddDays(600);
             return Json(new
             {
-                response = "SUCCESS"
+                response = "SUCCESS",
+                userId = accountServices.GetUserId(username),
+                token = getToken()
             });
         }
 
@@ -103,10 +105,12 @@ namespace Brobet.Controllers
         {
             var accountServices = new AccountServices();
             accountServices.Login(username, password);
-            Response.Cookies[0].Expires = DateTime.Now.AddDays(30);
+            Response.Cookies[0].Expires = DateTime.Now.AddDays(600);
             return Json(new
             {
-                response = "SUCCESS"
+                response = "SUCCESS",
+                userId = accountServices.GetUserId(username),
+                token = getToken()
             });
         }
 
@@ -136,6 +140,18 @@ namespace Brobet.Controllers
             var accountServices = new AccountServices();
             var succeeded = accountServices.AcceptFriendRequest(id);
             return Redirect("/Account/Me");
+        }
+
+        private Dictionary<string, string> getToken()
+        {
+
+            var token = new Dictionary<string, string>();
+            if (Request.Cookies[".ASPXAUTH"] != null)
+            {
+                token.Add("value", Request.Cookies[".ASPXAUTH"].Value);
+                token.Add("expires", Request.Cookies[".ASPXAUTH"].Expires.ToString());
+            }
+            return token;
         }
     }
 }

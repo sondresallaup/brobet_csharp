@@ -64,6 +64,10 @@
                     }
                 }
                 else if (response.response === 'SUCCESS') {
+                    console.log(response);
+                    if (window.webkit) {
+                        window.webkit.messageHandlers.userLogin.postMessage(response);
+                    }
                     location.reload();
                 }
             }
