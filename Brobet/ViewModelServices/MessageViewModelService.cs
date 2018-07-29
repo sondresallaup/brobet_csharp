@@ -44,6 +44,11 @@ namespace Brobet.ViewModelServices
                 isBet = m.isBet,
                 accepted = m.accepted,
                 fixtureName = m.fixtureName,
+                localTeamLogo = m.localTeamLogo,
+                localTeamName = m.localTeamName,
+                visitorTeamLogo = m.visitorTeamLogo,
+                visitorTeamName = m.visitorTeamName,
+                fixtureDate = m.fixtureDate,
                 url = m.url
             }).ToList();
             return vm;

@@ -5,7 +5,7 @@
     <li class="@(message.isCurrentUser ? "current-user" : "friend-user")">
         @if (!message.isBet)
         {
-            <a>
+            <a class="message">
                 @if (!message.isCurrentUser)
                 {
                     <div class="profile-image">
@@ -29,19 +29,44 @@
                     </div>
                 }
                     <div class="message-content">
-                        <i class="fas fa-futbol"></i>
-                        <div class="text">
-                            @message.fixtureName
+                        <div class="home-team team">
+                            <div class="logo">
+                                <img src="@message.localTeamLogo" />
+                            </div>
+                            <div class="name">
+                                @message.localTeamName
+                            </div>
                         </div>
-                        @if(message.accepted)
-                        {
-                            <span class="accepted-text">
-                                Accepted
-                            </span>
-                        }
+                        <div class="fixture-date" data-date="@message.fixtureDate">
+                            <div class="time">
+                            </div>
+                            <div class="date">
+                            </div>
+                        </div>
+                        <div class="away-team team">
+                            <div class="name">
+                                @message.visitorTeamName
+                            </div>
+                            <div class="logo">
+                                <img src="@message.visitorTeamLogo" />
+                            </div>
+                        </div>
                     </div>
             </a>
         }
     </li>
     }
 </ul>
+
+<script>
+    $(function () {
+        moment.locale('en-gb');
+        $('.fixture-date').each(function () {
+            var $this = $(this);
+            var datetime = $this.data('date');
+            console.log(datetime);
+            $this.find('.date').html(moment(datetime).format('LL'));
+            $this.find('.time').html(moment(datetime).format('LT'));
+        });
+    });
+</script>

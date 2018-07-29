@@ -152,6 +152,9 @@ namespace Brobet.Services
 
 
             db.SaveChanges();
+            var fixture = request.Fixture;
+            var messageContent = "Accepted bet: " + fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
+            PushNotificationService.SendNotification(request.ToUser.username, messageContent, request.FromUser.userId);
 
 
             return "SUCCESS";
@@ -160,7 +163,7 @@ namespace Brobet.Services
         public string CreateBetRequest(int toUserId, int fixtureId, int fromAmount, int toAmount, string[] fromBets, string[] toBets)
         {
             var accountService = new AccountServices();
-            var fromUserId = accountService.GetCurrentUserId();
+            var fromUser = accountService.GetCurrentUser();
 
             var fixture = db.Fixtures.SingleOrDefault(f => f.id == fixtureId);
             if(fixture.status != "NS")
@@ -170,7 +173,7 @@ namespace Brobet.Services
 
             var betRequest = new BetRequest
             {
-                fromUserId = fromUserId,
+                fromUserId = fromUser.userId,
                 toUserId = toUserId,
                 fixtureId = fixtureId,
                 fromAmount = fromAmount,
@@ -204,6 +207,9 @@ namespace Brobet.Services
 
 
             db.SaveChanges();
+
+            var messageContent = "Bet request: " + fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
+            PushNotificationService.SendNotification(fromUser.username, messageContent, toUserId);
 
             return "SUCCESS";
         }

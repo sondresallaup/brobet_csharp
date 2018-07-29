@@ -56,6 +56,11 @@ namespace Brobet.Services
                 accepted = false,
                 isCurrentUser = true,
                 fixtureName = m.Fixture.LocalTeam.name + " vs " + m.Fixture.VisitorTeam.name,
+                localTeamLogo = m.Fixture.LocalTeam.logoUrl,
+                localTeamName = m.Fixture.LocalTeam.name,
+                visitorTeamLogo = m.Fixture.VisitorTeam.logoUrl,
+                visitorTeamName = m.Fixture.VisitorTeam.name,
+                fixtureDate = m.Fixture.startingAt.Value,
                 date = m.date,
                 url = "/Bet/SentBetRequest/" + m.id
             }).ToList();
@@ -67,6 +72,11 @@ namespace Brobet.Services
                 accepted = false,
                 isCurrentUser = false,
                 fixtureName = m.Fixture.LocalTeam.name + " vs " + m.Fixture.VisitorTeam.name,
+                localTeamLogo = m.Fixture.LocalTeam.logoUrl,
+                localTeamName = m.Fixture.LocalTeam.name,
+                visitorTeamLogo = m.Fixture.VisitorTeam.logoUrl,
+                visitorTeamName = m.Fixture.VisitorTeam.name,
+                fixtureDate = m.Fixture.startingAt.Value,
                 date = m.date,
                 url = "/Bet/ReceivedBetRequest/" + m.id
             }).ToList();
@@ -78,6 +88,11 @@ namespace Brobet.Services
                 accepted = true,
                 isCurrentUser = true,
                 fixtureName = m.Fixture.LocalTeam.name + " vs " + m.Fixture.VisitorTeam.name,
+                localTeamLogo = m.Fixture.LocalTeam.logoUrl,
+                localTeamName = m.Fixture.LocalTeam.name,
+                visitorTeamLogo = m.Fixture.VisitorTeam.logoUrl,
+                visitorTeamName = m.Fixture.VisitorTeam.name,
+                fixtureDate = m.Fixture.startingAt.Value,
                 date = m.date,
                 url = "/Bet/BetDetails/" + m.id
             }).ToList();
@@ -89,6 +104,11 @@ namespace Brobet.Services
                 accepted = true,
                 isCurrentUser = false,
                 fixtureName = m.Fixture.LocalTeam.name + " vs " + m.Fixture.VisitorTeam.name,
+                localTeamLogo = m.Fixture.LocalTeam.logoUrl,
+                localTeamName = m.Fixture.LocalTeam.name,
+                visitorTeamLogo = m.Fixture.VisitorTeam.logoUrl,
+                visitorTeamName = m.Fixture.VisitorTeam.name,
+                fixtureDate = m.Fixture.startingAt.Value,
                 date = m.date,
                 url = "/Bet/BetDetails/" + m.id
             }).ToList();
@@ -120,6 +140,14 @@ namespace Brobet.Services
             };
             db.Messages.Add(message);
             db.SaveChanges();
+
+            var toUserId = friendship.fromUserId;
+            if(toUserId == currentUser.userId)
+            {
+                toUserId = friendship.toUserId;
+            }
+
+            PushNotificationService.SendNotification(currentUser.username, messageContent, toUserId);
         }
 
         public class ExtendedMessage
@@ -130,6 +158,11 @@ namespace Brobet.Services
             public bool isCurrentUser { get; set; }
             public string messageContent { get; set; }
             public string fixtureName { get; set; }
+            public string visitorTeamName { get; set; }
+            public string localTeamName { get; set; }
+            public string visitorTeamLogo { get; set; }
+            public string localTeamLogo { get; set; }
+            public DateTime fixtureDate { get; set; }
             public string url { get; set; }
             public DateTime date { get; set; }
         }

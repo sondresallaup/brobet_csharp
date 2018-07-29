@@ -572,35 +572,108 @@ body {
                         margin-right: 15px;
                     }
 
-                    .message-content {
-                        position: relative;
-                        text-align: left;
-                        display: inline-block;
-                        min-height: 34px;
-                        vertical-align: top;
-                        border: 1px solid @box-border-color;
-                        border-radius: 17px;
-                        padding: 0 20px;
-                        max-width: calc(~"100% - 86px");
+                    .message {
+                        .message-content {
+                            position: relative;
+                            text-align: left;
+                            display: inline-block;
+                            min-height: 34px;
+                            vertical-align: top;
+                            border: 1px solid @box-border-color;
+                            border-radius: 17px;
+                            padding: 0 20px;
+                            max-width: calc(~"100% - 86px");
 
-                        .fa-futbol {
-                            position: absolute;
-                            top: 10px;
-                            right: -20px;
-                        }
+                            .fa-futbol {
+                                position: absolute;
+                                top: 10px;
+                                right: -20px;
+                            }
 
-                        .text {
-                            line-height: 34px;
-                        }
+                            .text {
+                                line-height: 34px;
+                            }
 
-                        .accepted-text {
-                            position: absolute;
-                            right: -85px;
-                            bottom: 9px;
-                            font-size: 12px;
-                            color: #077307;
+                            .accepted-text {
+                                position: absolute;
+                                right: -85px;
+                                bottom: 9px;
+                                font-size: 12px;
+                                color: #077307;
+                            }
                         }
                     }
+
+                    .bet {
+                        .message-content {
+                            position: relative;
+                            text-align: left;
+                            display: inline-block;
+                            min-height: 34px;
+                            vertical-align: top;
+                            border: 1px solid @box-border-color;
+                            border-radius: 17px;
+                            padding: 20px 10px;
+                            width: calc(~"100% - 22px");
+
+                            .team {
+                                display: inline-block;
+
+                                &.home-team {
+                                    float: left;
+                                }
+
+                                &.away-team {
+                                    float: right;
+                                }
+
+                                .logo {
+                                    display: inline-block;
+                                    vertical-align: middle;
+                                    width: 30px;
+                                    height: 30px;
+
+                                    img {
+                                        width: 30px;
+                                        height: 30px;
+                                    }
+                                }
+
+                                .name {
+                                    display: inline-block;
+                                    vertical-align: middle;
+                                    font-weight: 600;
+                                    font-size: 12px;
+                                }
+                            }
+
+                            .fixture-date {
+                                display: inline-block;
+                                position: absolute;
+                                left: 0;
+                                width: 100%;
+                                text-align: center;
+                                top: 0;
+                                line-height: 100%;
+                                height: 100%;
+
+                                .time {
+                                    font-weight: 600;
+                                    font-size: 20px;
+                                    position: relative;
+                                    top: 20px;
+                                }
+
+                                .date {
+                                    font-weight: 200;
+                                    font-size: 10px;
+                                    position: relative;
+                                    top: 30px;
+                                }
+                            }
+                        }
+                    }
+
 
                     &.current-user {
                         text-align: right;
