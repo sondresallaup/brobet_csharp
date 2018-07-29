@@ -99,6 +99,9 @@ namespace Brobet.Services
             db.Friendships.Add(friendship);
             db.SaveChanges();
 
+            var messageContent = "Accepted friend request";
+            PushNotificationService.SendNotification(friendRequest.FromUser.username, messageContent, currentUser.userId);
+
             return true;
         }
 
@@ -128,6 +131,9 @@ namespace Brobet.Services
             };
             db.FriendRequests.Add(request);
             db.SaveChanges();
+
+            var messageContent = "Friend request";
+            PushNotificationService.SendNotification(fromUser.username, messageContent, toUser.userId);
 
             return true;
         }
