@@ -357,6 +357,7 @@
     <Content Include="Views\Message\Index.cshtml" />
     <Content Include="Views\Message\Friendship.cshtml" />
     <Content Include="Views\Message\_MessagesPartial.cshtml" />
+    <Content Include="Views\Shared\_TabbarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

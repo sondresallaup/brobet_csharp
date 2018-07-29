@@ -20,6 +20,8 @@ namespace Brobet.Controllers
 
             var vms = new BetViewModelService();
             var vm = vms.GetBetListViewModel();
+
+            ViewBag.ActiveTab = "bets";
             return View(vm);
         }
 

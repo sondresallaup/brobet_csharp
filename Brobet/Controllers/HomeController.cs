@@ -28,6 +28,7 @@ namespace Brobet.Controllers
             var vmService = new FixtureViewModelService();
             var model = vmService.GetIndexViewModel(daysFromNow);
 
+            ViewBag.ActiveTab = "home";
 
             return View(model);
         }

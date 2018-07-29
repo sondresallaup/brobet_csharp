@@ -19,6 +19,8 @@ namespace Brobet.Controllers
             }
             var vmService = new MessageViewModelService();
             var vm = vmService.GetMessageListViewModel();
+
+            ViewBag.ActiveTab = "message";
             return View(vm);
         }
 

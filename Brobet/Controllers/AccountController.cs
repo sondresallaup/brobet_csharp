@@ -49,6 +49,8 @@ namespace Brobet.Controllers
             var vmService = new AccountViewModelService();
             var vm = vmService.GetMeAccountViewModel();
 
+            ViewBag.ActiveTab = "profile";
+
             return View("User", vm);
         }
 

@@ -7,24 +7,6 @@
 @Html.Partial("_NavbarPartial")
 
 
-@if (Model.receivedBetRequests.Any())
-{
-    <div class="body-container">
-        <h1>Received bet requests</h1>
-        <ul>
-            @foreach (var request in Model.receivedBetRequests)
-            {
-                <li>
-                    <a href="/Bet/ReceivedBetRequest/@request.id">
-                        <b>From: </b> @request.friendName <br />
-                        @request.fixtureTitle
-                    </a><br /><br />
-                </li>
-            }
-        </ul>
-    </div>
-}
-
 @if (Model.bets.Any())
 {
     <div class="body-container">
@@ -44,24 +26,7 @@
         </ul>
     </div>
 }
-
-@if (Model.sentBetRequests.Any())
-{
-    <div class="body-container">
-        <h1>Sent bet requests</h1>
-        <ul>
-            @foreach (var request in Model.sentBetRequests)
-            {
-                <li>
-                    <a href="/Bet/SentBetRequest/@request.id">
-                        <b>To: </b> @request.friendName <br />
-                        @request.fixtureTitle
-                    </a><br/><br/>
-                </li>
-            }
-        </ul>
-    </div>
-}
+@Html.Partial("_TabbarPartial")
 
 <script>
     $(function () {
