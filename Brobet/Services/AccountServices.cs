@@ -100,7 +100,7 @@ namespace Brobet.Services
             db.SaveChanges();
 
             var messageContent = "Accepted friend request";
-            PushNotificationService.SendNotification(friendRequest.FromUser.username, messageContent, currentUser.userId);
+            PushNotificationService.SendNotification(currentUser.username, messageContent, otherUserId);
 
             return true;
         }
