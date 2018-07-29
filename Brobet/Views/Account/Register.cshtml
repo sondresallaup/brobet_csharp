@@ -68,6 +68,9 @@
                     }
                 }
                 else if (response.response === 'SUCCESS') {
+                    if (window.webkit) {
+                        window.webkit.messageHandlers.userLogin.postMessage(response);
+                    }
                     location.reload();
                 }
             }
