@@ -17,6 +17,7 @@ namespace Brobet.ViewModelServices
             var fixtureService = new FixtureService();
             var accountService = new AccountServices();
             model.daysFromNow = daysFromNow;
+            model.currentDate = DateTime.Now.AddDays(daysFromNow);
             model.fixtures = fixtureService.GetFixtures(daysFromNow);
             model.friends = accountService.GetFriends().Select(fr => new IndexViewModel.Friend
             {

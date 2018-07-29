@@ -265,6 +265,17 @@ body {
             display: inline-block;
             width: 100%;
             font-size: 30px;
+            position: relative;
+
+            .day-string {
+                position: absolute;
+                pointer-events: none;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                font-size: 18px;
+                top: 9px;
+            }
 
             a {
                 color: @text-color-light;

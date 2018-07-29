@@ -211,6 +211,16 @@ body .body-container .day-arrows {
   display: inline-block;
   width: 100%;
   font-size: 30px;
+  position: relative;
+}
+body .body-container .day-arrows .day-string {
+  position: absolute;
+  pointer-events: none;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  top: 9px;
 }
 body .body-container .day-arrows a {
   color: #999;

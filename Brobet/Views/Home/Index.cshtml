@@ -7,6 +7,7 @@
 <div class="body-container">
     <div class="day-arrows">
         <a class="previous disabled" href="javascript:void(0);"><i class="fas fa-arrow-left"></i></a>
+        <div class="day-string"></div>
         <a class="next" href="javascript:void(0);"><i class="fas fa-arrow-right"></i></a>
     </div>
     @{
@@ -152,6 +153,8 @@
         if (daysFromNow > 0) {
             $('.day-arrows a.previous').removeClass('disabled');
         }
+
+        $('.day-string').html(moment('@Model.currentDate').format('LL'));
 
 
         $('.day-arrows a').click(function () {

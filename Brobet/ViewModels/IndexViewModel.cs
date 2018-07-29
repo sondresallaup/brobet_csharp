@@ -13,6 +13,8 @@ namespace Brobet.ViewModels
         public Dictionary<int, FixtureViewModel> fixtures { get; set; }
         public List<Friend> friends { get; set; }
 
+        public DateTime currentDate { get; set; }
+
         public class Friend
         {
             public int userId { get; set; }
