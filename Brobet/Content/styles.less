@@ -41,11 +41,13 @@ body {
             line-height: 75px;
 
             .logo {
-                font-family: 'Press Start 2P', cursive;
+                font-family: 'Crete Round', serif;
+                /*font-family: 'Press Start 2P', cursive;*/
                 z-index: 9999;
                 position: relative;
 
                 a {
+                    font-size: 26px;
                     color: black;
                     text-decoration: none;
                 }
@@ -157,7 +159,9 @@ body {
 
         h1 {
             color: black;
-            font-family: 'Press Start 2P', cursive;
+            /*font-family: 'Press Start 2P', cursive;*/
+            font-family: 'Crete Round', serif;
+            font-size: 50px;
         }
 
         span.intro {
@@ -178,7 +182,7 @@ body {
         }
 
         .body {
-            padding-top: 30px;
+            padding-top: 0;
 
             .terms {
                 font-size: 14px;
@@ -275,6 +279,7 @@ body {
                 text-align: center;
                 font-size: 18px;
                 top: 9px;
+                opacity: 0.5;
             }
 
             a {
@@ -295,6 +300,11 @@ body {
                     text-align: right;
                 }
             }
+        }
+
+        .no-fixtures {
+            text-align: center;
+            margin-top: 50px;
         }
 
         .fixture {
@@ -435,6 +445,113 @@ body {
             text-align: center;
         }
 
+        .winner-is {
+            text-align: center;
+            position: relative;
+            top: 25px;
+            font-weight: 600;
+            font-size: 25px;
+        }
+
+        .fixture {
+            max-width: 460px;
+            margin: 0 auto;
+
+            &.status-FT,
+            &.status-LIVE {
+                .fixture-content {
+                    .fixture-date {
+                        .score {
+                            display: block;
+                        }
+
+                        .time {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .fixture-content {
+                position: relative;
+                text-align: left;
+                display: inline-block;
+                min-height: 34px;
+                vertical-align: top;
+                border: 1px solid #e6e6e6;
+                border-radius: 17px;
+                padding: 20px 10px;
+                width: calc(~"100% - 90px");
+                overflow: hidden;
+                background-color: white;
+                margin: 0 30px;
+
+                .team {
+                    display: inline-block;
+
+                    &.home-team {
+                        float: left;
+                    }
+
+                    &.away-team {
+                        float: right;
+                    }
+
+                    .logo {
+                        display: inline-block;
+                        vertical-align: middle;
+                        width: 30px;
+                        height: 30px;
+
+                        img {
+                            width: 30px;
+                            height: 30px;
+                        }
+                    }
+
+                    .name {
+                        display: inline-block;
+                        vertical-align: middle;
+                        font-weight: 600;
+                        font-size: 12px;
+                    }
+                }
+
+                .fixture-date {
+                    display: inline-block;
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    text-align: center;
+                    top: 0;
+                    line-height: 100%;
+                    height: 100%;
+
+                    .score {
+                        display: none;
+                        font-weight: 600;
+                        font-size: 20px;
+                        position: relative;
+                        top: 27px;
+                    }
+
+                    .time {
+                        font-weight: 600;
+                        font-size: 20px;
+                        position: relative;
+                        top: 27px;
+                    }
+
+                    .date {
+                        font-weight: 200;
+                        font-size: 10px;
+                        position: relative;
+                        top: 36px;
+                    }
+                }
+            }
+        }
+
         .send-bet-container {
             max-width: 462px;
             margin: 0 auto;
@@ -517,6 +634,10 @@ body {
 
                         &.selected {
                             background-color: @primary-color;
+                        }
+
+                        &.winner {
+                            color: #FFD700;
                         }
                     }
                 }
@@ -679,8 +800,31 @@ body {
                             vertical-align: top;
                             border: 1px solid @box-border-color;
                             border-radius: 17px;
-                            padding: 20px 10px;
+                            padding: 25px 10px;
                             width: calc(~"100% - 22px");
+                            overflow: hidden;
+
+                            .header {
+                                position: absolute;
+                                top: 0;
+                                width: calc(~"100% - 28px");
+                                left: 0;
+                                padding: 2px 14px;
+                                font-size: 11px;
+                                font-weight: 600;
+                                color: #797979;
+                            }
+
+                            .footer {
+                                position: absolute;
+                                bottom: 0;
+                                width: calc(~"100% - 28px");
+                                left: 0;
+                                padding: 2px 14px;
+                                font-size: 11px;
+                                font-weight: 600;
+                                color: #797979;
+                            }
 
                             .team {
                                 display: inline-block;
@@ -727,14 +871,14 @@ body {
                                     font-weight: 600;
                                     font-size: 20px;
                                     position: relative;
-                                    top: 20px;
+                                    top: 32px;
                                 }
 
                                 .date {
                                     font-weight: 200;
                                     font-size: 10px;
                                     position: relative;
-                                    top: 30px;
+                                    top: 39px;
                                 }
                             }
                         }

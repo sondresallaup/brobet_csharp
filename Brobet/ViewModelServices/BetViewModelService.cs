@@ -51,7 +51,13 @@ namespace Brobet.ViewModelServices
             {
                 id = bet.Fixture.id,
                 localTeamName = bet.Fixture.LocalTeam.name,
-                visitorTeamName = bet.Fixture.VisitorTeam.name
+                visitorTeamName = bet.Fixture.VisitorTeam.name,
+                localTeamLogo = bet.Fixture.LocalTeam.logoUrl,
+                visitorTeamLogo = bet.Fixture.VisitorTeam.logoUrl,
+                status = bet.Fixture.status,
+                scores = bet.Fixture.scores,
+                startingAt = bet.Fixture.startingAt,
+                startingAtAsString = bet.Fixture.startingAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'")
             };
             vm.friend = new BetRequestViewModel.Friend
             {
@@ -63,6 +69,36 @@ namespace Brobet.ViewModelServices
 
             vm.fromBets = bet.fromBetObjects.Select(o => o.value).ToArray();
             vm.toBets = bet.toBetObjects.Select(o => o.value).ToArray();
+
+            if(bet.status == "FINISHED")
+            {
+                string winningBetObject = null;
+                if(bet.fromBetObjects.Any(o => o.status == "WON"))
+                {
+                    winningBetObject = bet.fromBetObjects.FirstOrDefault(o => o.status == "WON").value;
+                }
+                if (bet.toBetObjects.Any(o => o.status == "WON"))
+                {
+                    winningBetObject = bet.toBetObjects.FirstOrDefault(o => o.status == "WON").value;
+                }
+                vm.winningBetObject = winningBetObject;
+
+                if(bet.Winner != null)
+                {
+                    if(bet.Winner.userId == currentUser.userId) // Current user won
+                    {
+                        vm.winner = "CURRENT_USER";
+                    }
+                    else
+                    {
+                        vm.winner = "OTHER_USER";
+                    }
+                }
+                else // Neither won
+                {
+                    vm.winner = "NO_ONE";
+                }
+            }
 
             return vm;
         }
@@ -83,7 +119,13 @@ namespace Brobet.ViewModelServices
             {
                 id = betRequest.Fixture.id,
                 localTeamName = betRequest.Fixture.LocalTeam.name,
-                visitorTeamName = betRequest.Fixture.VisitorTeam.name
+                visitorTeamName = betRequest.Fixture.VisitorTeam.name,
+                localTeamLogo = betRequest.Fixture.LocalTeam.logoUrl,
+                visitorTeamLogo = betRequest.Fixture.VisitorTeam.logoUrl,
+                status = betRequest.Fixture.status,
+                scores = betRequest.Fixture.scores,
+                startingAt = betRequest.Fixture.startingAt,
+                startingAtAsString = betRequest.Fixture.startingAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'")
             };
             vm.friend = new BetRequestViewModel.Friend
             {
@@ -115,7 +157,13 @@ namespace Brobet.ViewModelServices
             {
                 id = betRequest.Fixture.id,
                 localTeamName = betRequest.Fixture.LocalTeam.name,
-                visitorTeamName = betRequest.Fixture.VisitorTeam.name
+                visitorTeamName = betRequest.Fixture.VisitorTeam.name,
+                localTeamLogo = betRequest.Fixture.LocalTeam.logoUrl,
+                visitorTeamLogo = betRequest.Fixture.VisitorTeam.logoUrl,
+                status = betRequest.Fixture.status,
+                scores = betRequest.Fixture.scores,
+                startingAt = betRequest.Fixture.startingAt,
+                startingAtAsString = betRequest.Fixture.startingAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'")
             };
             vm.friend = new BetRequestViewModel.Friend
             {

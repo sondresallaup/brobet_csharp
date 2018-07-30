@@ -29,6 +29,9 @@
                     </div>
                 }
                     <div class="message-content">
+                        <div class="header">
+                            <span>@message.betStatus</span>
+                        </div>
                         <div class="home-team team">
                             <div class="logo">
                                 <img src="@message.localTeamLogo" />
@@ -37,7 +40,7 @@
                                 @message.localTeamName
                             </div>
                         </div>
-                        <div class="fixture-date" data-date="@message.fixtureDate">
+                        <div class="fixture-date" data-date="@message.fixtureDateAsString">
                             <div class="time">
                             </div>
                             <div class="date">
@@ -60,7 +63,6 @@
 
 <script>
     $(function () {
-        moment.locale('en-gb');
         $('.fixture-date').each(function () {
             var $this = $(this);
             var datetime = $this.data('date');

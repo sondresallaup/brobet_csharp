@@ -29,6 +29,9 @@ namespace Brobet.ViewModels
         public Friend friend { get; set; }
         public Friendship friendship { get; set; }
 
+        public string winningBetObject { get; set; }
+        public string winner { get; set; }
+
         public class Friend
         {
             public int userId { get; set; }

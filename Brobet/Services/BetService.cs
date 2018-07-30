@@ -30,7 +30,9 @@ namespace Brobet.Services
                 fromAmount = bet.fromAmount,
                 toAmount = bet.toAmount,
                 fromBetObjects = bet.FromBetObjects.ToList(),
-                toBetObjects = bet.ToBetObjects.ToList()
+                toBetObjects = bet.ToBetObjects.ToList(),
+                status = bet.status,
+                Winner = bet.Winner
             };
         }
 
@@ -101,6 +103,7 @@ namespace Brobet.Services
             public User Friend { get; set; }
             public User FromUser { get; set; }
             public User ToUser { get; set; }
+            public User Winner { get; set; }
             public bool hasWon { get; set; }
             public List<BetObject> fromBetObjects { get; set; }
             public List<BetObject> toBetObjects { get; set; }

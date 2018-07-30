@@ -18,7 +18,10 @@ namespace Brobet.ViewModels
         public string visitorTeamLogo { get; set; }
         public string localTeamLogo { get; set; }
         public DateTime fixtureDate { get; set; }
+        public string fixtureDateAsString { get; set; }
         public string messageContent { get; set; }
         public string url { get; set; }
+        public string betStatus { get; set; }
+        public string fixtureStatus { get; set; }
     }
 }

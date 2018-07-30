@@ -31,7 +31,7 @@
                         <td rowspan="2" class="time">
                             <span class="min">@fixture.minute'</span>
                             <span class="status">@fixture.status</span>
-                            <span class="scheduled">@fixture.staringAtString</span>
+                            <span class="scheduled"></span>
                         </td>
                     </tr>
                     <tr class="visitor-team">
@@ -48,6 +48,12 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+        }
+        if(Model.fixtures.Count == 0)
+        {
+            <div class="no-fixtures">
+                No fixtures this day.
             </div>
         }
     }
@@ -143,8 +149,10 @@
                     $visitorTeam.find('.score .score-span').html(fixture.visitorTeamScore);
 
                     // Time
+                    var startingAt = moment(fixture.staringAtString);
                     $fixture.find('.min').html(fixture.minute + "'");
                     $fixture.find('.status').html(fixture.status);
+                    $fixture.find('.scheduled').html(startingAt.format('LT'));
                 }
             });
         }

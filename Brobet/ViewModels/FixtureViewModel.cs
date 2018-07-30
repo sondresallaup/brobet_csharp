@@ -35,6 +35,7 @@ namespace Brobet.ViewModels
         public string standings { get; set; }
         public DateTime? updatedAt { get; set; }
         public DateTime? startingAt { get; set; }
+        public string startingAtAsString { get; set; }
         public string status { get; set; }
         public DateTime? date { get; set; }
 
@@ -73,7 +74,7 @@ namespace Brobet.ViewModels
         {
             get
             {
-                return this.startingAt.Value.AddHours(2).ToShortTimeString();
+                return this.startingAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'");
             }
         }
     }

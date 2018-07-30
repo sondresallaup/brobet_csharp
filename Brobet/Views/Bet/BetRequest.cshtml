@@ -10,13 +10,62 @@
             <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i></a>
         </span>
         <span class="title">
-            @Model.fixture.localTeamName vs @Model.fixture.visitorTeamName
+            @Model.friend.username
         </span>
     </div>
 </div>
 
 
 <div class="create-bet-request">
+
+    <div class="fixture status-@Model.fixture.status">
+        <div class="fixture-content">
+            <div class="home-team team">
+                <div class="logo">
+                    <img src="@Model.fixture.localTeamLogo" />
+                </div>
+                <div class="name">
+                    @Model.fixture.localTeamName
+                </div>
+            </div>
+            <div class="fixture-date" data-date="@Model.fixture.startingAtAsString">
+                <div class="score">
+                    @Model.fixture.localTeamScore - @Model.fixture.visitorTeamScore
+                </div>
+                <div class="time">
+                </div>
+                <div class="date">
+                </div>
+            </div>
+            <div class="away-team team">
+                <div class="name">
+                    @Model.fixture.visitorTeamName
+                </div>
+                <div class="logo">
+                    <img src="@Model.fixture.visitorTeamLogo" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if(Model.winner != null)
+    {
+    <div class="winner-is">
+        @if (Model.winner == "CURRENT_USER")
+        {
+            <text>You won!</text>
+        }
+        else if (Model.winner == "OTHER_USER")
+        {
+            <text>@Model.friend.username won</text>
+        }
+        else if (Model.winner == "NO_ONE")
+        {
+            <text>Neither of you won</text>
+        }
+    </div>
+    }
+
     <div class="body-container">
 
         <div class="bet-containers">
@@ -33,9 +82,9 @@
                 </label>
                 <input @(!Model.initial ? "disabled" : "") type="tel" placeholder="Amount" class="amount" name="from-amount" value="@Model.fromAmount" />
                 <div class="bet-buttons">
-                    <a class="bet-button from @(!Model.initial ? "disabled" : "")" data-value="h">H</a>
-                    <a class="bet-button from @(!Model.initial ? "disabled" : "")" data-value="x">X</a>
-                    <a class="bet-button from @(!Model.initial ? "disabled" : "")" data-value="a">A</a>
+                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "h" ? "winner" : "")" data-value="h">H</a>
+                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "x" ? "winner" : "")" data-value="x">X</a>
+                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "a" ? "winner" : "")" data-value="a">A</a>
                 </div>
             </div>
             <div class="bet-container to">
@@ -51,9 +100,9 @@
                 </label>
                 <input @(!Model.initial ? "disabled" : "") type="tel" placeholder="Amount" class="amount" name="from-amount" value="@Model.toAmount" />
                 <div class="bet-buttons">
-                    <a class="bet-button to @(!Model.initial ? "disabled" : "")" data-value="h">H</a>
-                    <a class="bet-button to @(!Model.initial ? "disabled" : "")" data-value="x">X</a>
-                    <a class="bet-button to @(!Model.initial ? "disabled" : "")" data-value="a">A</a>
+                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "h" ? "winner" : "")" data-value="h">H</a>
+                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "x" ? "winner" : "")" data-value="x">X</a>
+                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "a" ? "winner" : "")" data-value="a">A</a>
                 </div>
             </div>
         </div>
@@ -79,10 +128,20 @@
         }
         else
         {
-            <div class="send-bet-container">
-                <a href="javascript:void(0);" id="accept-bet-button" class="">Accept bet</a>
-                <div class="info"></div>
-            </div>
+            if (Model.fixture.status == "NS")
+            {
+                <div class="send-bet-container">
+                    <a href="javascript:void(0);" id="accept-bet-button" class="">Accept bet</a>
+                    <div class="info"></div>
+                </div>
+            }
+            else
+            {
+                <div class="send-bet-container">
+                    <a href="javascript:void(0);" id="accept-bet-button" class="disabled">Bet request expired</a>
+                    <div class="info"></div>
+                </div>
+            }
         }
     }
 </div>
@@ -106,6 +165,15 @@
             }
         }
         updateInfoText()
+
+
+        $('.fixture-date').each(function () {
+            var $this = $(this);
+            var datetime = $this.data('date');
+            console.log(datetime);
+            $this.find('.date').html(moment(datetime).format('LL'));
+            $this.find('.time').html(moment(datetime).format('LT'));
+        });
 
         $('.bet-button').click(function () {
             var $this = $(this);

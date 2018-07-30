@@ -49,9 +49,20 @@ namespace Brobet.ViewModelServices
                 visitorTeamLogo = m.visitorTeamLogo,
                 visitorTeamName = m.visitorTeamName,
                 fixtureDate = m.fixtureDate,
-                url = m.url
+                fixtureDateAsString = m.fixtureDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'"),
+                url = m.url,
+                betStatus = betStatusToFriendly(m.betStatus)
             }).ToList();
             return vm;
+        }
+
+        private string betStatusToFriendly(string betStatus)
+        {
+            if (betStatus == "SENT_REQUEST") return "Sent bet request";
+            if (betStatus == "RECEIVED_REQUEST") return "Received bet request";
+            if (betStatus == "SENT_BET") return "Sent bet";
+            if (betStatus == "RECEIVED_BET") return "Received bet";
+            return "";
         }
     }
 }

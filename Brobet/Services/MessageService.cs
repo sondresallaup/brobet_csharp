@@ -62,7 +62,8 @@ namespace Brobet.Services
                 visitorTeamName = m.Fixture.VisitorTeam.name,
                 fixtureDate = m.Fixture.startingAt.Value,
                 date = m.date,
-                url = "/Bet/SentBetRequest/" + m.id
+                url = "/Bet/SentBetRequest/" + m.id,
+                betStatus = "SENT_REQUEST"
             }).ToList();
 
             var receivedBetRequests = currentUser.ReceivedBetRequests.Where(b => b.fromUserId == friendId && !b.accepted).Select(m => new ExtendedMessage
@@ -78,7 +79,8 @@ namespace Brobet.Services
                 visitorTeamName = m.Fixture.VisitorTeam.name,
                 fixtureDate = m.Fixture.startingAt.Value,
                 date = m.date,
-                url = "/Bet/ReceivedBetRequest/" + m.id
+                url = "/Bet/ReceivedBetRequest/" + m.id,
+                betStatus = "RECEIVED_REQUEST"
             }).ToList();
 
             var sentBets = currentUser.SentBets.Where(b => b.toUserId == friendId).Select(m => new ExtendedMessage
@@ -94,7 +96,8 @@ namespace Brobet.Services
                 visitorTeamName = m.Fixture.VisitorTeam.name,
                 fixtureDate = m.Fixture.startingAt.Value,
                 date = m.date,
-                url = "/Bet/BetDetails/" + m.id
+                url = "/Bet/BetDetails/" + m.id,
+                betStatus = "SENT_BET"
             }).ToList();
 
             var receivedBets = currentUser.ReceivedBets.Where(b => b.fromUserId == friendId).Select(m => new ExtendedMessage
@@ -110,7 +113,8 @@ namespace Brobet.Services
                 visitorTeamName = m.Fixture.VisitorTeam.name,
                 fixtureDate = m.Fixture.startingAt.Value,
                 date = m.date,
-                url = "/Bet/BetDetails/" + m.id
+                url = "/Bet/BetDetails/" + m.id,
+                betStatus = "RECEIVED_BET"
             }).ToList();
 
             extendedMessages.AddRange(messages);
@@ -165,6 +169,8 @@ namespace Brobet.Services
             public DateTime fixtureDate { get; set; }
             public string url { get; set; }
             public DateTime date { get; set; }
+            public string betStatus { get; set; }
+            public string fixtureStatus { get; set; }
         }
     }
 }
