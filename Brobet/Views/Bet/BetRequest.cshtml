@@ -10,7 +10,14 @@
             <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i></a>
         </span>
         <span class="title">
-            @Model.friend.username
+            @if (Model.friend != null)
+            {
+                @Model.friend.username
+            }
+            else
+            {
+                <text>Create new bet</text>
+            }
         </span>
     </div>
 </div>
