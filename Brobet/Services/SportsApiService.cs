@@ -79,7 +79,8 @@ namespace Brobet.Services
                     // Update bets if finished
                     if (fixture.status != "FT" && apiFixture.time.status == "FT")
                     {
-                        foreach(var bet in fixture.Bets)
+                        var notifiationHeader = fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
+                        foreach (var bet in fixture.Bets)
                         {
                             bet.status = "FINISHED";
                             var winner = "NONE";
@@ -123,10 +124,19 @@ namespace Brobet.Services
                             if (winner == "FROM_USER")
                             {
                                 bet.winnerId = bet.fromUserId;
+                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You won", bet.fromUserId);
+                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You lost", bet.toUserId);
                             }
                             else if(winner == "TO_USER")
                             {
                                 bet.winnerId = bet.toUserId;
+                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You won", bet.toUserId);
+                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You lost", bet.fromUserId);
+                            }
+                            else if(winner == "NONE")
+                            {
+                                PushNotificationService.SendNotification(notifiationHeader, "Full time. Neither of you won", bet.toUserId);
+                                PushNotificationService.SendNotification(notifiationHeader, "Full time. Neither of you won", bet.fromUserId);
                             }
                         }
                     }
