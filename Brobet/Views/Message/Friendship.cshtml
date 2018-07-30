@@ -49,7 +49,7 @@
             $.get('/Message/MessagesPartial/@Model.id', function (result) {
                 $('#messages-partial').html(result);
                 //scrollToBottom();
-            })
+            });
         }
 
         function scrollToBottom() {
@@ -59,7 +59,7 @@
 
 
         window.setInterval(function () {
-           //updateMessages();
+           updateMessages();
         }, 5000);
     });
 </script>

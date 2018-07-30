@@ -211,6 +211,7 @@
 
         $('#send-bet-button').click(function () {
             if ($(this).hasClass('disabled')) return;
+            $(this).addClass('disabled');
 
             var fromAmount = $('.bet-container.from .amount').val();
             var toAmount = $('.bet-container.to .amount').val();
@@ -240,9 +241,11 @@
         });
 
         $('#accept-bet-button').click(function () {
+            if ($(this).hasClass('disabled')) return;
             var data = {
                 id: @Model.betRequestId
             };
+            $(this).addClass('disabled');
             $.post('/Bet/AcceptRequest/', data, function (response) {
                 if (response.response === 'SUCCESS') {
                     window.history.back();
