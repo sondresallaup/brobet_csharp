@@ -42,6 +42,11 @@ namespace Brobet.Services
             return db.Users.SingleOrDefault(u => u.userId == currentUserId);
         }
 
+        public string GetAvatar(int userId)
+        {
+            return this.GetUser(userId).avatarUrl ?? "https://avataaars.io/?avatarStyle=Transparent&clotheType=Hoodie&clotheColor=Blue03";
+        }
+
         public bool isUserNameInUse(string username)
         {
             return WebSecurity.UserExists(username);
@@ -136,6 +141,13 @@ namespace Brobet.Services
             PushNotificationService.SendNotification(fromUser.username, messageContent, toUser.userId);
 
             return true;
+        }
+
+        public void SaveAvatar(string avatarUrl)
+        {
+            var currentUser = this.GetCurrentUser();
+            currentUser.avatarUrl = avatarUrl;
+            this.db.SaveChanges();
         }
 
         public bool HasFriendRequestWithUser(User user)

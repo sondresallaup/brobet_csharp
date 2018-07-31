@@ -133,6 +133,7 @@
           </Key>
           <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="username" Type="nvarchar" MaxLength="56" Nullable="false" />
+          <Property Name="avatarUrl" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -834,6 +835,7 @@
           <NavigationProperty Name="WonBets" Relationship="BrobetModel.FK_Bet_Users2" FromRole="User" ToRole="Bet" />
           <NavigationProperty Name="Transactions" Relationship="BrobetModel.FK_Transaction_Users" FromRole="User" ToRole="Transaction" />
           <NavigationProperty Name="Messages" Relationship="BrobetModel.FK_Message_Users" FromRole="User" ToRole="Message" />
+          <Property Name="avatarUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_FriendRequest_Users">
           <End Type="BrobetModel.User" Role="User" Multiplicity="1" />
@@ -1286,6 +1288,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="BrobetModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="avatarUrl" ColumnName="avatarUrl" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
               </MappingFragment>

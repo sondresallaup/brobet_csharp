@@ -17,6 +17,7 @@ namespace Brobet.ViewModelServices
                 isMe = true,
                 userId = service.GetCurrentUserId(),
                 username = service.GetCurrentUserName(),
+                avatarUrl = service.GetAvatar(service.GetCurrentUserId()),
                 friends = service.GetFriends().Select(fr => new AccountViewModel.Friend
                 {
                     userId = fr.userId,
@@ -45,7 +46,8 @@ namespace Brobet.ViewModelServices
             {
                 isMe = false,
                 userId = user.userId,
-                username = user.username
+                username = user.username,
+                avatarUrl = service.GetAvatar(userId)
             };
         }
 

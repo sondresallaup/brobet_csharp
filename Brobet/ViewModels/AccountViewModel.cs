@@ -10,6 +10,7 @@ namespace Brobet.ViewModels
         public bool isMe { get; set; }
         public int userId { get; set; }
         public string username { get; set; }
+        public string avatarUrl { get; set; }
 
         public decimal accountBalance { get; set; }
 

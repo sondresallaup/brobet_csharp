@@ -9,6 +9,7 @@ namespace Brobet.ViewModels
     {
         public int id { get; set; }
         public string friendName { get; set; }
+        public string friendAvatarUrl { get; set; }
         public MessageViewModel lastMessage { get; set; }
         public List<MessageViewModel> messages { get; set; }
     }

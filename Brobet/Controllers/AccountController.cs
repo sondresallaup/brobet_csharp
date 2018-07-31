@@ -54,6 +54,19 @@ namespace Brobet.Controllers
             return View("User", vm);
         }
 
+        public ActionResult Avatar()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+            var vmService = new AccountViewModelService();
+            var vm = vmService.GetMeAccountViewModel();
+
+            return View(vm);
+        }
+
         public ActionResult UserProfile(int id)
         {
             var accountServices = new AccountServices();
@@ -142,6 +155,17 @@ namespace Brobet.Controllers
             var accountServices = new AccountServices();
             var succeeded = accountServices.AcceptFriendRequest(id);
             return Redirect("/Account/Me");
+        }
+
+        [HttpPost]
+        public ActionResult SaveAvatar(string avatarUrl)
+        {
+            var accountServices = new AccountServices();
+            accountServices.SaveAvatar(avatarUrl);
+            return Json(new
+            {
+                response = "SUCCESS"
+            });
         }
 
         private Dictionary<string, string> getToken()

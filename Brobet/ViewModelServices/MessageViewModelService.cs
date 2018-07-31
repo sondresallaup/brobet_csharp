@@ -18,7 +18,8 @@ namespace Brobet.ViewModelServices
             vm.friendships = service.GetFriendships().Select(f => new FriendshipViewModel
             {
                 id = f.id,
-                friendName = f.fromUserId == currentUser.userId ? f.ToUser.username : f.FromUser.username
+                friendName = f.fromUserId == currentUser.userId ? f.ToUser.username : f.FromUser.username,
+                friendAvatarUrl = f.fromUserId == currentUser.userId ? accountService.GetAvatar(f.toUserId) : accountService.GetAvatar(f.fromUserId)
             }).ToList();
             return vm;
         }

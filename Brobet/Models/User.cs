@@ -33,6 +33,7 @@ namespace Brobet.Models
     
         public int userId { get; set; }
         public string username { get; set; }
+        public string avatarUrl { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FriendRequest> SentFriendRequests { get; set; }

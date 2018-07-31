@@ -8,6 +8,7 @@
 
 <div class="body-container">
     <div class="profile">
+        <img class="avatar" src="@Model.avatarUrl" />
         <h1>@Model.username</h1>
         @if (Model.isMe)
         {
@@ -69,6 +70,9 @@
         <div class="modal">
             <div class="me-profile-modal">
                 <ul>
+                    <li>
+                        <a href="/Account/Avatar">Edit Avatar</a>
+                    </li>
                     <li>
                         <a href="javascript:void(0);">Change Password</a>
                     </li>

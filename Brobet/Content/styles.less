@@ -389,6 +389,10 @@ body {
                 font-weight: 500;
             }
 
+            img.avatar {
+                width: 200px;
+            }
+
             .settings {
                 color: black;
                 font-size: 25px;
@@ -692,6 +696,10 @@ body {
                             display: inline-block;
                             font-size: 45px;
                             margin-right: 10px;
+
+                            img {
+                                width: 60px;
+                            }
                         }
 
                         .username {
@@ -914,6 +922,65 @@ body {
 
                     &:focus {
                         outline: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .body-container.edit-avatar {
+        text-align: center;
+
+        #avatar-image {
+            position: fixed;
+            top: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+        }
+
+        #saveAvatarButton {
+            -webkit-appearance: none;
+            margin-top: 14px;
+            cursor: pointer;
+            border: none;
+            color: #fff;
+            background-color: #3897f0;
+            padding: 10px 10px;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 3px;
+            font-weight: 600;
+            text-decoration: none;
+            z-index: 9;
+            position: relative;
+
+            &.disabled {
+                background-color: #ececec;
+            }
+        }
+
+        .edit-avatar-containers {
+            margin-top: 220px;
+            margin-bottom: 30px;
+
+            .edit-avatar-container {
+                margin-bottom: 10px;
+                border: 1px solid @box-border-color;
+                padding: 10px 0;
+
+                .title {
+                }
+
+                .arrows {
+                    margin-top: 10px;
+
+                    a {
+                        font-size: 20px;
+                    }
+
+                    .arrow-left {
+                        margin-right: 50px;
                     }
                 }
             }

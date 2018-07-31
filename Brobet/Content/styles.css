@@ -296,6 +296,9 @@ body .body-container .profile h1 {
   display: inline-block;
   font-weight: 500;
 }
+body .body-container .profile img.avatar {
+  width: 200px;
+}
 body .body-container .profile .settings {
   color: black;
   font-size: 25px;
@@ -542,6 +545,9 @@ body .message-list .body-container ul li a .profile-image {
   font-size: 45px;
   margin-right: 10px;
 }
+body .message-list .body-container ul li a .profile-image img {
+  width: 60px;
+}
 body .message-list .body-container ul li a .username {
   display: inline-block;
   vertical-align: top;
@@ -726,6 +732,53 @@ body .friendship-message-list .body-container .compose-message-container input {
 }
 body .friendship-message-list .body-container .compose-message-container input:focus {
   outline: none;
+}
+body .body-container.edit-avatar {
+  text-align: center;
+}
+body .body-container.edit-avatar #avatar-image {
+  position: fixed;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 190px;
+}
+body .body-container.edit-avatar #saveAvatarButton {
+  -webkit-appearance: none;
+  margin-top: 14px;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  background-color: #3897f0;
+  padding: 10px 10px;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 3px;
+  font-weight: 600;
+  text-decoration: none;
+  z-index: 9;
+  position: relative;
+}
+body .body-container.edit-avatar #saveAvatarButton.disabled {
+  background-color: #ececec;
+}
+body .body-container.edit-avatar .edit-avatar-containers {
+  margin-top: 220px;
+  margin-bottom: 30px;
+}
+body .body-container.edit-avatar .edit-avatar-containers .edit-avatar-container {
+  margin-bottom: 10px;
+  border: 1px solid #e6e6e6;
+  padding: 10px 0;
+}
+body .body-container.edit-avatar .edit-avatar-containers .edit-avatar-container .arrows {
+  margin-top: 10px;
+}
+body .body-container.edit-avatar .edit-avatar-containers .edit-avatar-container .arrows a {
+  font-size: 20px;
+}
+body .body-container.edit-avatar .edit-avatar-containers .edit-avatar-container .arrows .arrow-left {
+  margin-right: 50px;
 }
 .modal-background {
   position: fixed;
