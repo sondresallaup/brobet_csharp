@@ -544,9 +544,20 @@ body .message-list .body-container ul li a .profile-image {
   display: inline-block;
   font-size: 45px;
   margin-right: 10px;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 30px;
+  background-color: gainsboro;
+  top: 3px;
 }
 body .message-list .body-container ul li a .profile-image img {
-  width: 60px;
+  width: 75px;
+  padding: 0;
+  position: absolute;
+  top: 2px;
+  left: -7px;
 }
 body .message-list .body-container ul li a .username {
   display: inline-block;
