@@ -25,7 +25,7 @@
 
 <div class="create-bet-request">
 
-    <div class="fixture status-@Model.fixture.status">
+    <div class="fixture status-@Model.fixture.status" data-fixture-id="@Model.fixture.id">
         <div class="fixture-content">
             <div class="home-team team">
                 <div class="logo">
@@ -207,6 +207,11 @@
 
         $('input.amount').keyup(function () {
             enableOrDisableSubmitButton();
+        });
+
+        $('.fixture').click(function () {
+            var fixtureId = $(this).data('fixture-id');
+            location.href = '/Fixture/Index/' + fixtureId;
         });
 
         $('#send-bet-button').click(function () {
