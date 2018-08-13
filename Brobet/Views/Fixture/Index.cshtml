@@ -1,0 +1,37 @@
+﻿@using System.Web.Script.Serialization
+@using Brobet.Models.SportsApiModels
+@model Brobet.Models.Fixture
+
+@{
+    ViewBag.Title = Model.LocalTeam.name + "vs" + Model.VisitorTeam.name;
+}
+
+<div class="navbar">
+    <div class="content">
+        <span class="logo back">
+            <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i></a>
+        </span>
+        <span class="title">
+            @Model.LocalTeam.name vs @Model.VisitorTeam.name
+        </span>
+    </div>
+</div>
+@if (Model.events != null)
+{
+    <div class="body-container">
+        @{
+            var events = new JavaScriptSerializer().Deserialize<DataObject<Fixture.Event>>(Model.events);
+        }
+
+        <ul>
+            @foreach (var fixtureEvent in events.data)
+            {
+                <li>
+                    @fixtureEvent.type -
+                    @fixtureEvent.player_name -
+                    @fixtureEvent.minute'
+                </li>
+            }
+        </ul>
+    </div>
+}

@@ -15,16 +15,25 @@ namespace Brobet.Jobs
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
             scheduler.Start();
 
-            IJobDetail job = JobBuilder.Create<UpdateFixturesJob>().Build();
-
-            ITrigger trigger = TriggerBuilder.Create()
-            .WithIdentity("trigger1", "group1")
+            IJobDetail allFixturesJob = JobBuilder.Create<UpdateAllFixturesJob>().Build();
+            ITrigger allFixturesTrigger = TriggerBuilder.Create()
+            .WithIdentity("allFixturestrigger", "group1")
             .StartNow()
             .WithSimpleSchedule(x => x
-            .WithIntervalInSeconds(30)
+            .WithIntervalInSeconds(86400)
             .RepeatForever())
             .Build();
-            scheduler.ScheduleJob(job, trigger);
+            scheduler.ScheduleJob(allFixturesJob, allFixturesTrigger);
+
+            IJobDetail todaysFixturesJob = JobBuilder.Create<UpdateTodaysFixturesJob>().Build();
+            ITrigger todaysFixturesTrigger = TriggerBuilder.Create()
+            .WithIdentity("todaysFixturesTrigger", "group2")
+            .StartNow()
+            .WithSimpleSchedule(x => x
+            .WithIntervalInSeconds(60)
+            .RepeatForever())
+            .Build();
+            scheduler.ScheduleJob(todaysFixturesJob, todaysFixturesTrigger);
         }
     }
 }

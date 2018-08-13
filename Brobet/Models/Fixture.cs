@@ -40,6 +40,7 @@ namespace Brobet.Models
         public Nullable<System.DateTime> startingAt { get; set; }
         public string status { get; set; }
         public Nullable<System.DateTime> date { get; set; }
+        public string events { get; set; }
     
         public virtual Team LocalTeam { get; set; }
         public virtual Team VisitorTeam { get; set; }
