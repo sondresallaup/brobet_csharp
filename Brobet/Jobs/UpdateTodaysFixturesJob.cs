@@ -13,7 +13,7 @@ namespace Brobet.Jobs
         public void Execute(IJobExecutionContext context)
         {
             var apiservice = new SportsApiService();
-            //apiservice.UpdateFixturesBetweenDates(DateTime.Now.AddDays(-1).ToString("YYYY-MM-DD"), DateTime.Now.AddDays(1).ToString("YYYY-MM-DD"));
+            apiservice.UpdateFixturesBetweenDates(DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd"), DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
         }
     }
 }
