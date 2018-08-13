@@ -8,15 +8,12 @@ using System.Web;
 
 namespace Brobet.Jobs
 {
-    public class UpdateFixturesJob : IJob
+    public class UpdateTodaysFixturesJob : IJob
     {
         public void Execute(IJobExecutionContext context)
         {
             var apiservice = new SportsApiService();
-            apiservice.UpdateFixtures(11983); // Eliterien
-            apiservice.UpdateFixtures(12962); // Premier League
-            apiservice.UpdateFixtures(12950); // Champions League
-            apiservice.UpdateFixtures(12945); // Europa League
+            //apiservice.UpdateFixturesBetweenDates(DateTime.Now.AddDays(-1).ToString("YYYY-MM-DD"), DateTime.Now.AddDays(1).ToString("YYYY-MM-DD"));
         }
     }
 }

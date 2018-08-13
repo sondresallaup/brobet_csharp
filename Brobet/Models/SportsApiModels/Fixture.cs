@@ -20,6 +20,7 @@ namespace Brobet.Models.SportsApiModels
         public Time time { get; set; }
         public Scores scores { get; set; }
         public Standings standings { get; set; }
+        public DataObject<Event> events{ get; set; }
 
         public class Time
         {
@@ -56,6 +57,22 @@ namespace Brobet.Models.SportsApiModels
         {
             public int? localteam_position { get; set; }
             public int? visitorteam_position { get; set; }
+        }
+
+        public class Event : BaseSportsApiModel
+        {
+            public Int64 id { get; set; }
+            public int team_id { get; set; }
+            public string type { get; set; }
+            public int? player_id { get; set; }
+            public string player_name { get; set; }
+            public int? related_player_id { get; set; }
+            public string related_player_name { get; set; }
+            public int? minute { get; set; }
+            public int? extra_minute { get; set; }
+            public string header { get; set; }
+            public bool? injuried { get; set; }
+            public string result { get; set; }
         }
     }
 }

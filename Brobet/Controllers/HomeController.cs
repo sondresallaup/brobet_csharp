@@ -30,6 +30,10 @@ namespace Brobet.Controllers
 
             ViewBag.ActiveTab = "home";
 
+
+            var apiservice = new SportsApiService();
+            apiservice.UpdateFixturesBetweenDates(DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd"), DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
+
             return View(model);
         }
 

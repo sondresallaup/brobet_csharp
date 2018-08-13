@@ -187,8 +187,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BetController.cs" />
+    <Compile Include="Controllers\FixtureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Jobs\UpdateTodaysFixturesJob.cs" />
     <Compile Include="Models\Bet.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
@@ -213,6 +215,7 @@
     <Compile Include="Models\Message.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SportsApiModels\Fixtures.cs" />
     <Compile Include="Models\Team.cs">
       <DependentUpon>BrobetEF.tt</DependentUpon>
     </Compile>
@@ -242,7 +245,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Jobs\JobScheduler.cs" />
-    <Compile Include="Jobs\UpdateFixturesJob.cs" />
+    <Compile Include="Jobs\UpdateAllFixturesJob.cs" />
     <Compile Include="Models\BrobetEF.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -360,6 +363,7 @@
     <Content Include="Views\Message\_MessagesPartial.cshtml" />
     <Content Include="Views\Shared\_TabbarPartial.cshtml" />
     <Content Include="Views\Account\Avatar.cshtml" />
+    <Content Include="Views\Fixture\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

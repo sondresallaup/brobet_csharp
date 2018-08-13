@@ -80,43 +80,6 @@
     </div>
 </div>
 
-<div class="modal-background hidden" id="bet-modal">
-    <div class="modal">
-        <div class="friends-list-modal">
-            <ul>
-                <li><b>Choose a bet🍀</b></li>
-                <li class="bet" data-value="HOME">Home</li>
-                <li class="bet" data-value="AWAY">Away</li>
-                <li>
-                    <a href="javascript:void(0);" class="cancel">Cancel</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div class="modal-background hidden" id="amount-modal">
-    <div class="modal">
-        <div class="friends-list-modal">
-            <ul>
-                <li><b>Choose the cash🤑</b></li>
-                <li class="amount" data-value="HOME">
-                    <input type="tel" class="home-amount" placeholder="Home bet" />
-                </li>
-                <li class="amount" data-value="AWAY">
-                    <input type="tel" class="away-amount" placeholder="Away bet" />
-                </li>
-                <li class="place-bet">
-                    <a href="javascript:void(0);" class="place-bet-button">Place bet🤞🙈</a>
-                </li>
-                <li>
-                    <a href="javascript:void(0);" class="cancel">Cancel</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
 
 <script>
     var daysFromNow = @Model.daysFromNow;
@@ -179,7 +142,11 @@
         })
 
         $('.fixture').click(function () {
-            if ($(this).data('status') !== 'NS') return;
+            if ($(this).data('status') !== 'NS') {
+                fixtureId = $(this).data('fixture-id');
+                location.href = '/Fixture/Index/' + fixtureId;
+                return;
+            }
             fixtureId = $(this).data('fixture-id');
             location.href = '/Bet/CreateRequest/' + fixtureId;
             return;
