@@ -1,0 +1,379 @@
+﻿@model Brobet.ViewModels.AccountViewModel
+
+@{
+    ViewBag.Title = "Edit Avatar";
+}
+
+<div class="navbar">
+    <div class="content">
+        <span class="logo back">
+            <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i></a>
+        </span>
+        <span class="title">
+            Edit Avatar
+        </span>
+    </div>
+</div>
+
+<div class="body-container edit-avatar">
+    <img id="avatar-image" src='@Model.avatarUrl' />
+
+    <div class="edit-avatar-containers">
+        <div class="edit-avatar-container" data-type="topType">
+            <div class="title">
+                Hair/hats
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edit-avatar-container" data-type="hairColor">
+            <div class="title">
+                Hair color
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edit-avatar-container" data-type="facialHairType">
+            <div class="title">
+                Facial hair
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edit-avatar-container" data-type="facialHairColor">
+            <div class="title">
+                Facial hair color
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edit-avatar-container" data-type="eyeType">
+            <div class="title">
+                Eyes
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edit-avatar-container" data-type="eyebrowType">
+            <div class="title">
+                Eyebrows
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edit-avatar-container" data-type="mouthType">
+            <div class="title">
+                Mouth
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edit-avatar-container" data-type="skinColor">
+            <div class="title">
+                Skin color
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="edit-avatar-container" data-type="accessoriesType">
+            <div class="title">
+                Accessories
+            </div>
+            <div class="arrows">
+                <a href="javascript:void(0);" class="arrow-left arrow">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="javascript:void(0);" class="arrow-right arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <a href="javascript:void(0);" id="saveAvatarButton">Save Avatar</a>
+</div>
+
+<script>
+    $(function () {
+        $('.edit-avatar-container .arrows .arrow').click(function () {
+            $('#saveAvatarButton').html('Save Avatar');
+            var type = $(this).closest('.edit-avatar-container').data('type');
+            var typeAssets = avatarAssets[type];
+            if ($(this).hasClass('arrow-left')) {
+                if (typeAssets.index === 0) {
+                    typeAssets.index = typeAssets.assets.length - 1;
+                }
+                else {
+                    typeAssets.index--;
+                }
+            }
+            else if ($(this).hasClass('arrow-right')) {
+                if (typeAssets.index === typeAssets.assets.length - 1) {
+                    typeAssets.index = 0;
+                }
+                else {
+                    typeAssets.index++;
+                }
+            }
+            console.log(typeAssets);
+            var imageUrl = $('#avatar-image').attr('src');
+            console.log(imageUrl);
+            var newImageUrl = updateURLParameter(imageUrl, type, typeAssets.assets[typeAssets.index]);
+            $('#avatar-image').attr('src', newImageUrl);
+        });
+
+        $('#saveAvatarButton').click(function () {
+            if ($(this).hasClass('disabled')) return;
+            $(this).addClass('disabled');
+
+            var avatarUrl = $('#avatar-image').attr('src');
+
+            var data = {
+                avatarUrl: avatarUrl
+            };
+
+            $.post('/Account/SaveAvatar', data, function (response) {
+                if (response.response === 'SUCCESS') {
+                    $('#saveAvatarButton').removeClass('disabled');
+                    $('#saveAvatarButton').html('Saved');
+                }
+            });
+        });
+    });
+
+
+    var avatarAssets = {
+        topType: {
+            index: 0,
+            assets:
+                [
+                    'NoHair',
+                    'Eyepatch',
+                    'Hat',
+                    'Hijab',
+                    'Turban',
+                    'WinterHat1',
+                    'WinterHat2',
+                    'WinterHat3',
+                    'WinterHat4',
+                    'LongHairBigHair',
+                    'LongHairBob',
+                    'LongHairBun',
+                    'LongHairCurly',
+                    'LongHairCurvy',
+                    'LongHairDreads',
+                    'LongHairFrida',
+                    'LongHairFro',
+                    'LongHairFroBand',
+                    'LongHairNotTooLong',
+                    'LongHairShavedSides',
+                    'LongHairMiaWallace',
+                    'LongHairStraight',
+                    'LongHairStraight2',
+                    'LongHairStraightStrand',
+                    'ShortHairDreads01',
+                    'ShortHairDreads02',
+                    'ShortHairFrizzle',
+                    'ShortHairShaggyMullet',
+                    'ShortHairShortCurly',
+                    'ShortHairShortFlat',
+                    'ShortHairShortRound',
+                    'ShortHairShortWaved',
+                    'ShortHairSides',
+                    'ShortHairTheCaesar',
+                    'ShortHairTheCaesarSidePart'
+                ]
+        },
+        facialHairType: {
+            index: 0,
+            assets:
+                [
+                    'Blank',
+                    'BeardMedium',
+                    'BeardLight',
+                    'BeardMagestic'
+                ]
+        },
+        accessoriesType: {
+            index: 0,
+            assets:
+                [
+                    'Blank',
+                    'Kurt',
+                    'Prescription01',
+                    'Prescription02',
+                    'Round',
+                    'Sunglasses',
+                    'Wayfarers' 
+                ]
+        },
+        hairColor: {
+            index: 0,
+            assets:
+                [
+                    'Auburn',
+                    'Black',
+                    'Blonde',
+                    'BlondeGolden',
+                    'Brown',
+                    'BrownDark',
+                    'PastelPink',
+                    'Platinum',
+                    'Red',
+                    'SilverGray'
+                ]
+        },
+        facialHairColor: {
+            index: 0,
+            assets:
+                [
+                    'Auburn',
+                    'Black',
+                    'Blonde',
+                    'BlondeGolden',
+                    'Brown',
+                    'BrownDark',
+                    'Platinum',
+                    'Red'
+                ]
+        },
+        eyeType: {
+            index: 0,
+            assets:
+                [
+                    'Default',
+                    'Cry',
+                    'Close',
+                    'Dizzy',
+                    'EyeRoll',
+                    'Happy',
+                    'Hearts',
+                    'Side',
+                    'Squint',
+                    'Surprised',
+                    'Wink',
+                    'WinkWacky'
+                ]
+        },
+        eyebrowType: {
+            index: 0,
+            assets:
+                [
+                    'Default',
+                    'Angry',
+                    'AngryNatural',
+                    'DefaultNatural',
+                    'FlatNatural',
+                    'RaisedExcited',
+                    'RaisedExcitedNatural',
+                    'SadConcerned',
+                    'SadConcernedNatural',
+                    'UnibrowNatural',
+                    'UpDown',
+                    'UpDownNatural'
+                ]
+        },
+        mouthType: {
+            index: 0,
+            assets:
+                [
+                    'Default',
+                    'Concerned',
+                    'Disbelief',
+                    'Eating',
+                    'Grimace',
+                    'Sad',
+                    'ScreamOpen',
+                    'Serious',
+                    'Smile',
+                    'Tongue',
+                    'Twinkle',
+                    'Vomit'
+                ]
+        },
+        skinColor: {
+            index: 0,
+            assets:
+                [
+                    'Tanned',
+                    'Yellow',
+                    'Pale',
+                    'Light',
+                    'Brown',
+                    'DarkBrown',
+                    'Black'
+                ]
+        }
+    };
+
+    /**
+ * http://stackoverflow.com/a/10997390/11236
+ */
+    function updateURLParameter(url, param, paramVal) {
+        var newAdditionalURL = "";
+        var tempArray = url.split("?");
+        var baseURL = tempArray[0];
+        var additionalURL = tempArray[1];
+        var temp = "";
+        if (additionalURL) {
+            tempArray = additionalURL.split("&");
+            for (var i = 0; i < tempArray.length; i++) {
+                if (tempArray[i].split('=')[0] != param) {
+                    newAdditionalURL += temp + tempArray[i];
+                    temp = "&";
+                }
+            }
+        }
+
+        var rows_txt = temp + "" + param + "=" + paramVal;
+        return baseURL + "?" + newAdditionalURL + rows_txt;
+    }
+</script>

@@ -1,0 +1,288 @@
+﻿@model Brobet.ViewModels.BetRequestViewModel
+
+@{
+    ViewBag.Title = Model.fixture.localTeamName + " vs " + Model.fixture.visitorTeamName;
+}
+
+<div class="navbar">
+    <div class="content">
+        <span class="logo back">
+            <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i></a>
+        </span>
+        <span class="title">
+            @if (Model.friend != null)
+            {
+                @Model.friend.username
+            }
+            else
+            {
+                <text>Create new bet</text>
+            }
+        </span>
+    </div>
+</div>
+
+
+<div class="create-bet-request">
+
+    <div class="fixture status-@Model.fixture.status">
+        <div class="fixture-content">
+            <div class="home-team team">
+                <div class="logo">
+                    <img src="@Model.fixture.localTeamLogo" />
+                </div>
+                <div class="name">
+                    @Model.fixture.localTeamName
+                </div>
+            </div>
+            <div class="fixture-date" data-date="@Model.fixture.staringAtString">
+                <div class="score">
+                    @Model.fixture.localTeamScore - @Model.fixture.visitorTeamScore
+                </div>
+                <div class="time">
+                </div>
+                <div class="date">
+                </div>
+            </div>
+            <div class="away-team team">
+                <div class="name">
+                    @Model.fixture.visitorTeamName
+                </div>
+                <div class="logo">
+                    <img src="@Model.fixture.visitorTeamLogo" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if(Model.winner != null)
+    {
+    <div class="winner-is">
+        @if (Model.winner == "CURRENT_USER")
+        {
+            <text>You won!</text>
+        }
+        else if (Model.winner == "OTHER_USER")
+        {
+            <text>@Model.friend.username won</text>
+        }
+        else if (Model.winner == "NO_ONE")
+        {
+            <text>Neither of you won</text>
+        }
+    </div>
+    }
+
+    <div class="body-container">
+
+        <div class="bet-containers">
+            <div class="bet-container from">
+                <label>
+                    @if (Model.isFromUser)
+                    {
+                        <text>Your bet</text>
+                    }
+                    else
+                    {
+                        @Model.friend.username<text>'s bet</text>
+                    }
+                </label>
+                <input @(!Model.initial ? "disabled" : "") type="tel" placeholder="Amount" class="amount" name="from-amount" value="@Model.fromAmount" />
+                <div class="bet-buttons">
+                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "h" ? "winner" : "")" data-value="h">H</a>
+                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "x" ? "winner" : "")" data-value="x">X</a>
+                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "a" ? "winner" : "")" data-value="a">A</a>
+                </div>
+            </div>
+            <div class="bet-container to">
+                <label>
+                    @if (Model.isFromUser)
+                    {
+                        <text>Bro's bet</text>
+                    }
+                    else
+                    {
+                        <text>Your bet</text>
+                    }
+                </label>
+                <input @(!Model.initial ? "disabled" : "") type="tel" placeholder="Amount" class="amount" name="from-amount" value="@Model.toAmount" />
+                <div class="bet-buttons">
+                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "h" ? "winner" : "")" data-value="h">H</a>
+                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "x" ? "winner" : "")" data-value="x">X</a>
+                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "a" ? "winner" : "")" data-value="a">A</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (Model.editable)
+    {
+        if (Model.isFromUser)
+        {
+
+            <div class="body-container friends-list">
+                <span>Choose a bro to bet</span>
+                <ul>
+                    @foreach (var friend in Model.friends)
+                    {
+                        <li><a class="choose-friend-button" href="javascript:void(0);" data-id="@friend.userId"><i class="fas fa-check"></i>@friend.username</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="send-bet-container">
+                <a href="javascript:void(0);" id="send-bet-button" class="disabled">Send bet</a>
+                <div class="info"></div>
+            </div>
+        }
+        else
+        {
+            if (Model.fixture.status == "NS")
+            {
+                <div class="send-bet-container">
+                    <a href="javascript:void(0);" id="accept-bet-button" class="">Accept bet</a>
+                    <div class="info"></div>
+                </div>
+            }
+            else
+            {
+                <div class="send-bet-container">
+                    <a href="javascript:void(0);" id="accept-bet-button" class="disabled">Bet request expired</a>
+                    <div class="info"></div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<script>
+    var friendId;
+
+    $(function () {
+        @if(Model.fromBets != null)
+        {
+            foreach(var bet in Model.fromBets)
+            {
+                <text>$(`.bet-button.from[data-value='@bet']`).addClass('selected');</text>
+            }
+        }
+        @if(Model.toBets != null)
+        {
+            foreach(var bet in Model.toBets)
+            {
+                <text>$(`.bet-button.to[data-value='@bet']`).addClass('selected');</text>
+            }
+        }
+        updateInfoText()
+
+
+        $('.fixture-date').each(function () {
+            var $this = $(this);
+            var datetime = $this.data('date');
+            console.log(datetime);
+            $this.find('.date').html(moment(datetime).format('LL'));
+            $this.find('.time').html(moment(datetime).format('LT'));
+        });
+
+        $('.bet-button').click(function () {
+            var $this = $(this);
+            if ($this.hasClass('disabled')) return;
+            $this.toggleClass('selected');
+
+            var value = $this.data('value');
+
+            if ($this.hasClass('from')) {
+                $(`.bet-button.to[data-value='${value}']`).toggleClass('disabled');
+            }
+            else if ($this.hasClass('to')) {
+                $(`.bet-button.from[data-value='${value}']`).toggleClass('disabled');
+            }
+            enableOrDisableSubmitButton();
+        });
+
+        $('.choose-friend-button').click(function () {
+            $('.choose-friend-button').removeClass('selected');
+            $(this).addClass('selected');
+            friendId = $(this).data('id');
+            enableOrDisableSubmitButton();
+        });
+
+        $('input.amount').keyup(function () {
+            enableOrDisableSubmitButton();
+        });
+
+        $('#send-bet-button').click(function () {
+            if ($(this).hasClass('disabled')) return;
+            $(this).addClass('disabled');
+
+            var fromAmount = $('.bet-container.from .amount').val();
+            var toAmount = $('.bet-container.to .amount').val();
+
+            var fromBets = [];
+            var toBets = [];
+            $('.bet-container.from .bet-button.selected').each(function () {
+                var value = $(this).data('value');
+                fromBets.push(value);
+            });
+            $('.bet-container.to .bet-button.selected').each(function () {
+                var value = $(this).data('value');
+                toBets.push(value);
+            });
+            var data = {
+                toUserId: friendId,
+                fixtureId: @Model.fixture.id,
+                fromAmount: fromAmount,
+                toAmount: toAmount,
+                fromBets: fromBets,
+                toBets: toBets
+            }
+
+            $.post('/Bet/Place', data, function (response) {
+                window.history.back();
+            });
+        });
+
+        $('#accept-bet-button').click(function () {
+            if ($(this).hasClass('disabled')) return;
+            var data = {
+                id: @Model.betRequestId
+            };
+            $(this).addClass('disabled');
+            $.post('/Bet/AcceptRequest/', data, function (response) {
+                if (response.response === 'SUCCESS') {
+                    window.history.back();
+                }
+            });
+        });
+
+        function enableOrDisableSubmitButton() {
+            var $button = $('#send-bet-button');
+            $button.addClass('disabled');
+            var $info = $('.send-bet-container .info');
+            $info.html('');
+            if ($('.bet-container.from .amount').val().length === 0) return;
+            if ($('.bet-container.to .amount').val().length === 0) return;
+
+            if ($('.bet-container.from .bet-button.selected').length === 0) return;
+            if ($('.bet-container.to .bet-button.selected').length === 0) return;
+            if (friendId == null) return;
+
+            $button.removeClass('disabled');
+            updateInfoText();
+        }
+
+        function updateInfoText() {
+            var $info = $('.send-bet-container .info');
+            $info.html('');
+            if ($('.bet-button.selected').length === 0) return;
+
+            if ($(`.bet-button.selected[data-value='h']`).length === 0) {
+                $info.html("If it's a home victory, neither of you win.");
+            }
+            if ($(`.bet-button.selected[data-value='x']`).length === 0) {
+                $info.html("If it's a tie, neither of you win.");
+            }
+            if ($(`.bet-button.selected[data-value='a']`).length === 0) {
+                $info.html("If it's an away victory, neither of you win.");
+            }
+        }
+    });
+</script>

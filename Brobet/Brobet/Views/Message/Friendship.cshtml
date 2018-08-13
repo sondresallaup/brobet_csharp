@@ -1,0 +1,65 @@
+﻿@model Brobet.ViewModels.FriendshipViewModel
+
+@{
+    ViewBag.Title = Model.friendName;
+}
+
+<div class="navbar">
+    <div class="content">
+        <span class="logo back">
+            <a href="/Message"><i class="fas fa-chevron-left"></i></a>
+        </span>
+        <span class="title">
+            @Model.friendName
+        </span>
+    </div>
+</div>
+
+<div class="friendship-message-list">
+    <div class="body-container">
+        <div id="messages-partial">
+            @Html.Partial("_MessagesPartial")
+        </div>
+        <div class="compose-message-container">
+            <form id="compose-form">
+                <input type="text" placeholder="Write a message..." class="composed-message"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#compose-form').submit(function (e) {
+            var $composedMessage = $(this).find('.composed-message');
+            var message = $composedMessage.val();
+            $composedMessage.val('');
+
+            var data = {
+                friendshipId: @Model.id,
+                messageContent: message
+            };
+            $.post('/Message/Compose', data, function () {
+                updateMessages();
+            });
+            e.preventDefault();
+        });
+
+        function updateMessages() {
+            $.get('/Message/MessagesPartial/@Model.id', function (result) {
+                $('#messages-partial').html(result);
+                //scrollToBottom();
+            });
+        }
+
+        function scrollToBottom() {
+            $('#messages-partial').scrollTop($('#messages-partial').height() * 2);
+        }
+        scrollToBottom();
+
+
+        window.setInterval(function () {
+           updateMessages();
+        }, 5000);
+    });
+</script>
