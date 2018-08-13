@@ -1,0 +1,26 @@
+﻿<div class="tabbar">
+    <div class="content">
+        <ul>
+            <li class="@(ViewBag.ActiveTab == "home" ? "active" : "")">
+                <a href="/">
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+            <li class="@(ViewBag.ActiveTab == "message" ? "active" : "")">
+                <a href="/Message/">
+                    <i class="fas fa-paper-plane"></i>
+                </a>
+            </li>
+            <li class="@(ViewBag.ActiveTab == "bets" ? "active" : "")">
+                <a href="/Bet/List">
+                    <i class="fas fa-beer"></i>
+                </a>
+            </li>
+            <li class="@(ViewBag.ActiveTab == "profile" ? "active" : "")">
+                <a href="/Account/Me">
+                    <i class="fas fa-user"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

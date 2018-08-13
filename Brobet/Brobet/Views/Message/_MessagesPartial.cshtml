@@ -1,0 +1,74 @@
+﻿@model Brobet.ViewModels.FriendshipViewModel
+<ul>
+    @foreach (var message in Model.messages)
+    {
+    <li class="@(message.isCurrentUser ? "current-user" : "friend-user")">
+        @if (!message.isBet)
+        {
+            <a class="message">
+                @if (!message.isCurrentUser)
+                {
+                    <div class="profile-image">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                }
+                <div class="message-content">
+                    <div class="text">
+                        @message.messageContent
+                    </div>
+                </div>
+            </a>
+        }
+        else // This is a bet
+        {
+            <a class="bet" href="@message.url">
+                @if (!message.isCurrentUser)
+                {
+                    <div class="profile-image">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                }
+                    <div class="message-content">
+                        <div class="header">
+                            <span>@message.betStatus</span>
+                        </div>
+                        <div class="home-team team">
+                            <div class="logo">
+                                <img src="@message.localTeamLogo" />
+                            </div>
+                            <div class="name">
+                                @message.localTeamName
+                            </div>
+                        </div>
+                        <div class="fixture-date" data-date="@message.fixtureDateAsString">
+                            <div class="time">
+                            </div>
+                            <div class="date">
+                            </div>
+                        </div>
+                        <div class="away-team team">
+                            <div class="name">
+                                @message.visitorTeamName
+                            </div>
+                            <div class="logo">
+                                <img src="@message.visitorTeamLogo" />
+                            </div>
+                        </div>
+                    </div>
+            </a>
+        }
+    </li>
+    }
+</ul>
+
+<script>
+    $(function () {
+        $('.fixture-date').each(function () {
+            var $this = $(this);
+            var datetime = $this.data('date');
+            console.log(datetime);
+            $this.find('.date').html(moment(datetime).format('LL'));
+            $this.find('.time').html(moment(datetime).format('LT'));
+        });
+    });
+</script>

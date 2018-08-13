@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="44c98203851545e595b975ff55408556" Name="Diagram1" >
+        <EntityTypeShape EntityType="BrobetModel.Team" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BrobetModel.Fixture" Width="1.5" PointX="7.875" PointY="0.75" />
+        <AssociationConnector Association="BrobetModel.FK_Fixture_LocalTeam" />
+        <AssociationConnector Association="BrobetModel.FK_Fixture_VisitorTeam" />
+        <EntityTypeShape EntityType="BrobetModel.webpages_Membership" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BrobetModel.webpages_OAuthMembership" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="BrobetModel.webpages_Roles" Width="1.5" PointX="0.75" PointY="4.875" />
+        <EntityTypeShape EntityType="BrobetModel.FriendRequest" Width="1.5" PointX="5.25" PointY="4.5" />
+        <EntityTypeShape EntityType="BrobetModel.User" Width="1.5" PointX="3" PointY="4.625" />
+        <AssociationConnector Association="BrobetModel.FK_FriendRequest_Users" />
+        <AssociationConnector Association="BrobetModel.FK_FriendRequest_Users1" />
+        <AssociationConnector Association="BrobetModel.webpages_UsersInRoles" />
+        <EntityTypeShape EntityType="BrobetModel.Friendship" Width="1.5" PointX="6.5" PointY="7.5" />
+        <AssociationConnector Association="BrobetModel.FK_Friendship_Users" />
+        <AssociationConnector Association="BrobetModel.FK_Friendship_Users1" />
+        <EntityTypeShape EntityType="BrobetModel.BetRequest" Width="1.5" PointX="10.125" PointY="1.875" />
+        <AssociationConnector Association="BrobetModel.FK_BetRequest_Fixture" />
+        <AssociationConnector Association="BrobetModel.FK_BetRequest_Users" />
+        <AssociationConnector Association="BrobetModel.FK_BetRequest_Users1" />
+        <EntityTypeShape EntityType="BrobetModel.Bet" Width="1.5" PointX="12.25" PointY="2" />
+        <AssociationConnector Association="BrobetModel.FK_Bet_Fixture" />
+        <AssociationConnector Association="BrobetModel.FK_Bet_Users" />
+        <AssociationConnector Association="BrobetModel.FK_Bet_Users1" />
+        <AssociationConnector Association="BrobetModel.FK_Bet_Users2" />
+        <EntityTypeShape EntityType="BrobetModel.Transaction" Width="1.5" PointX="1" PointY="8.25" />
+        <AssociationConnector Association="BrobetModel.FK_Transaction_Bet" />
+        <AssociationConnector Association="BrobetModel.FK_Transaction_Users" />
+        <AssociationConnector Association="BrobetModel.FK_Transaction_BetRequest" />
+        <EntityTypeShape EntityType="BrobetModel.BetObject" Width="1.5" PointX="18.25" PointY="5.125" />
+        <EntityTypeShape EntityType="BrobetModel.BetType" Width="1.5" PointX="16" PointY="1.375" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_Bet" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_BetType" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_Bet" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_BetRequest" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_FromBet" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_ToBet" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_FromBetRequest" />
+        <AssociationConnector Association="BrobetModel.FK_BetObject_ToBetRequest" />
+        <EntityTypeShape EntityType="BrobetModel.Message" Width="1.5" PointX="8.75" PointY="7.125" />
+        <AssociationConnector Association="BrobetModel.FK_Message_Friendship" />
+        <AssociationConnector Association="BrobetModel.FK_Message_Users" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

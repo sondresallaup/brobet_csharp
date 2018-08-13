@@ -1,0 +1,29 @@
+﻿@model Brobet.ViewModels.MessageListViewModel
+
+@{
+    ViewBag.Title = "Messages";
+}
+
+@Html.Partial("_NavbarPartial")
+<div class="message-list">
+    <div class="body-container">
+        <ul>
+            @foreach (var friendship in Model.friendships)
+            {
+                <li>
+                    <a href="/Message/Friendship/@friendship.id">
+                        <div class="profile-image">
+                            <img src="@friendship.friendAvatarUrl" />
+                        </div>
+                        <div class="username">
+                            <div class="text">
+                                @friendship.friendName
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+@Html.Partial("_TabbarPartial")
