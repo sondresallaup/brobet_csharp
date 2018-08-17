@@ -32,7 +32,8 @@ namespace Brobet.Services
                 fromBetObjects = bet.FromBetObjects.ToList(),
                 toBetObjects = bet.ToBetObjects.ToList(),
                 status = bet.status,
-                Winner = bet.Winner
+                Winner = bet.Winner,
+                payed = bet.payed.HasValue && bet.payed.Value
             };
         }
 
@@ -98,6 +99,7 @@ namespace Brobet.Services
             public int toAmount { get; set; }
             public string status { get; set; }
             public string bet { get; set; }
+            public bool payed { get; set; }
             public DateTime date { get; set; }
             public Fixture Fixture { get; set; }
             public User Friend { get; set; }
@@ -160,6 +162,28 @@ namespace Brobet.Services
             PushNotificationService.SendNotification(request.ToUser.username, messageContent, request.FromUser.userId);
 
 
+            return "SUCCESS";
+        }
+
+        public string MarkAsPayed(int betId)
+        {
+            var accountService = new AccountServices();
+            var currentUserId = accountService.GetCurrentUserId();
+
+            var bet = db.Bets.SingleOrDefault(b => b.id == betId);
+
+
+            if (bet.toUserId != currentUserId && bet.fromUserId != currentUserId)
+            {
+                return "UNAUTHORIZED";
+            }
+            var otherUser = (bet.fromUserId == currentUserId) ? bet.ToUser : bet.FromUser;
+            bet.payed = true;
+            db.SaveChanges();
+            var fixture = bet.Fixture;
+            var messageContent = "Payed bet: " + fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
+
+            PushNotificationService.SendNotification(otherUser.username, messageContent, currentUserId);
             return "SUCCESS";
         }
 
