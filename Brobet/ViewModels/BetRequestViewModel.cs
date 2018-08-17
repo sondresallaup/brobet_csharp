@@ -17,6 +17,7 @@ namespace Brobet.ViewModels
         public bool initial { get; set; }
         public bool editable { get; set; }
         public bool accepted { get; set; }
+        public bool isPayed { get; set; }
 
         public int fromAmount { get; set; }
         public int toAmount { get; set; }
@@ -31,6 +32,31 @@ namespace Brobet.ViewModels
 
         public string winningBetObject { get; set; }
         public string winner { get; set; }
+
+        public int oweAmount
+        {
+            get
+            {
+                if(winner == "OTHER_USER")
+                {
+                    if (isFromUser)
+                    {
+                        return fromAmount;
+                    }
+                    else return toAmount;
+                }
+                else if(winner == "CURRENT_USER")
+                {
+
+                    if (isFromUser)
+                    {
+                        return toAmount;
+                    }
+                    else return fromAmount;
+                }
+                return 0;
+            }
+        }
 
         public class Friend
         {

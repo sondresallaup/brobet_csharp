@@ -18,6 +18,7 @@
           <Property Name="date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="winnerId" Type="int" />
+          <Property Name="payed" Type="bit" />
         </EntityType>
         <EntityType Name="BetObject">
           <Key>
@@ -978,6 +979,7 @@
           <NavigationProperty Name="ToBetObjects" Relationship="BrobetModel.FK_BetObject_ToBet" FromRole="Bet" ToRole="BetObject" />
           <Property Name="fromAmount" Type="Int32" Nullable="false" />
           <Property Name="toAmount" Type="Int32" Nullable="false" />
+          <Property Name="payed" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Bet_Fixture">
           <End Type="BrobetModel.Fixture" Role="Fixture" Multiplicity="1" />
@@ -1332,6 +1334,7 @@
           <EntitySetMapping Name="Bets">
             <EntityTypeMapping TypeName="BrobetModel.Bet">
               <MappingFragment StoreEntitySet="Bet">
+                <ScalarProperty Name="payed" ColumnName="payed" />
                 <ScalarProperty Name="toAmount" ColumnName="toAmount" />
                 <ScalarProperty Name="fromAmount" ColumnName="fromAmount" />
                 <ScalarProperty Name="winnerId" ColumnName="winnerId" />

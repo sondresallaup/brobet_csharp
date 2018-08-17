@@ -68,7 +68,7 @@
                     if (window.webkit) {
                         window.webkit.messageHandlers.userLogin.postMessage(response);
                     }
-                    else if (Android) {
+                    else if (typeof Android != 'undefined') {
                         Android.login(response.userId);
                     }
                     location.reload();

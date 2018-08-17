@@ -31,6 +31,7 @@ namespace Brobet.Models
         public Nullable<int> winnerId { get; set; }
         public int fromAmount { get; set; }
         public int toAmount { get; set; }
+        public Nullable<bool> payed { get; set; }
     
         public virtual Fixture Fixture { get; set; }
         public virtual User FromUser { get; set; }

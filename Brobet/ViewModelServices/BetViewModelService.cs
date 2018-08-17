@@ -47,6 +47,7 @@ namespace Brobet.ViewModelServices
             vm.editable = false;
             vm.backUrl = "/";
             vm.betId = betId;
+            vm.isPayed = bet.payed;
             vm.fixture = new FixtureViewModel
             {
                 id = bet.Fixture.id,

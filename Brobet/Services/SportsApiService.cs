@@ -82,7 +82,7 @@ namespace Brobet.Services
                     // Update bets if finished
                     if (fixture.status != "FT" && apiFixture.time.status == "FT")
                     {
-                        var notifiationHeader = fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
+                        var fixtureMessage = fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
                         foreach (var bet in fixture.Bets)
                         {
                             bet.status = "FINISHED";
@@ -127,19 +127,19 @@ namespace Brobet.Services
                             if (winner == "FROM_USER")
                             {
                                 bet.winnerId = bet.fromUserId;
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You won", bet.fromUserId);
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You lost", bet.toUserId);
+                                PushNotificationService.SendNotification(bet.ToUser.username, fixtureMessage + ": Full time. You won", bet.fromUserId);
+                                PushNotificationService.SendNotification(bet.FromUser.username, fixtureMessage + ": Full time. You lost", bet.toUserId);
                             }
                             else if (winner == "TO_USER")
                             {
                                 bet.winnerId = bet.toUserId;
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You won", bet.toUserId);
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You lost", bet.fromUserId);
+                                PushNotificationService.SendNotification(bet.FromUser.username, fixtureMessage + ": Full time. You won", bet.toUserId);
+                                PushNotificationService.SendNotification(bet.ToUser.username, fixtureMessage + ": Full time. You lost", bet.fromUserId);
                             }
                             else if (winner == "NONE")
                             {
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. Neither of you won", bet.toUserId);
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. Neither of you won", bet.fromUserId);
+                                PushNotificationService.SendNotification(bet.FromUser.username, fixtureMessage + ": Full time. Neither of you won", bet.toUserId);
+                                PushNotificationService.SendNotification(bet.ToUser.username, fixtureMessage + ": Full time. Neither of you won", bet.fromUserId);
                             }
                         }
                     }
@@ -226,90 +226,90 @@ namespace Brobet.Services
                     var homeScore = apiFixture.scores.localteam_score;
                     var awayScore = apiFixture.scores.visitorteam_score;
 
-                    // Update bets if finished
-                    if (fixture.status != "FT" && apiFixture.time.status == "FT")
-                    {
-                        var notifiationHeader = fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
-                        foreach (var bet in fixture.Bets)
-                        {
-                            bet.status = "FINISHED";
-                            var winner = "NONE";
-                            var winnerValue = "";
-                            if(homeScore == awayScore) // Tie
-                            {
-                                winnerValue = "x";
-                            }
-                            else if(homeScore > awayScore) // Home win
-                            {
-                                winnerValue = "h";
-                            }
-                            else if(homeScore < awayScore) // Away win
-                            {
-                                winnerValue = "a";
-                            }
-                            foreach (var betObject in bet.FromBetObjects)
-                            {
-                                if(betObject.value == winnerValue)
-                                {
-                                    betObject.status = "WON";
-                                    winner = "FROM_USER";
-                                }
-                                else
-                                {
-                                    betObject.status = "LOST";
-                                }
-                            }
-                            foreach (var betObject in bet.ToBetObjects)
-                            {
-                                if (betObject.value == winnerValue)
-                                {
-                                    betObject.status = "WON";
-                                    winner = "TO_USER";
-                                }
-                                else
-                                {
-                                    betObject.status = "LOST";
-                                }
-                            }
-                            if (winner == "FROM_USER")
-                            {
-                                bet.winnerId = bet.fromUserId;
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You won", bet.fromUserId);
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You lost", bet.toUserId);
-                            }
-                            else if(winner == "TO_USER")
-                            {
-                                bet.winnerId = bet.toUserId;
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You won", bet.toUserId);
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. You lost", bet.fromUserId);
-                            }
-                            else if(winner == "NONE")
-                            {
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. Neither of you won", bet.toUserId);
-                                PushNotificationService.SendNotification(notifiationHeader, "Full time. Neither of you won", bet.fromUserId);
-                            }
-                        }
-                    }
+                    //// Update bets if finished
+                    //if (fixture.status != "FT" && apiFixture.time.status == "FT")
+                    //{
+                    //    var notifiationHeader = fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
+                    //    foreach (var bet in fixture.Bets)
+                    //    {
+                    //        bet.status = "FINISHED";
+                    //        var winner = "NONE";
+                    //        var winnerValue = "";
+                    //        if(homeScore == awayScore) // Tie
+                    //        {
+                    //            winnerValue = "x";
+                    //        }
+                    //        else if(homeScore > awayScore) // Home win
+                    //        {
+                    //            winnerValue = "h";
+                    //        }
+                    //        else if(homeScore < awayScore) // Away win
+                    //        {
+                    //            winnerValue = "a";
+                    //        }
+                    //        foreach (var betObject in bet.FromBetObjects)
+                    //        {
+                    //            if(betObject.value == winnerValue)
+                    //            {
+                    //                betObject.status = "WON";
+                    //                winner = "FROM_USER";
+                    //            }
+                    //            else
+                    //            {
+                    //                betObject.status = "LOST";
+                    //            }
+                    //        }
+                    //        foreach (var betObject in bet.ToBetObjects)
+                    //        {
+                    //            if (betObject.value == winnerValue)
+                    //            {
+                    //                betObject.status = "WON";
+                    //                winner = "TO_USER";
+                    //            }
+                    //            else
+                    //            {
+                    //                betObject.status = "LOST";
+                    //            }
+                    //        }
+                    //        if (winner == "FROM_USER")
+                    //        {
+                    //            bet.winnerId = bet.fromUserId;
+                    //            PushNotificationService.SendNotification(notifiationHeader, "Full time. You won", bet.fromUserId);
+                    //            PushNotificationService.SendNotification(notifiationHeader, "Full time. You lost", bet.toUserId);
+                    //        }
+                    //        else if(winner == "TO_USER")
+                    //        {
+                    //            bet.winnerId = bet.toUserId;
+                    //            PushNotificationService.SendNotification(notifiationHeader, "Full time. You won", bet.toUserId);
+                    //            PushNotificationService.SendNotification(notifiationHeader, "Full time. You lost", bet.fromUserId);
+                    //        }
+                    //        else if(winner == "NONE")
+                    //        {
+                    //            PushNotificationService.SendNotification(notifiationHeader, "Full time. Neither of you won", bet.toUserId);
+                    //            PushNotificationService.SendNotification(notifiationHeader, "Full time. Neither of you won", bet.fromUserId);
+                    //        }
+                    //    }
+                    //}
 
-                    // Return money for unaccepted bet requests
-                    if(fixture.status != "LIVE" && apiFixture.time.status == "LIVE")
-                    {
-                        foreach(var request in fixture.BetRequests.Where(br => !br.accepted))
-                        {
-                            var requestTransaction = request.Transactions.SingleOrDefault();
-                            requestTransaction.description = "Bet request not accpeted. Money is returned";
-                            var returnTransaction = new Transaction
-                            {
-                                userId = requestTransaction.userId,
-                                amount = (requestTransaction.amount * -1),
-                                date = DateTime.Now,
-                                betRequestId = requestTransaction.betRequestId,
-                                description = "Returned money ref. transaction id: " + requestTransaction.id
-                            };
-                            db.Transactions.Add(returnTransaction);
-                        }
-                    }
-                    fixture.status = apiFixture.time.status;
+                    //// Return money for unaccepted bet requests
+                    //if(fixture.status != "LIVE" && apiFixture.time.status == "LIVE")
+                    //{
+                    //    foreach(var request in fixture.BetRequests.Where(br => !br.accepted))
+                    //    {
+                    //        var requestTransaction = request.Transactions.SingleOrDefault();
+                    //        requestTransaction.description = "Bet request not accpeted. Money is returned";
+                    //        var returnTransaction = new Transaction
+                    //        {
+                    //            userId = requestTransaction.userId,
+                    //            amount = (requestTransaction.amount * -1),
+                    //            date = DateTime.Now,
+                    //            betRequestId = requestTransaction.betRequestId,
+                    //            description = "Returned money ref. transaction id: " + requestTransaction.id
+                    //        };
+                    //        db.Transactions.Add(returnTransaction);
+                    //    }
+                    //}
+                    //fixture.status = apiFixture.time.status;
 
                 }
                 db.SaveChanges();

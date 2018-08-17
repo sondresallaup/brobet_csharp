@@ -98,5 +98,16 @@ namespace Brobet.Controllers
                 response = result
             });
         }
+
+        [HttpPost]
+        public ActionResult MarkAsPayed(int id)
+        {
+            var betService = new BetService();
+            var result = betService.MarkAsPayed(id);
+            return Json(new
+            {
+                response = result
+            });
+        }
     }
 }
