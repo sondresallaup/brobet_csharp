@@ -30,6 +30,8 @@
 
 <script>
     $(function () {
+        $('body').addClass('tabbar-hidden');
+
         $('#compose-form').submit(function (e) {
             var $composedMessage = $(this).find('.composed-message');
             var message = $composedMessage.val();
