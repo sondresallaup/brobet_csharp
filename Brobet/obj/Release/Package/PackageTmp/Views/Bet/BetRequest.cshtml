@@ -60,11 +60,19 @@
     <div class="winner-is">
         @if (Model.winner == "CURRENT_USER")
         {
-            <text>You won!</text>
+            <div>
+                You won<br />
+                @Model.friend.username owes you @Model.oweAmount kr
+            </div>
+            <a class="pay-button @(Model.isPayed ? "payed" : "")" href="javascript:void(0);"></a>
         }
         else if (Model.winner == "OTHER_USER")
         {
-            <text>@Model.friend.username won</text>
+            <div>
+                You lost<br />
+                You owe @Model.friend.username @Model.oweAmount kr
+            </div>
+
         }
         else if (Model.winner == "NO_ONE")
         {
@@ -171,7 +179,7 @@
                 <text>$(`.bet-button.to[data-value='@bet']`).addClass('selected');</text>
             }
         }
-        updateInfoText()
+        updateInfoText();
 
 
         $('.fixture-date').each(function () {
@@ -254,6 +262,18 @@
             $.post('/Bet/AcceptRequest/', data, function (response) {
                 if (response.response === 'SUCCESS') {
                     window.history.back();
+                }
+            });
+        });
+
+        $('.pay-button').click(function () {
+            if ($(this).hasClass('payed')) return;
+            var data = {
+                id: @Model.betId
+            };
+            $(this).addClass('payed');
+            $.post('/Bet/MarkAsPayed/', data, function (response) {
+                if (response.response === 'SUCCESS') {
                 }
             });
         });
