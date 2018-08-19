@@ -25,6 +25,21 @@ namespace Brobet.Controllers
             return View(vm);
         }
 
+        public ActionResult ListPartial()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var vms = new BetViewModelService();
+            var vm = vms.GetBetListViewModel();
+
+            ViewBag.ActiveTab = "bets";
+            return PartialView("_ListPartial", vm);
+        }
+
         public ActionResult CreateRequest(int id)
         {
             var accountServices = new AccountServices();

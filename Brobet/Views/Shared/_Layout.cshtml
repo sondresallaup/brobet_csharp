@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/Content/styles.min.css?v=7" />
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled-uncompressed/html4+html5/jquery.history.js"></script>
     <script>
         moment.locale('en-gb');
     </script>
@@ -20,5 +21,54 @@
     </div>
 
     @RenderSection("scripts", required: false)
+
+    <script>
+
+        function renderPartial(fullHref, partialHref, replaceState = false) {
+            if (!fullHref) return;
+            if (replaceState) {
+                if (History.replaceState) {
+                    History.replaceState({
+                        partialHref: partialHref
+                    }, document.title, fullHref);
+                }
+            }
+            else {
+                if (History.pushState) {
+                    History.pushState({
+                        partialHref: partialHref
+                    }, document.title, fullHref);
+                }
+            }
+        }
+        $(function () {
+            $(document).on('click', 'a.partial-href', function (e) {
+                var fullHref = $(this).attr('href');
+                var partialHref = $(this).data('partial-href');
+                renderPartial(fullHref, partialHref);
+                e.preventDefault();
+            });
+
+            History.Adapter.bind(window, 'statechange', function (evt) { // Note: We are using statechange instead of popstate
+                var State = History.getState(); // Note: We are using History.getState() instead of event.state
+
+                if (State) {
+                    var $body = $('#partial-body');
+                    var partialHref = State.data.partialHref;
+                    if (!partialHref) return;
+
+                    $body.empty();
+                    $body.removeClass().addClass('loading');
+                    $.get(partialHref, function (data) {
+                        $body.removeClass();
+                        $body.html(data);
+                    }).fail(function () {
+                        $body.addClass('error');
+                    });
+                }
+                else History.back();
+            });
+        });
+    </script>
 </body>
 </html>

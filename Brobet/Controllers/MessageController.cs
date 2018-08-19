@@ -24,6 +24,20 @@ namespace Brobet.Controllers
             return View(vm);
         }
 
+        public ActionResult IndexPartial()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+            var vmService = new MessageViewModelService();
+            var vm = vmService.GetMessageListViewModel();
+
+            ViewBag.ActiveTab = "message";
+            return PartialView("_IndexPartial", vm);
+        }
+
         public ActionResult Friendship(int id)
         {
             var accountServices = new AccountServices();
@@ -34,6 +48,18 @@ namespace Brobet.Controllers
             var vmService = new MessageViewModelService();
             var vm = vmService.GetFriendshipViewModel(id);
             return View(vm);
+        }
+
+        public ActionResult FriendshipPartial(int id)
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+            var vmService = new MessageViewModelService();
+            var vm = vmService.GetFriendshipViewModel(id);
+            return PartialView("_FriendshipPartial", vm);
         }
 
         public ActionResult MessagesPartial(int id)
