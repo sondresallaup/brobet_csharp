@@ -2,25 +2,34 @@
     <div class="content">
         <ul>
             <li class="@(ViewBag.ActiveTab == "home" ? "active" : "")">
-                <a href="/">
+                <a class="partial-href" href="/" data-partial-href="/Home/IndexPartial">
                     <i class="fas fa-home"></i>
                 </a>
             </li>
             <li class="@(ViewBag.ActiveTab == "message" ? "active" : "")">
-                <a href="/Message/">
+                <a class="partial-href" href="/Message/" data-partial-href="/Message/IndexPartial">
                     <i class="fas fa-paper-plane"></i>
                 </a>
             </li>
             <li class="@(ViewBag.ActiveTab == "bets" ? "active" : "")">
-                <a href="/Bet/List">
+                <a class="partial-href" href="/Bet/List" data-partial-href="/Bet/ListPartial">
                     <i class="fas fa-beer"></i>
                 </a>
             </li>
             <li class="@(ViewBag.ActiveTab == "profile" ? "active" : "")">
-                <a href="/Account/Me">
+                <a class="partial-href" href="/Account/Me" data-partial-href="/Account/MePartial">
                     <i class="fas fa-user"></i>
                 </a>
             </li>
         </ul>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('.tabbar .content li a').click(function () {
+            $('.tabbar .content li').removeClass('active');
+            $(this).parent('li').addClass('active');
+        });
+    });
+</script>
