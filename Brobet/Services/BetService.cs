@@ -183,7 +183,7 @@ namespace Brobet.Services
             var fixture = bet.Fixture;
             var messageContent = "Payed bet: " + fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
 
-            PushNotificationService.SendNotification(otherUser.username, messageContent, otherUser.userId);
+            PushNotificationService.SendNotification(accountService.GetCurrentUserName(), messageContent, otherUser.userId);
             return "SUCCESS";
         }
 
