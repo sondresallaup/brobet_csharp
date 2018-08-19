@@ -1,42 +1,9 @@
 ﻿@model Brobet.ViewModels.BetListViewModel
-
 @{
-    ViewBag.Title = "Bets";
 }
 
 @Html.Partial("_NavbarPartial")
-
-
-@if (Model.bets.Any())
-{
-    <div class="body-container">
-        <h1>Bets</h1>
-        <ul>
-            @foreach (var bet in Model.bets)
-            {
-                <li>
-                    <a href="/Bet/BetDetails/@bet.id">
-                        <b>With: </b> @bet.friendName <br />
-                        @bet.fixtureTitle <br />
-                        <b>Status: </b> @bet.status <br />
-                        <b>Has won: </b> @bet.hasWon
-                    </a><br /><br />
-                </li>
-            }
-        </ul>
-    </div>
-}
+<div id="partial-body">
+    @{Html.RenderAction("ListPartial"); }
+</div>
 @Html.Partial("_TabbarPartial")
-
-<script>
-    $(function () {
-        $('.accept-bet-request').click(function () {
-            var requestId = $(this).data('id');
-            $.post('/Bet/AcceptRequest/' + requestId, function (response) {
-                if (response.response === 'SUCCESS') {
-                    location.reload();
-                }
-            });
-        });
-    });
-</script>

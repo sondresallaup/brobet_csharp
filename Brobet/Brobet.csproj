@@ -350,20 +350,25 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Team.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\_IndexPartial.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
-    <Content Include="Views\Account\User.cshtml" />
-    <Content Include="Views\Bet\List.cshtml" />
+    <Content Include="Views\Account\_UserPartial.cshtml" />
+    <Content Include="Views\Bet\_ListPartial.cshtml" />
     <Content Include="Views\Account\Transactions.cshtml" />
     <Content Include="Views\Bet\BetRequest.cshtml" />
-    <Content Include="Views\Message\Index.cshtml" />
-    <Content Include="Views\Message\Friendship.cshtml" />
+    <Content Include="Views\Message\_IndexPartial.cshtml" />
+    <Content Include="Views\Message\_FriendshipPartial.cshtml" />
     <Content Include="Views\Message\_MessagesPartial.cshtml" />
     <Content Include="Views\Shared\_TabbarPartial.cshtml" />
     <Content Include="Views\Account\Avatar.cshtml" />
     <Content Include="Views\Fixture\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Bet\List.cshtml" />
+    <Content Include="Views\Account\User.cshtml" />
+    <Content Include="Views\Message\Friendship.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -402,7 +407,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53556</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/</IISUrl>
+          <IISUrl>http://localhost</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

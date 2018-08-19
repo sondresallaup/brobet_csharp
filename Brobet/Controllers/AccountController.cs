@@ -54,6 +54,21 @@ namespace Brobet.Controllers
             return View("User", vm);
         }
 
+        public ActionResult MePartial()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+            var vmService = new AccountViewModelService();
+            var vm = vmService.GetMeAccountViewModel();
+
+            ViewBag.ActiveTab = "profile";
+
+            return PartialView("_UserPartial", vm);
+        }
+
         public ActionResult Avatar()
         {
             var accountServices = new AccountServices();

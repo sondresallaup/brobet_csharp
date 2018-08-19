@@ -33,6 +33,22 @@ namespace Brobet.Controllers
             return View(model);
         }
 
+        public ActionResult IndexPartial(int daysFromNow = 0)
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var vmService = new FixtureViewModelService();
+            var model = vmService.GetIndexViewModel(daysFromNow);
+
+            ViewBag.ActiveTab = "home";
+
+            return PartialView("_IndexPartial", model);
+        }
+
         public ActionResult Team(int id)
         {
             var team = db.Teams.SingleOrDefault(t => t.id == id);
