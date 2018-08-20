@@ -18,6 +18,7 @@ namespace Brobet.ViewModelServices
                 userId = service.GetCurrentUserId(),
                 username = service.GetCurrentUserName(),
                 avatarUrl = service.GetAvatar(service.GetCurrentUserId()),
+                accountBalance = service.GetAccountBalance(),
                 friends = service.GetFriends().Select(fr => new AccountViewModel.Friend
                 {
                     userId = fr.userId,
@@ -48,6 +49,15 @@ namespace Brobet.ViewModelServices
                 userId = user.userId,
                 username = user.username,
                 avatarUrl = service.GetAvatar(userId)
+            };
+        }
+
+        public FillUpWalletViewModel GetFillUpWalletViewModel()
+        {
+            var service = new AccountServices();
+            return new FillUpWalletViewModel
+            {
+                userId = service.GetCurrentUserId()
             };
         }
 

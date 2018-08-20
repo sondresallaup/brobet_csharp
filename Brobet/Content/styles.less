@@ -23,7 +23,6 @@ body {
 
     .body-content {
         margin-top: 65px;
-        margin-bottom: 1000px;
     }
 
     &.tabbar-hidden {
@@ -34,6 +33,14 @@ body {
         .body-content {
             margin-bottom: 0;
         }
+    }
+
+    .stripe-button-el {
+        /*display: none;
+
+        &.shown {
+            display: block;
+        }*/
     }
 
     .navbar {
@@ -412,6 +419,24 @@ body {
                 margin-left: 20px;
             }
 
+            .money-container {
+                a {
+                    -webkit-appearance: none;
+                    margin-top: 14px;
+                    cursor: pointer;
+                    border: none;
+                    color: #fff;
+                    background-color: #3897f0;
+                    padding: 10px 10px;
+                    font-size: 14px;
+                    display: block;
+                    text-align: center;
+                    border-radius: 3px;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                }
+            }
+
             .friends-list {
                 h2 {
                 }
@@ -454,12 +479,18 @@ body {
 
 
     .create-bet-request {
+        margin-top: calc(~"env(safe-area-inset-top) + 70px");
+
         h1 {
             max-width: 400px;
             margin: 0 auto;
             margin-top: 30px;
             color: #999999;
             text-align: center;
+        }
+
+        .body-container {
+            margin-top: 20px;
         }
 
         .winner-is {
@@ -470,8 +501,9 @@ body {
             font-size: 25px;
 
             .pay-button {
+
                 &:before {
-                    content: "Mark as payed";
+                    content: "Pay";
                 }
 
                 font-size: 14px;
@@ -489,11 +521,19 @@ body {
                 font-weight: 600;
                 margin-bottom: 20px;
 
-                &.payed {
+                &.loading {
                     background-color: #999;
 
                     &:before {
-                        content: "Payed";
+                        content: "Paying...";
+                    }
+                }
+
+                &.paid {
+                    background-color: #999;
+
+                    &:before {
+                        content: "Paid";
                     }
                 }
             }

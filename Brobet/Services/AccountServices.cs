@@ -191,6 +191,19 @@ namespace Brobet.Services
             return user.Transactions.OrderByDescending(t => t.date).ToList();
         }
 
+        public void FillAccount(int amount)
+        {
+            var user = this.GetCurrentUser();
+            var transaction = new Transaction
+            {
+                amount = amount,
+                date = DateTime.Now,
+                description = "Credit card"
+            };
+            user.Transactions.Add(transaction);
+            db.SaveChanges();
+        }
+
         public decimal GetAccountBalance()
         {
             var transactions = this.GetTransactions();

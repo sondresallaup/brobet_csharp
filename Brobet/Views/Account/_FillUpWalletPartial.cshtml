@@ -1,0 +1,30 @@
+﻿@model Brobet.ViewModels.FillUpWalletViewModel
+
+@{
+    ViewBag.Title = "Fill up wallet";
+}
+
+<div class="navbar">
+    <div class="content">
+        <span class="logo back">
+            <a class="partial-href" href="/Message" data-partial-href="/Message/IndexPartial"><i class="fas fa-chevron-left"></i></a>
+        </span>
+        <span class="title">
+            Fill up wallet
+        </span>
+    </div>
+</div>
+<div class="body-container">
+    <form action="/Account/Charge" method="POST">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_test_zk3xH5MbHQ3sXQxoMdXPOqKT"
+                data-amount="10000"
+                data-name="Brobet"
+                data-description="Fill up wallet"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-currency="nok">
+        </script>
+    </form>
+
+</div>

@@ -115,10 +115,10 @@ namespace Brobet.Controllers
         }
 
         [HttpPost]
-        public ActionResult MarkAsPayed(int id)
+        public ActionResult Pay(int id)
         {
             var betService = new BetService();
-            var result = betService.MarkAsPayed(id);
+            var result = betService.Pay(id);
             return Json(new
             {
                 response = result

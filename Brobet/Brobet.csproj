@@ -62,8 +62,15 @@
     <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.0.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net, Version=17.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stripe.net.17.9.0\lib\net45\Stripe.net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
@@ -273,6 +280,7 @@
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BetListViewModel.cs" />
     <Compile Include="ViewModels\BetRequestViewModel.cs" />
+    <Compile Include="ViewModels\FillUpWalletViewModel.cs" />
     <Compile Include="ViewModels\FixtureViewModel.cs" />
     <Compile Include="ViewModels\FriendshipViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
@@ -356,7 +364,7 @@
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
     <Content Include="Views\Account\_UserPartial.cshtml" />
     <Content Include="Views\Bet\_ListPartial.cshtml" />
-    <Content Include="Views\Account\Transactions.cshtml" />
+    <Content Include="Views\Account\_TransactionsPartial.cshtml" />
     <Content Include="Views\Bet\BetRequest.cshtml" />
     <Content Include="Views\Message\_IndexPartial.cshtml" />
     <Content Include="Views\Message\_FriendshipPartial.cshtml" />
@@ -369,6 +377,9 @@
     <Content Include="Views\Bet\List.cshtml" />
     <Content Include="Views\Account\User.cshtml" />
     <Content Include="Views\Message\Friendship.cshtml" />
+    <Content Include="Views\Account\FillUpWallet.cshtml" />
+    <Content Include="Views\Account\_FillUpWalletPartial.cshtml" />
+    <Content Include="Views\Account\Transactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -407,7 +418,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53556</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost</IISUrl>
+          <IISUrl>http://localhost/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

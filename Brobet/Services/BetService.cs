@@ -165,23 +165,62 @@ namespace Brobet.Services
             return "SUCCESS";
         }
 
-        public string MarkAsPayed(int betId)
+        public string Pay(int betId)
         {
             var accountService = new AccountServices();
             var currentUserId = accountService.GetCurrentUserId();
 
             var bet = db.Bets.SingleOrDefault(b => b.id == betId);
 
+            if(bet.payed.HasValue && bet.payed.Value)
+            {
+                return "BET_ALREADY_PAID";
+            }
 
             if (bet.toUserId != currentUserId && bet.fromUserId != currentUserId)
             {
                 return "UNAUTHORIZED";
             }
-            var otherUser = (bet.fromUserId == currentUserId) ? bet.ToUser : bet.FromUser;
+            var amount = 0;
+            var isFromUser = bet.fromUserId == currentUserId;
+            var otherUser = bet.FromUser;
+            if(isFromUser)
+            {
+                amount = bet.fromAmount;
+                otherUser = bet.ToUser;
+            }
+            else
+            {
+                amount = bet.toAmount;
+            }
+            if(amount > accountService.GetAccountBalance())
+            {
+                return "NOT_ENOUGH_MONEY";
+            }
+
+            var currentUserTransaction = new Transaction
+            {
+                amount = (amount * -1),
+                description = "Bet lost",
+                betId = bet.id,
+                userId = accountService.GetCurrentUserId(),
+                date = DateTime.Now
+            };
+            db.Transactions.Add(currentUserTransaction);
+            db.SaveChanges();
+
+            var otherUserTransaction = new Transaction
+            {
+                amount = amount,
+                description = "Bet won",
+                betId = bet.id,
+                date = DateTime.Now
+            };
+            otherUser.Transactions.Add(otherUserTransaction);
             bet.payed = true;
             db.SaveChanges();
             var fixture = bet.Fixture;
-            var messageContent = "Payed bet: " + fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
+            var messageContent = "Paid bet: " + fixture.LocalTeam.name + " vs " + fixture.VisitorTeam.name;
 
             PushNotificationService.SendNotification(accountService.GetCurrentUserName(), messageContent, otherUser.userId);
             return "SUCCESS";

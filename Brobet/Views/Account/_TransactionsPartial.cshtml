@@ -1,0 +1,22 @@
+﻿@model Brobet.ViewModels.AccountViewModel
+
+@{
+    ViewBag.Title = "Transactions";
+}
+
+<div class="body-container">
+    <span class="balance">Your balance: @Model.accountBalance</span>
+    <div class="transactions">
+        <h1>Transactions</h1>
+        <ul>
+            @foreach(var transaction in Model.transactions)
+            {
+            <li>
+                <b>Date:</b> @transaction.dateString <br />
+                <b>Amount:</b> @transaction.amount <br />
+                <b>Description:</b> @transaction.description
+            </li>
+            }
+        </ul>
+    </div>
+</div>

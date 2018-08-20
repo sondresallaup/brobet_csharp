@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using WebMatrix.WebData;
+using Stripe;
 
 namespace Brobet
 {
@@ -22,6 +23,7 @@ namespace Brobet
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             JobScheduler.Start();
 
+            StripeConfiguration.SetApiKey("sk_test_QAgVMc8HdTAaXaStuHfS3dEW");
 
             string connectionString = "DefaultConnection";
             string userTableName = "Users";

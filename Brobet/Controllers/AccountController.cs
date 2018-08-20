@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Stripe;
 
 namespace Brobet.Controllers
 {
@@ -69,6 +70,36 @@ namespace Brobet.Controllers
             return PartialView("_UserPartial", vm);
         }
 
+        public ActionResult FillUpWallet()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+            var vmService = new AccountViewModelService();
+            var vm = vmService.GetFillUpWalletViewModel();
+
+            ViewBag.ActiveTab = "profile";
+
+            return View(vm);
+        }
+
+        public ActionResult FillUpWalletPartial()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+            var vmService = new AccountViewModelService();
+            var vm = vmService.GetFillUpWalletViewModel();
+
+            ViewBag.ActiveTab = "profile";
+
+            return PartialView("_FillUpWalletPartial", vm);
+        }
+
         public ActionResult Avatar()
         {
             var accountServices = new AccountServices();
@@ -108,6 +139,19 @@ namespace Brobet.Controllers
             return View(vm);
         }
 
+        public ActionResult TransactionsPartial()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+            var vmService = new AccountViewModelService();
+            var vm = vmService.GetTransactionsViewModel();
+
+            return PartialView("_TransactionsPartial", vm);
+        }
+
         [HttpPost]
         public ActionResult Register(string username, string password)
         {
@@ -128,6 +172,30 @@ namespace Brobet.Controllers
                 userId = accountServices.GetUserId(username),
                 token = getToken()
             });
+        }
+
+        public ActionResult Charge(string stripeEmail, string stripeToken)
+        {
+            var accountServices = new AccountServices();
+            var customers = new StripeCustomerService();
+            var charges = new StripeChargeService();
+
+            var customer = customers.Create(new StripeCustomerCreateOptions
+            {
+                Email = stripeEmail,
+                SourceToken = stripeToken
+            });
+
+            var charge = charges.Create(new StripeChargeCreateOptions
+            {
+                Amount = 10000,
+                Description = "Fill up wallet",
+                Currency = "nok",
+                CustomerId = customer.Id
+            });
+            accountServices.FillAccount(100);
+
+            return Redirect("/Account/Me");
         }
 
         [HttpPost]
