@@ -48,7 +48,7 @@
         });
 
         function updateMessages() {
-            $.get('/Message/MessagesPartial/@Model.id', function (result) {
+            $.get('/Message/MessagesPartial/@Model.id?_=' + new Date().getTime(), function (result) {
                 $('#messages-partial').html(result);
                 //scrollToBottom();
             });

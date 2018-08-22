@@ -17,6 +17,11 @@
 
         @if (Model.isMe)
         {
+            <div class="money-container">
+                <p>You have NOK @Model.accountBalance in your Brobet wallet</p>
+                <a href="/Account/FillUpWallet">Fill it up</a>
+            </div>
+
             <div class="friends-list">
                 <form id="friend-request-form">
                     <input type="text" placeholder="Add bro by username" class="request-username" name="username" />

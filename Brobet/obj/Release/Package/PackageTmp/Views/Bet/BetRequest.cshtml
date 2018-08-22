@@ -64,7 +64,6 @@
                 You won<br />
                 @Model.friend.username owes you @Model.oweAmount kr
             </div>
-            <a class="pay-button @(Model.isPayed ? "payed" : "")" href="javascript:void(0);"></a>
         }
         else if (Model.winner == "OTHER_USER")
         {
@@ -72,6 +71,7 @@
                 You lost<br />
                 You owe @Model.friend.username @Model.oweAmount kr
             </div>
+            <a class="pay-button @(Model.isPayed ? "paid" : "")" href="javascript:void(0);"></a>
 
         }
         else if (Model.winner == "NO_ONE")
@@ -97,9 +97,9 @@
                 </label>
                 <input @(!Model.initial ? "disabled" : "") type="tel" placeholder="Amount" class="amount" name="from-amount" value="@Model.fromAmount" />
                 <div class="bet-buttons">
-                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "h" ? "winner" : "")" data-value="h">H</a>
+                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "h" ? "winner" : "")" data-value="h">1</a>
                     <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "x" ? "winner" : "")" data-value="x">X</a>
-                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "a" ? "winner" : "")" data-value="a">A</a>
+                    <a class="bet-button from @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "a" ? "winner" : "")" data-value="a">2</a>
                 </div>
             </div>
             <div class="bet-container to">
@@ -115,9 +115,9 @@
                 </label>
                 <input @(!Model.initial ? "disabled" : "") type="tel" placeholder="Amount" class="amount" name="from-amount" value="@Model.toAmount" />
                 <div class="bet-buttons">
-                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "h" ? "winner" : "")" data-value="h">H</a>
+                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "h" ? "winner" : "")" data-value="h">1</a>
                     <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "x" ? "winner" : "")" data-value="x">X</a>
-                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "a" ? "winner" : "")" data-value="a">A</a>
+                    <a class="bet-button to @(!Model.initial ? "disabled" : "") @(Model.winningBetObject == "a" ? "winner" : "")" data-value="a">2</a>
                 </div>
             </div>
         </div>
@@ -267,13 +267,18 @@
         });
 
         $('.pay-button').click(function () {
-            if ($(this).hasClass('payed')) return;
+            var $this = $(this);
+            if ($(this).hasClass('paid')) return;
             var data = {
                 id: @Model.betId
             };
-            $(this).addClass('payed');
-            $.post('/Bet/MarkAsPayed/', data, function (response) {
+            $(this).addClass('loading');
+            $.post('/Bet/Pay/', data, function (response) {
                 if (response.response === 'SUCCESS') {
+                    $this.addClass('paid');
+                }
+                else {
+                    $this.html(response.response);
                 }
             });
         });
