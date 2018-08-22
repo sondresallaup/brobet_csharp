@@ -30,7 +30,7 @@ namespace Brobet.Jobs
             .WithIdentity("todaysFixturesTrigger", "group2")
             .StartNow()
             .WithSimpleSchedule(x => x
-            .WithIntervalInSeconds(60)
+            .WithIntervalInSeconds(600)
             .RepeatForever())
             .Build();
             scheduler.ScheduleJob(todaysFixturesJob, todaysFixturesTrigger);

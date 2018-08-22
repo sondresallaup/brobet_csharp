@@ -9,6 +9,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using WebMatrix.WebData;
 using Stripe;
+using Brobet.Services;
 
 namespace Brobet
 {
@@ -30,6 +31,8 @@ namespace Brobet
             string userIdColumn = "userId";
             string usernameColumn = "username";
             WebSecurity.InitializeDatabaseConnection(connectionString, userTableName, userIdColumn, usernameColumn, true);
+
+            var sportsApiService = new SportsApiService();
         }
     }
 }
