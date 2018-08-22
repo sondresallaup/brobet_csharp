@@ -26,7 +26,7 @@ namespace Brobet.Services
             // fixtures/between/2018-08-11/2018-08-13?api_token=__TOKEN__&include=events
             // CL = 2, EL = 5, PL = 8, Eliteserien = 444
             string URL = baseUrl + "fixtures/between/" + fromDate + "/" + toDate;
-            string urlParameters = sportmonksApiToken + "&include=events&leagues=2,5,8,444";
+            string urlParameters = sportmonksApiToken + "&include=events&leagues=2,5,8,444,12,24,82,301384,564";
 
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(URL);
@@ -75,6 +75,7 @@ namespace Brobet.Services
                     fixture.time = new JavaScriptSerializer().Serialize(apiFixture.time);
                     fixture.standings = new JavaScriptSerializer().Serialize(apiFixture.standings);
                     fixture.events = new JavaScriptSerializer().Serialize(apiFixture.events);
+                    fixture.status = apiFixture.time.status;
 
                     var homeScore = apiFixture.scores.localteam_score;
                     var awayScore = apiFixture.scores.visitorteam_score;
@@ -222,6 +223,7 @@ namespace Brobet.Services
                     fixture.scores = new JavaScriptSerializer().Serialize(apiFixture.scores);
                     fixture.time = new JavaScriptSerializer().Serialize(apiFixture.time);
                     fixture.standings = new JavaScriptSerializer().Serialize(apiFixture.standings);
+                    fixture.status = apiFixture.time.status;
 
                     var homeScore = apiFixture.scores.localteam_score;
                     var awayScore = apiFixture.scores.visitorteam_score;
