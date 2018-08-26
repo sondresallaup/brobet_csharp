@@ -10,46 +10,52 @@
         <a class="next" href="javascript:void(0);"><i class="fas fa-arrow-right"></i></a>
     </div>
     @{
-        foreach (var fixtureD in Model.fixtures)
+        foreach (var seasonD in Model.fixtures)
         {
-            var fixture = fixtureD.Value;
-            <div class="fixture status-@fixture.status" data-fixture-id="@fixture.id" data-status="@fixture.status">
-                <table>
-                    <tr class="local-team">
-                        <td class="score">
-                            <span class="score-span">
-                                @fixture.localTeamScore
-                            </span>
-                        </td>
-                        <td class="logo">
-                            <img src="@fixture.localTeamLogo" />
-                        </td>
-                        <td class="name">
-                            @fixture.localTeamName
-                        </td>
-                        <td rowspan="2" class="time">
-                            <span class="min">@fixture.minute'</span>
-                            <span class="status">@fixture.status</span>
-                            <span class="scheduled"></span>
-                        </td>
-                    </tr>
-                    <tr class="visitor-team">
-                        <td class="score">
-                            <span class="score-span">
-                                @fixture.visitorTeamScore
-                            </span>
-                        </td>
-                        <td class="logo">
-                            <img src="@fixture.visitorTeamLogo" />
-                        </td>
-                        <td class="name">
-                            @fixture.visitorTeamName
-                        </td>
-                    </tr>
-                </table>
+            var season = seasonD.Key;
+            <div class="season-name">
+                @Model.seasonNameFromId(season)
             </div>
+            foreach (var fixture in seasonD.Value)
+            {
+                <div class="fixture status-@fixture.status" data-fixture-id="@fixture.id" data-status="@fixture.status">
+                    <table>
+                        <tr class="local-team">
+                            <td class="score">
+                                <span class="score-span">
+                                    @fixture.localTeamScore
+                                </span>
+                            </td>
+                            <td class="logo">
+                                <img src="@fixture.localTeamLogo" />
+                            </td>
+                            <td class="name">
+                                @fixture.localTeamName
+                            </td>
+                            <td rowspan="2" class="time">
+                                <span class="min">@fixture.minute'</span>
+                                <span class="status">@fixture.status</span>
+                                <span class="scheduled"></span>
+                            </td>
+                        </tr>
+                        <tr class="visitor-team">
+                            <td class="score">
+                                <span class="score-span">
+                                    @fixture.visitorTeamScore
+                                </span>
+                            </td>
+                            <td class="logo">
+                                <img src="@fixture.visitorTeamLogo" />
+                            </td>
+                            <td class="name">
+                                @fixture.visitorTeamName
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            }
         }
-        if(Model.fixtures.Count == 0)
+        if (Model.fixtures.Count == 0)
         {
             <div class="no-fixtures">
                 No fixtures this day.
