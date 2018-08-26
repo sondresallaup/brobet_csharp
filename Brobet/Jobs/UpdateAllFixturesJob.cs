@@ -19,8 +19,7 @@ namespace Brobet.Jobs
             apiservice.UpdateAllFixtures(12945); // Europa League
             apiservice.UpdateAllFixtures(13136); // FA Cup
             apiservice.UpdateAllFixtures(13005); // Bundesliga
-            apiservice.UpdateAllFixtures(12935); // Leage 1
-            apiservice.UpdateAllFixtures(13136); // FA Cup
+            apiservice.UpdateAllFixtures(12935); // League 1
             apiservice.UpdateAllFixtures(13158); // Serie A
             apiservice.UpdateAllFixtures(13133); // La Liga
         }
