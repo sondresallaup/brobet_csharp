@@ -145,24 +145,24 @@ namespace Brobet.Services
                         }
                     }
 
-                    // Return money for unaccepted bet requests
-                    if (fixture.status != "LIVE" && apiFixture.time.status == "LIVE")
-                    {
-                        foreach (var request in fixture.BetRequests.Where(br => !br.accepted))
-                        {
-                            var requestTransaction = request.Transactions.SingleOrDefault();
-                            requestTransaction.description = "Bet request not accpeted. Money is returned";
-                            var returnTransaction = new Transaction
-                            {
-                                userId = requestTransaction.userId,
-                                amount = (requestTransaction.amount * -1),
-                                date = DateTime.Now,
-                                betRequestId = requestTransaction.betRequestId,
-                                description = "Returned money ref. transaction id: " + requestTransaction.id
-                            };
-                            db.Transactions.Add(returnTransaction);
-                        }
-                    }
+                    //// Return money for unaccepted bet requests
+                    //if (fixture.status != "LIVE" && apiFixture.time.status == "LIVE")
+                    //{
+                    //    foreach (var request in fixture.BetRequests.Where(br => !br.accepted))
+                    //    {
+                    //        var requestTransaction = request.Transactions.SingleOrDefault();
+                    //        requestTransaction.description = "Bet request not accpeted. Money is returned";
+                    //        var returnTransaction = new Transaction
+                    //        {
+                    //            userId = requestTransaction.userId,
+                    //            amount = (requestTransaction.amount * -1),
+                    //            date = DateTime.Now,
+                    //            betRequestId = requestTransaction.betRequestId,
+                    //            description = "Returned money ref. transaction id: " + requestTransaction.id
+                    //        };
+                    //        db.Transactions.Add(returnTransaction);
+                    //    }
+                    //}
                     fixture.status = apiFixture.time.status;
 
                 }
@@ -223,6 +223,7 @@ namespace Brobet.Services
                     fixture.scores = new JavaScriptSerializer().Serialize(apiFixture.scores);
                     fixture.time = new JavaScriptSerializer().Serialize(apiFixture.time);
                     fixture.standings = new JavaScriptSerializer().Serialize(apiFixture.standings);
+                    fixture.status = apiFixture.time.status;
                 }
                 db.SaveChanges();
 
