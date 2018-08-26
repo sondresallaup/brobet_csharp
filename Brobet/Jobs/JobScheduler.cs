@@ -13,7 +13,6 @@ namespace Brobet.Jobs
         public static void Start()
         {
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
-            scheduler.Shutdown();
             scheduler.Start();
 
             IJobDetail allFixturesJob = JobBuilder.Create<UpdateAllFixturesJob>().Build();
