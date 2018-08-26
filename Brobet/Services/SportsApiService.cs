@@ -26,7 +26,7 @@ namespace Brobet.Services
             // fixtures/between/2018-08-11/2018-08-13?api_token=__TOKEN__&include=events
             // CL = 2, EL = 5, PL = 8, Eliteserien = 444
             string URL = baseUrl + "fixtures/between/" + fromDate + "/" + toDate;
-            string urlParameters = sportmonksApiToken + "&include=leagues=2,5,8,444,12,24,82,301384,564";
+            string urlParameters = sportmonksApiToken + "&leagues=2,5,8,444,12,24,82,301384,564";
             //string urlParameters = sportmonksApiToken + "&include=events&leagues=2,5,8,444,12,24,82,301384,564";
 
             HttpClient client = new HttpClient();
