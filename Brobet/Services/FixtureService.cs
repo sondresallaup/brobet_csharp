@@ -13,10 +13,10 @@ namespace Brobet.Services
 
         public FixtureService() { }
 
-        public Dictionary<int, FixtureViewModel> GetFixtures(int daysFromNow = 0)
+        public Dictionary<int, List<FixtureViewModel>> GetFixtures(int daysFromNow = 0)
         {
             var date = DateTime.Today.AddDays(daysFromNow);
-            var fixtures = db.Fixtures.Where(f => f.date == date).OrderBy(f => f.startingAt).ToDictionary(f => f.id, f => new FixtureViewModel(f));
+            var fixtures = db.Fixtures.Where(f => f.date == date).OrderBy(f => f.startingAt).GroupBy(f => f.seasonId).ToDictionary(f => f.Key.Value, f => f.Select(fa => new FixtureViewModel(fa)).ToList());
             return fixtures;
         }
 
