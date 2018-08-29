@@ -69,6 +69,10 @@ namespace Brobet.Services
                 Fixture = b.Fixture,
                 Friend = b.ToUser,
                 date = b.date,
+                isFromCurrentUser = true,
+                CurrentUserBetObjects = b.FromBetObjects.ToList(),
+                FromBetObjects = b.FromBetObjects.ToList(),
+                ToBetObjects = b.ToBetObjects.ToList(),
                 //bet = b.initiatorBet,
                 hasWon = b.winnerId != null ? b.winnerId == currentUser.userId : false
             }).ToList();
@@ -83,6 +87,10 @@ namespace Brobet.Services
                 Fixture = b.Fixture,
                 Friend = b.FromUser,
                 date = b.date,
+                isFromCurrentUser = false,
+                CurrentUserBetObjects = b.ToBetObjects.ToList(),
+                FromBetObjects = b.FromBetObjects.ToList(),
+                ToBetObjects = b.ToBetObjects.ToList(),
                 //bet = this.OppositeBet(b.initiatorBet),
                 hasWon = b.winnerId != null ? b.winnerId == currentUser.userId : false
             }).ToList();
@@ -106,7 +114,11 @@ namespace Brobet.Services
             public User FromUser { get; set; }
             public User ToUser { get; set; }
             public User Winner { get; set; }
+            public List<BetObject> CurrentUserBetObjects { get; set; }
+            public List<BetObject> FromBetObjects { get; set; }
+            public List<BetObject> ToBetObjects { get; set; }
             public bool hasWon { get; set; }
+            public bool isFromCurrentUser { get; set; }
             public List<BetObject> fromBetObjects { get; set; }
             public List<BetObject> toBetObjects { get; set; }
         }

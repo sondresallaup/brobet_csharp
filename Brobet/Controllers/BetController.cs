@@ -10,6 +10,33 @@ namespace Brobet.Controllers
 {
     public class BetController : Controller
     {
+        public ActionResult Index()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var vms = new BetViewModelService();
+            var vm = vms.GetBetOverviewViewModel();
+            
+            return View(vm);
+        }
+
+        public ActionResult IndexPartial()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Redirect("/Account/Login");
+            }
+
+            var vms = new BetViewModelService();
+            var vm = vms.GetBetOverviewViewModel();
+            
+            return PartialView("_IndexPartial", vm);
+        }
         public ActionResult List()
         {
             var accountServices = new AccountServices();

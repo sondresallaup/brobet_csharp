@@ -279,6 +279,7 @@
     <Compile Include="ViewModelServices\MessageViewModelService.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\BetListViewModel.cs" />
+    <Compile Include="ViewModels\BetOverviewViewModel.cs" />
     <Compile Include="ViewModels\BetRequestViewModel.cs" />
     <Compile Include="ViewModels\FillUpWalletViewModel.cs" />
     <Compile Include="ViewModels\FixtureViewModel.cs" />
@@ -380,6 +381,8 @@
     <Content Include="Views\Account\FillUpWallet.cshtml" />
     <Content Include="Views\Account\_FillUpWalletPartial.cshtml" />
     <Content Include="Views\Account\Transactions.cshtml" />
+    <Content Include="Views\Bet\Index.cshtml" />
+    <Content Include="Views\Bet\_IndexPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

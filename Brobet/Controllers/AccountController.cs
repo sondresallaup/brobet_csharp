@@ -16,7 +16,7 @@ namespace Brobet.Controllers
             var accountServices = new AccountServices();
             if(accountServices.isLoggedIn())
             {
-                return Redirect("/");
+                return Redirect("/Bet/");
             }
 
             return View();
@@ -27,7 +27,7 @@ namespace Brobet.Controllers
             var accountServices = new AccountServices();
             if (accountServices.isLoggedIn())
             {
-                return Redirect("/");
+                return Redirect("/Bet/");
             }
 
             return View();
@@ -37,7 +37,7 @@ namespace Brobet.Controllers
         {
             var accountServices = new AccountServices();
             accountServices.Logout();
-            return Redirect("/");
+            return Redirect("/Bet/");
         }
 
         public ActionResult Me()
