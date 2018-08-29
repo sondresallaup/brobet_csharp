@@ -30,7 +30,8 @@ namespace Brobet.Controllers
 
             ViewBag.ActiveTab = "home";
 
-            return View(model);
+            return Redirect("/Bet/");
+            //return View(model);
         }
 
         public ActionResult IndexPartial(int daysFromNow = 0)

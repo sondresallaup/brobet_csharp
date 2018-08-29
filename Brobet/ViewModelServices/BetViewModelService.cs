@@ -14,6 +14,92 @@ namespace Brobet.ViewModelServices
 
         }
 
+        public BetOverviewViewModel GetBetOverviewViewModel()
+        {
+            var vm = new BetOverviewViewModel();
+            var service = new BetService();
+            vm.activeBets = service.GetBets().Where(b => b.Fixture.status != "FT").Select(b => new BetOverviewViewModel.Bet
+            {
+                id = b.id,
+                isFromCurrentUser = b.isFromCurrentUser,
+                currentUserBetObjects = b.CurrentUserBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                friend = new BetOverviewViewModel.Friend
+                {
+                    id = b.Friend.userId,
+                    username = b.Friend.username
+                },
+                fixture = new BetOverviewViewModel.Fixture
+                {
+                    name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
+                }
+            }).ToList();
+            vm.previousBets = service.GetBets().Where(b => b.Fixture.status == "FT").Select(b => new BetOverviewViewModel.Bet
+            {
+                id = b.id,
+                isFromCurrentUser = b.isFromCurrentUser,
+                currentUserBetObjects = b.CurrentUserBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                friend = new BetOverviewViewModel.Friend
+                {
+                    id = b.Friend.userId,
+                    username = b.Friend.username,
+                    avatar = b.Friend.avatarUrl
+                },
+                fixture = new BetOverviewViewModel.Fixture
+                {
+                    name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
+                }
+            }).ToList();
+            vm.sentBetRequests = service.GetSentBetRequests().Where(b => !b.accepted).Select(b => new BetOverviewViewModel.Bet
+            {
+                id = b.id,
+                isFromCurrentUser = true,
+                currentUserBetObjects = b.FromBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                friend = new BetOverviewViewModel.Friend
+                {
+                    id = b.ToUser.userId,
+                    username = b.ToUser.username,
+                    avatar = b.ToUser.avatarUrl
+                },
+                fixture = new BetOverviewViewModel.Fixture
+                {
+                    name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
+                }
+            }).ToList();
+            vm.receivedBetRequests = service.GetReceivedBetRequests().Where(b => !b.accepted).Select(b => new BetOverviewViewModel.Bet
+            {
+                id = b.id,
+                isFromCurrentUser = false,
+                currentUserBetObjects = b.ToBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                friend = new BetOverviewViewModel.Friend
+                {
+                    id = b.FromUser.userId,
+                    username = b.FromUser.username,
+                    avatar = b.FromUser.avatarUrl
+                },
+                fixture = new BetOverviewViewModel.Fixture
+                {
+                    name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
+                }
+            }).ToList();
+            return vm;
+        }
+
         public BetRequestViewModel GetCreateBetRequestViewModel(int fixtureId)
         {
             var vm = new BetRequestViewModel();
