@@ -1,0 +1,143 @@
+﻿@model Brobet.ViewModels.BetOverviewViewModel
+@{
+}
+<div class="body-container">
+    <div class="new-bet-container">
+        <a class="new-bet-button button" href="javascript:void(0);">
+            Create new bet
+        </a>
+    </div>
+
+    @if (Model.receivedBetRequests.Any())
+    {
+        <div class="bet-list received">
+            <h3>Received bet requests</h3>
+            @foreach (var bet in Model.receivedBetRequests)
+            {
+                <div class="bet" data-id="@bet.id">
+                    <div class="friend">
+                        <div class="name">
+                            @bet.friend.username
+                        </div>
+                    </div>
+                    <div class="fixture">
+                        <div class="name">
+                            @bet.fixture.name
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.sentBetRequests.Any())
+    {
+        <div class="bet-list sent">
+            <h3>Sent bet requests</h3>
+            @foreach (var bet in Model.sentBetRequests)
+            {
+                <div class="bet" data-id="@bet.id">
+                    <div class="friend">
+                        <div class="name">
+                            @bet.friend.username
+                        </div>
+                    </div>
+                    <div class="fixture">
+                        <div class="name">
+                            @bet.fixture.name
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.activeBets.Any())
+    {
+        <div class="bet-list active">
+            <h3>Active bets</h3>
+            @foreach (var bet in Model.activeBets)
+            {
+                <div class="bet" data-id="@bet.id">
+                    <div class="friend">
+                        <div class="name">
+                            @bet.friend.username
+                        </div>
+                    </div>
+                    <div class="fixture">
+                        <div class="name">
+                            @bet.fixture.name
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.previousBets.Any())
+    {
+        <div class="bet-list previous">
+            <h3>Previous bets</h3>
+            @foreach (var bet in Model.previousBets)
+            {
+                <div class="bet" data-id="@bet.id">
+                    <div class="friend">
+                        <div class="name">
+                            @bet.friend.username
+                        </div>
+                    </div>
+                    <div class="fixture">
+                        <div class="name">
+                            @bet.fixture.name
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<div class="new-bet-modal">
+    <div class="head">
+        <a class="close-button" href="javascript:void(0);">
+            Cancel
+        </a>
+        <div class="title">
+            Create new bet
+        </div>
+    </div>
+    <div class="modal-body">
+        <p>Loading...</p>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var $modal = $('.new-bet-modal');
+
+        $('.bet-list.received .bet').click(function () {
+            var id = $(this).data('id');
+            location.href = '/Bet/ReceivedBetRequest/' + id;
+        });
+        $('.bet-list.sent .bet').click(function () {
+            var id = $(this).data('id');
+            location.href = '/Bet/SentBetRequest/' + id;
+        });
+        $('.bet-list.active .bet').click(function () {
+            var id = $(this).data('id');
+            location.href = '/Bet/BetDetails/' + id;
+        });
+        $('.bet-list.previous .bet').click(function () {
+            var id = $(this).data('id');
+            location.href = '/Bet/BetDetails/' + id;
+        });
+
+        $('.new-bet-button.button').click(function () {
+            $modal.show();
+            $.get('/Home/IndexPartial', function (data) {
+                $modal.find('.modal-body').html(data);
+            });
+        })
+
+        $modal.find('.close-button').click(function () {
+            $modal.hide();
+        });
+    });
+</script>
