@@ -125,7 +125,9 @@
             else {
                 daysFromNow--;
             }
-            location.href = '/?daysFromNow=' + daysFromNow;
+            $.get('/Home/IndexPartial?daysFromNow=' + daysFromNow, function (data) {
+                $('.new-bet-modal').find('.modal-body').html(data);
+            });
         })
 
         $('.fixture').click(function () {

@@ -1,6 +1,9 @@
 ﻿@model Brobet.ViewModels.BetOverviewViewModel
 @{
 }
+
+<div class="refresh-text">Click brobet to refresh ;-)</div>
+
 <div class="body-container">
     <div class="new-bet-container">
         <a class="new-bet-button button" href="javascript:void(0);">
@@ -88,6 +91,19 @@
                             @bet.fixture.name
                         </div>
                     </div>
+                    <div class="status">
+                        @if (bet.winner == Model.currentUser)
+                        {
+                            <span class="won">won</span>
+                        }
+                        else if (bet.winner == null)
+                        {
+                        }
+                        else
+                        {
+                            <span class="lost">lost</span>
+                        }
+                    </div>
                 </div>
             }
         </div>
@@ -130,7 +146,7 @@
         });
 
         $('.new-bet-button.button').click(function () {
-            $modal.show();
+            $modal.addClass('shown');
             $('body').addClass('modal-open');
             $.get('/Home/IndexPartial', function (data) {
                 $modal.find('.modal-body').html(data);
@@ -138,7 +154,7 @@
         })
 
         $modal.find('.close-button').click(function () {
-            $modal.hide();
+            $modal.removeClass('shown');
             $('body').removeClass('modal-open');
         });
     });

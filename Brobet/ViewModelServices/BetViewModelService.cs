@@ -18,7 +18,7 @@ namespace Brobet.ViewModelServices
         {
             var vm = new BetOverviewViewModel();
             var service = new BetService();
-            vm.activeBets = service.GetBets().Where(b => b.Fixture.status != "FT").Select(b => new BetOverviewViewModel.Bet
+            vm.activeBets = service.GetBets().Where(b => b.Fixture.status != "FT").OrderByDescending(b => b.date).Select(b => new BetOverviewViewModel.Bet
             {
                 id = b.id,
                 isFromCurrentUser = b.isFromCurrentUser,
@@ -37,10 +37,11 @@ namespace Brobet.ViewModelServices
                     name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
                 }
             }).ToList();
-            vm.previousBets = service.GetBets().Where(b => b.Fixture.status == "FT").Select(b => new BetOverviewViewModel.Bet
+            vm.previousBets = service.GetBets().Where(b => b.Fixture.status == "FT").OrderByDescending(b => b.date).Select(b => new BetOverviewViewModel.Bet
             {
                 id = b.id,
                 isFromCurrentUser = b.isFromCurrentUser,
+                winner = b.Winner,
                 currentUserBetObjects = b.CurrentUserBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
                 {
                     type = cbo.betTypeId,
@@ -57,7 +58,7 @@ namespace Brobet.ViewModelServices
                     name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
                 }
             }).ToList();
-            vm.sentBetRequests = service.GetSentBetRequests().Where(b => !b.accepted).Select(b => new BetOverviewViewModel.Bet
+            vm.sentBetRequests = service.GetSentBetRequests().Where(b => !b.accepted && b.Fixture.status != "FT").OrderByDescending(b => b.date).Select(b => new BetOverviewViewModel.Bet
             {
                 id = b.id,
                 isFromCurrentUser = true,
@@ -77,7 +78,7 @@ namespace Brobet.ViewModelServices
                     name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
                 }
             }).ToList();
-            vm.receivedBetRequests = service.GetReceivedBetRequests().Where(b => !b.accepted).Select(b => new BetOverviewViewModel.Bet
+            vm.receivedBetRequests = service.GetReceivedBetRequests().Where(b => !b.accepted && b.Fixture.status != "FT").OrderByDescending(b => b.date).Select(b => new BetOverviewViewModel.Bet
             {
                 id = b.id,
                 isFromCurrentUser = false,
