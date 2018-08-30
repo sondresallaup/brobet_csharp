@@ -70,6 +70,7 @@ namespace Brobet.Services
                 Friend = b.ToUser,
                 date = b.date,
                 isFromCurrentUser = true,
+                Winner = b.Winner,
                 CurrentUserBetObjects = b.FromBetObjects.ToList(),
                 FromBetObjects = b.FromBetObjects.ToList(),
                 ToBetObjects = b.ToBetObjects.ToList(),
