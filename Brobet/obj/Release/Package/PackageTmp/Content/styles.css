@@ -11,7 +11,7 @@ body {
   margin: 0;
 }
 body .body-content {
-  margin-top: 65px;
+  margin-top: 45px;
 }
 body.tabbar-hidden .tabbar {
   display: none;
@@ -25,6 +25,42 @@ body .stripe-button-el {
         &.shown {
             display: block;
         }*/
+}
+body .new-bet-modal {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 100%;
+  width: 420px;
+  background-color: white;
+  padding: 0 20px;
+  height: calc(100vh - 70px);
+}
+body .new-bet-modal .head {
+  border-bottom: 1px solid black;
+}
+body .new-bet-modal .head .title {
+  margin-top: 30px;
+}
+body .new-bet-container {
+  text-align: center;
+}
+body .new-bet-container .new-bet-button {
+  display: inline-block;
+  -webkit-appearance: none;
+  margin-top: 14px;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  background-color: #3897f0;
+  padding: 4px 10px;
+  font-size: 23px;
+  text-align: center;
+  border-radius: 3px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 body .navbar {
   position: fixed;
