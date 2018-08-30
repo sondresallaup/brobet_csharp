@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Brobet.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace Brobet.ViewModels
         public List<Bet> previousBets { get; set; }
         public List<Bet> sentBetRequests { get; set; }
         public List<Bet> receivedBetRequests { get; set; }
+        public User currentUser { get; set; }
 
         public class Friend
         {
@@ -26,6 +28,7 @@ namespace Brobet.ViewModels
             public Fixture fixture { get; set; }
             public bool isFromCurrentUser { get; set; }
             public List<BetObject> currentUserBetObjects { get; set; }
+            public User winner { get; set; }
 
             public class BetObject
             {

@@ -34,6 +34,7 @@ namespace Brobet.Controllers
 
             var vms = new BetViewModelService();
             var vm = vms.GetBetOverviewViewModel();
+            vm.currentUser = accountServices.GetCurrentUser();
             
             return PartialView("_IndexPartial", vm);
         }
