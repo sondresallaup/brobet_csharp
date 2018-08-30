@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="status">
-                        @if (bet.winner == Model.currentUser)
+                        @if (bet.winner.userId == Model.currentUser.userId)
                         {
                             <span class="won">won</span>
                         }
