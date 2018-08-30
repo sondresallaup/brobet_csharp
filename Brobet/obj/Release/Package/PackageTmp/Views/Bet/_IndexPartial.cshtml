@@ -131,6 +131,7 @@
 
         $('.new-bet-button.button').click(function () {
             $modal.show();
+            $('body').addClass('modal-open');
             $.get('/Home/IndexPartial', function (data) {
                 $modal.find('.modal-body').html(data);
             });
@@ -138,6 +139,7 @@
 
         $modal.find('.close-button').click(function () {
             $modal.hide();
+            $('body').removeClass('modal-open');
         });
     });
 </script>

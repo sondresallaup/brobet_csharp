@@ -10,6 +10,9 @@ body {
   background-color: #fafafa;
   margin: 0;
 }
+body.modal-open {
+  overflow: hidden;
+}
 body .body-content {
   margin-top: 45px;
 }
@@ -36,13 +39,20 @@ body .new-bet-modal {
   width: 420px;
   background-color: white;
   padding: 0 20px;
-  height: calc(100vh - 70px);
 }
 body .new-bet-modal .head {
   border-bottom: 1px solid black;
 }
+body .new-bet-modal .head .close-button {
+  position: fixed;
+  top: 0;
+}
 body .new-bet-modal .head .title {
   margin-top: 30px;
+}
+body .new-bet-modal .modal-body {
+  overflow-y: auto;
+  height: calc(100vh - 30px);
 }
 body .new-bet-container {
   text-align: center;
