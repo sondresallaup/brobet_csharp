@@ -12,6 +12,7 @@ body {
 }
 body.modal-open {
   overflow: hidden;
+  height: 100vh;
 }
 body .body-content {
   margin-top: 45px;
@@ -29,30 +30,83 @@ body .stripe-button-el {
             display: block;
         }*/
 }
-body .new-bet-modal {
-  display: none;
+body .refresh-text {
   position: fixed;
-  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 62px;
+  top: calc(env(safe-area-inset-top) + 62px);
+  z-index: -1;
+}
+body .bet-list .bet {
+  position: relative;
+  background-color: whitesmoke;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border-bottom: none;
+  margin: 10px -20px;
+}
+body .bet-list .bet .fixture {
+  border-bottom: none;
+}
+body .bet-list .bet .status span {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0px 5px;
+  border-radius: 9px;
+  color: white;
+}
+body .bet-list .bet .status span.won {
+  background-color: #47de47;
+}
+body .bet-list .bet .status span.lost {
+  background-color: #e00909;
+}
+body .bet-list .bet .friend .name {
+  font-weight: 600;
+}
+body .new-bet-modal {
+  transition: top 0.5s;
+  top: 150vh;
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
   max-width: 100%;
   width: 420px;
   background-color: white;
   padding: 0 20px;
+  z-index: 999;
+}
+body .new-bet-modal.shown {
+  top: 46px;
+  top: calc(env(safe-area-inset-top) + 46px);
 }
 body .new-bet-modal .head {
-  border-bottom: 1px solid black;
+  /*border-bottom: 1px solid black;*/
 }
 body .new-bet-modal .head .close-button {
   position: fixed;
-  top: 0;
+  top: -36px;
+  left: 30px;
+  z-index: 99999999;
+  font-size: 20px;
+  font-weight: 400;
 }
 body .new-bet-modal .head .title {
   margin-top: 30px;
+  text-align: center;
+  font-size: 20px;
+  position: relative;
+  top: -10px;
 }
 body .new-bet-modal .modal-body {
   overflow-y: auto;
-  height: calc(100vh - 30px);
+  height: calc(100vh - 130px);
+  -webkit-overflow-scrolling: touch;
+}
+body .new-bet-modal .modal-body .body-container {
+  margin-top: calc(env(safe-area-inset-top) + 0px);
 }
 body .new-bet-container {
   text-align: center;
@@ -251,8 +305,8 @@ body .body-container {
   background-color: #ffffff;
   max-width: 400px;
   margin: 0 auto;
-  margin-top: 20px;
-  margin-top: calc(env(safe-area-inset-top) + 70px);
+  /*margin-top: 20px;*/
+  margin-top: calc(env(safe-area-inset-top) + 20px);
   margin-bottom: 90px;
   padding: 30px;
   border: 1px solid #e6e6e6;
