@@ -92,12 +92,12 @@
                         </div>
                     </div>
                     <div class="status">
-                        @if (bet.winner.userId == Model.currentUser.userId)
+                        @if (bet.winner == null)
+                        {
+                        }
+                        else if (bet.winner.userId == Model.currentUser.userId)
                         {
                             <span class="won">won</span>
-                        }
-                        else if (bet.winner == null)
-                        {
                         }
                         else
                         {
