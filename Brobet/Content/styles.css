@@ -504,13 +504,13 @@ body .create-bet-request .winner-is .pay-button {
   margin-bottom: 20px;
 }
 body .create-bet-request .winner-is .pay-button:before {
-  content: "Pay";
+  content: "Mark as paid";
 }
 body .create-bet-request .winner-is .pay-button.loading {
   background-color: #999;
-}
-body .create-bet-request .winner-is .pay-button.loading:before {
-  content: "Paying...";
+  /*&:before {
+                        content: "Paying...";
+                    }*/
 }
 body .create-bet-request .winner-is .pay-button.paid {
   background-color: #999;

@@ -88,6 +88,7 @@ namespace Brobet.Services
                 Fixture = b.Fixture,
                 Friend = b.FromUser,
                 date = b.date,
+                Winner = b.Winner,
                 isFromCurrentUser = false,
                 CurrentUserBetObjects = b.ToBetObjects.ToList(),
                 FromBetObjects = b.FromBetObjects.ToList(),
@@ -194,42 +195,42 @@ namespace Brobet.Services
             {
                 return "UNAUTHORIZED";
             }
-            var amount = 0;
+            //var amount = 0;
             var isFromUser = bet.fromUserId == currentUserId;
             var otherUser = bet.FromUser;
-            if(isFromUser)
+            if (isFromUser)
             {
-                amount = bet.fromAmount;
+                //amount = bet.fromAmount;
                 otherUser = bet.ToUser;
             }
-            else
-            {
-                amount = bet.toAmount;
-            }
-            if(amount > accountService.GetAccountBalance())
-            {
-                return "NOT_ENOUGH_MONEY";
-            }
+            //else
+            //{
+            //    amount = bet.toAmount;
+            //}
+            //if(amount > accountService.GetAccountBalance())
+            //{
+            //    return "NOT_ENOUGH_MONEY";
+            //}
 
-            var currentUserTransaction = new Transaction
-            {
-                amount = (amount * -1),
-                description = "Bet lost",
-                betId = bet.id,
-                userId = accountService.GetCurrentUserId(),
-                date = DateTime.Now
-            };
-            db.Transactions.Add(currentUserTransaction);
-            db.SaveChanges();
+            //var currentUserTransaction = new Transaction
+            //{
+            //    amount = (amount * -1),
+            //    description = "Bet lost",
+            //    betId = bet.id,
+            //    userId = accountService.GetCurrentUserId(),
+            //    date = DateTime.Now
+            //};
+            //db.Transactions.Add(currentUserTransaction);
+            //db.SaveChanges();
 
-            var otherUserTransaction = new Transaction
-            {
-                amount = amount,
-                description = "Bet won",
-                betId = bet.id,
-                date = DateTime.Now
-            };
-            otherUser.Transactions.Add(otherUserTransaction);
+            //var otherUserTransaction = new Transaction
+            //{
+            //    amount = amount,
+            //    description = "Bet won",
+            //    betId = bet.id,
+            //    date = DateTime.Now
+            //};
+            //otherUser.Transactions.Add(otherUserTransaction);
             bet.payed = true;
             db.SaveChanges();
             var fixture = bet.Fixture;
