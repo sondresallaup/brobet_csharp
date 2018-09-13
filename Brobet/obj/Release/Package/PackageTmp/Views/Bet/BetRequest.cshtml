@@ -261,7 +261,7 @@
             $(this).addClass('disabled');
             $.post('/Bet/AcceptRequest/', data, function (response) {
                 if (response.response === 'SUCCESS') {
-                    window.history.back();
+                    location.href = '/';
                 }
             });
         });
