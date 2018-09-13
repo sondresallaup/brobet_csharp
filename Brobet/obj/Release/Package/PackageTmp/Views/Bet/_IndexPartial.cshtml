@@ -157,5 +157,15 @@
             $modal.removeClass('shown');
             $('body').removeClass('modal-open');
         });
+
+        $('#logo-button').click(function (e) {
+            e.preventDefault();
+
+            $('#partial-body').fadeOut();
+            $.get('/Bet/IndexPartial', function (data) {
+                $('#partial-body').fadeIn();
+                $('#partial-body').html(data);
+            });
+        })
     });
 </script>
