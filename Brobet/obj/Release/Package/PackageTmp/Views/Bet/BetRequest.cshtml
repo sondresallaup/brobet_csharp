@@ -54,31 +54,60 @@
             </div>
         </div>
     </div>
-
-    @if(Model.winner != null)
+    @if (Model.fixture.hasProbability)
     {
-    <div class="winner-is">
-        @if (Model.winner == "CURRENT_USER")
-        {
-            <div>
-                You won<br />
-                @Model.friend.username owes you @Model.oweAmount kr
+    <div class="probabilities">
+        <div class="fixture-probability">
+            <div class="home">
+                <b>1</b>
+                <div class="probability">
+                    @Model.fixture.homeProbability%
+                </div>
             </div>
-        }
-        else if (Model.winner == "OTHER_USER")
-        {
-            <div>
-                You lost<br />
-                You owe @Model.friend.username @Model.oweAmount kr
+        </div>
+        <div class="fixture-probability">
+            <div class="draw">
+                <b>X</b>
+                <div class="probability">
+                    @Model.fixture.drawProbability%
+                </div>
             </div>
-            <a class="pay-button @(Model.isPayed ? "paid" : "")" href="javascript:void(0);"></a>
-
-        }
-        else if (Model.winner == "NO_ONE")
-        {
-            <text>Neither of you won</text>
-        }
+        </div>
+        <div class="fixture-probability">
+            <div class="away">
+                <b>2</b>
+                <div class="probability">
+                    @Model.fixture.awayProbability%
+                </div>
+            </div>
+        </div>
     </div>
+    }
+
+    @if (Model.winner != null)
+    {
+        <div class="winner-is">
+            @if (Model.winner == "CURRENT_USER")
+            {
+                <div>
+                    You won<br />
+                    @Model.friend.username owes you @Model.oweAmount kr
+                </div>
+            }
+            else if (Model.winner == "OTHER_USER")
+            {
+                <div>
+                    You lost<br />
+                    You owe @Model.friend.username @Model.oweAmount kr
+                </div>
+                <a class="pay-button @(Model.isPayed ? "paid" : "")" href="javascript:void(0);"></a>
+
+            }
+            else if (Model.winner == "NO_ONE")
+            {
+                <text>Neither of you won</text>
+            }
+        </div>
     }
 
     <div class="body-container">
