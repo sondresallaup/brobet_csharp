@@ -20,10 +20,26 @@ namespace Brobet.Services
             return fixtures;
         }
 
+        public Dictionary<int, List<FixtureViewModel>> GetAdminFixtures()
+        {
+            var toDate = DateTime.Today.AddDays(10);
+            var fixtures = db.Fixtures.Where(f => f.date >= DateTime.Today && f.date <= toDate).OrderBy(f => f.startingAt).GroupBy(f => f.seasonId).ToDictionary(f => f.Key.Value, f => f.Select(fa => new FixtureViewModel(fa)).ToList());
+            return fixtures;
+        }
+
         public FixtureViewModel GetFixture(int id)
         {
             var fixture = db.Fixtures.SingleOrDefault(f => f.id == id);
             return new FixtureViewModel(fixture);
+        }
+
+        public void UpdateFixture(int id, double homeOdds, double drawOdds, double awayOdds)
+        {
+            var fixture = db.Fixtures.SingleOrDefault(f => f.id == id);
+            fixture.homeOdds = homeOdds;
+            fixture.drawOdds = drawOdds;
+            fixture.awayOdds = awayOdds;
+            db.SaveChanges();
         }
     }
 }

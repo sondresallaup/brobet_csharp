@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BetController.cs" />
     <Compile Include="Controllers\FixtureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\PushNotificationService.cs" />
     <Compile Include="ViewModelServices\AccountViewModelService.cs" />
+    <Compile Include="ViewModelServices\AdminViewModelService.cs" />
     <Compile Include="ViewModelServices\BetViewModelService.cs" />
     <Compile Include="ViewModelServices\FixtureViewModelService.cs" />
     <Compile Include="Global.asax.cs">
@@ -281,6 +283,7 @@
     <Compile Include="Services\SportsApiService.cs" />
     <Compile Include="ViewModelServices\MessageViewModelService.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\AdminFixturesViewModel.cs" />
     <Compile Include="ViewModels\BetListViewModel.cs" />
     <Compile Include="ViewModels\BetOverviewViewModel.cs" />
     <Compile Include="ViewModels\BetRequestViewModel.cs" />
@@ -386,6 +389,7 @@
     <Content Include="Views\Account\Transactions.cshtml" />
     <Content Include="Views\Bet\Index.cshtml" />
     <Content Include="Views\Bet\_IndexPartial.cshtml" />
+    <Content Include="Views\Admin\Fixtures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

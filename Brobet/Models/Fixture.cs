@@ -41,6 +41,10 @@ namespace Brobet.Models
         public string status { get; set; }
         public Nullable<System.DateTime> date { get; set; }
         public string events { get; set; }
+        public Nullable<double> homeOdds { get; set; }
+        public Nullable<double> drawOdds { get; set; }
+        public Nullable<double> awayOdds { get; set; }
+        public Nullable<bool> deleted { get; set; }
     
         public virtual Team LocalTeam { get; set; }
         public virtual Team VisitorTeam { get; set; }

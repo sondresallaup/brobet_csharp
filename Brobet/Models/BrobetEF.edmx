@@ -77,6 +77,10 @@
           <Property Name="status" Type="nvarchar" MaxLength="50" />
           <Property Name="date" Type="datetime2" Precision="7" />
           <Property Name="events" Type="nvarchar" MaxLength="4000" />
+          <Property Name="homeOdds" Type="float" />
+          <Property Name="drawOdds" Type="float" />
+          <Property Name="awayOdds" Type="float" />
+          <Property Name="deleted" Type="bit" />
         </EntityType>
         <EntityType Name="FriendRequest">
           <Key>
@@ -750,6 +754,10 @@
           <NavigationProperty Name="BetRequests" Relationship="BrobetModel.FK_BetRequest_Fixture" FromRole="Fixture" ToRole="BetRequest" />
           <NavigationProperty Name="Bets" Relationship="BrobetModel.FK_Bet_Fixture" FromRole="Fixture" ToRole="Bet" />
           <Property Name="events" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="homeOdds" Type="Double" />
+          <Property Name="drawOdds" Type="Double" />
+          <Property Name="awayOdds" Type="Double" />
+          <Property Name="deleted" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Fixture_LocalTeam">
           <End Type="BrobetModel.Team" Role="Team" Multiplicity="1" />
@@ -1222,6 +1230,10 @@
           <EntitySetMapping Name="Fixtures">
             <EntityTypeMapping TypeName="BrobetModel.Fixture">
               <MappingFragment StoreEntitySet="Fixture">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="awayOdds" ColumnName="awayOdds" />
+                <ScalarProperty Name="drawOdds" ColumnName="drawOdds" />
+                <ScalarProperty Name="homeOdds" ColumnName="homeOdds" />
                 <ScalarProperty Name="events" ColumnName="events" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="status" ColumnName="status" />

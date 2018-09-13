@@ -17,6 +17,7 @@ namespace Brobet.ViewModels
         public FixtureViewModel(Fixture f)
         {
             id = f.id;
+            seasonId = f.seasonId;
             scores = f.scores;
             status = f.status;
             startingAt = f.startingAt;
@@ -25,11 +26,16 @@ namespace Brobet.ViewModels
             visitorTeamName = f.VisitorTeam.name;
             visitorTeamLogo = f.VisitorTeam.logoUrl;
             time = f.time;
+            homeOdds = f.homeOdds;
+            drawOdds = f.drawOdds;
+            awayOdds = f.awayOdds;
+            deleted = f.deleted;
         }
 
         public int id { get; set; }
         public int localTeamId { get; set; }
         public int visitorTeamId { get; set; }
+        public int? seasonId { get; set; }
         public string scores { get; set; }
         public string time { get; set; }
         public string standings { get; set; }
@@ -44,6 +50,11 @@ namespace Brobet.ViewModels
 
         public string visitorTeamName { get; set; }
         public string visitorTeamLogo { get; set; }
+
+        public double? homeOdds { get; set; }
+        public double? drawOdds { get; set; }
+        public double? awayOdds { get; set; }
+        public bool? deleted { get; set; }
 
         public int minute
         {
