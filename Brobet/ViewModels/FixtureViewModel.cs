@@ -88,5 +88,48 @@ namespace Brobet.ViewModels
                 return this.startingAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'");
             }
         }
+
+        public bool hasProbability
+        {
+            get
+            {
+                return this.homeOdds.HasValue;
+            }
+        }
+
+        public int homeProbability
+        {
+            get
+            {
+                return (int)Math.Round(((1.0 / this.homeOdds.Value) / this.totalProbability) *100.0, 0);
+            }
+
+        }
+
+        public int drawProbability
+        {
+            get
+            {
+                return (int)Math.Round(((1.0 / this.drawOdds.Value) / this.totalProbability) *100.0, 0);
+            }
+
+        }
+
+        public int awayProbability
+        {
+            get
+            {
+                return (int)Math.Round(((1.0 / this.awayOdds.Value) / this.totalProbability) * 100.0, 0);
+            }
+
+        }
+
+        private double totalProbability
+        {
+            get
+            {
+                return (1.0 / this.homeOdds.Value) + (1.0 / this.drawOdds.Value) + (1.0 / this.awayOdds.Value);
+            }
+        }
     }
 }

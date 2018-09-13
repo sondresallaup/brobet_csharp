@@ -33,6 +33,7 @@ namespace Brobet.ViewModels
         public string winningBetObject { get; set; }
         public string winner { get; set; }
 
+
         public int oweAmount
         {
             get
