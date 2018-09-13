@@ -145,6 +145,9 @@ namespace Brobet.ViewModelServices
                 status = bet.Fixture.status,
                 scores = bet.Fixture.scores,
                 startingAt = bet.Fixture.startingAt,
+                homeOdds = bet.Fixture.homeOdds,
+                drawOdds = bet.Fixture.drawOdds,
+                awayOdds = bet.Fixture.awayOdds,
                 startingAtAsString = bet.Fixture.startingAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'")
             };
             vm.friend = new BetRequestViewModel.Friend
@@ -212,6 +215,9 @@ namespace Brobet.ViewModelServices
                 visitorTeamLogo = betRequest.Fixture.VisitorTeam.logoUrl,
                 status = betRequest.Fixture.status,
                 scores = betRequest.Fixture.scores,
+                homeOdds = betRequest.Fixture.homeOdds,
+                drawOdds = betRequest.Fixture.drawOdds,
+                awayOdds = betRequest.Fixture.awayOdds,
                 startingAt = betRequest.Fixture.startingAt,
                 startingAtAsString = betRequest.Fixture.startingAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'")
             };
@@ -250,6 +256,9 @@ namespace Brobet.ViewModelServices
                 visitorTeamLogo = betRequest.Fixture.VisitorTeam.logoUrl,
                 status = betRequest.Fixture.status,
                 scores = betRequest.Fixture.scores,
+                homeOdds = betRequest.Fixture.homeOdds,
+                drawOdds = betRequest.Fixture.drawOdds,
+                awayOdds = betRequest.Fixture.awayOdds,
                 startingAt = betRequest.Fixture.startingAt,
                 startingAtAsString = betRequest.Fixture.startingAt.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'")
             };
