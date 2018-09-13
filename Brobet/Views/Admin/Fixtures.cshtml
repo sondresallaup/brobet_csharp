@@ -1,0 +1,101 @@
+﻿@model Brobet.ViewModels.AdminFixturesViewModel
+@{
+}
+
+<div class="navbar">
+    <div class="content" style="text-align: center;">
+        <span class="logo">
+            <a id="logo-button" href="/">brobet admin</a>
+        </span>
+
+    </div>
+</div>
+
+<div class="admin-fixtures">
+    @{
+        foreach (var seasonD in Model.fixtures)
+        {
+    <div class="season">
+        @{
+            var season = seasonD.Key;
+        }
+        <div class="season-name">
+            @Model.seasonNameFromId(season)
+        </div>
+        @foreach (var fixture in seasonD.Value)
+        {
+        <div class="fixture status-@fixture.status @(fixture.homeOdds.HasValue ? "has-odds" : "")" data-fixture-id="@fixture.id" data-status="@fixture.status">
+            <div class="info">
+                <div class="id">@fixture.id</div>
+                <div class="date">@(fixture.startingAt.HasValue ? fixture.startingAt.Value.ToLongDateString() + ", " + fixture.startingAt.Value.ToLongTimeString() : "No date")</div>
+                <div class="fixture-name">@fixture.localTeamName vs @fixture.visitorTeamName</div>
+            </div>
+            <div class="odds-container">
+                <b>Odds</b>
+                <div class="inputs">
+                    @if (fixture.homeOdds.HasValue)
+                    {
+                        <input type="number" placeholder="1" class="odds home" value="@fixture.homeOdds.Value" />
+                    }
+                    else
+                    {
+                        <input type="number" placeholder="1" class="odds home" />
+                    }
+                    @if (fixture.drawOdds.HasValue)
+                    {
+                        <input type="number" placeholder="X" class="odds draw" value="@fixture.drawOdds.Value" />
+                    }
+                    else
+                    {
+                        <input type="number" placeholder="X" class="odds draw" />
+                    }
+                    @if (fixture.awayOdds.HasValue)
+                    {
+                        <input type="number" placeholder="2" class="odds away" value="@fixture.awayOdds.Value" />
+                    }
+                    else
+                    {
+                        <input type="number" placeholder="2" class="odds away" />
+                    }
+                </div>
+            </div>
+            <div class="buttons-container">
+                <a class="save button" href="javascript:void(0);">Save</a>
+                <span class="saving-info"></span>
+            </div>
+        </div>
+        }
+    </div>
+        }
+        if (Model.fixtures.Count == 0)
+        {
+            <div class="no-fixtures">
+                No fixtures
+            </div>
+        }
+    }
+</div>
+
+<script>
+    $(function () {
+        $('.save.button').click(function () {
+            $(this).hide();
+            var $fixture = $(this).closest('.fixture');
+            var fixtureId = $fixture.data('fixture-id');
+
+            $fixture.find('.saving-info').html('Saving...');
+
+            var data = {
+                id: fixtureId,
+                homeOdds: $fixture.find('.odds.home').val(),
+                drawOdds: $fixture.find('.odds.draw').val(),
+                awayOdds: $fixture.find('.odds.away').val()
+            };
+
+            $.post('/Admin/UpdateFixture/', data, function (result) {
+                $fixture.find('.saving-info').html('Saved');
+                $fixture.addClass('has-odds');
+            });
+        });
+    });
+</script>
