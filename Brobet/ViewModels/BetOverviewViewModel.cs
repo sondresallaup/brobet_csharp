@@ -39,8 +39,15 @@ namespace Brobet.ViewModels
 
         public class Fixture
         {
-            public string name { get; set; }
+            public Team homeTeam { get; set; }
+            public Team awayTeam { get; set; }
             public DateTime date { get; set; }
+
+            public class Team
+            {
+                public string name { get; set; }
+                public int score { get; set; }
+            }
         }
     }
 }

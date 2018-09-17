@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 
 namespace Brobet.ViewModelServices
 {
@@ -34,7 +35,14 @@ namespace Brobet.ViewModelServices
                 },
                 fixture = new BetOverviewViewModel.Fixture
                 {
-                    name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
+                    homeTeam = new BetOverviewViewModel.Fixture.Team
+                    {
+                        name = b.Fixture.LocalTeam.name
+                    },
+                    awayTeam = new BetOverviewViewModel.Fixture.Team
+                    {
+                        name = b.Fixture.VisitorTeam.name
+                    }
                 }
             }).ToList();
             vm.previousBets = service.GetBets().Where(b => b.status == "FINISHED").OrderByDescending(b => b.date).Select(b => new BetOverviewViewModel.Bet
@@ -55,7 +63,16 @@ namespace Brobet.ViewModelServices
                 },
                 fixture = new BetOverviewViewModel.Fixture
                 {
-                    name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
+                    homeTeam = new BetOverviewViewModel.Fixture.Team
+                    {
+                        name = b.Fixture.LocalTeam.name,
+                        score = Json.Decode(b.Fixture.scores)["localteam_score"]
+                    },
+                    awayTeam = new BetOverviewViewModel.Fixture.Team
+                    {
+                        name = b.Fixture.VisitorTeam.name,
+                        score = Json.Decode(b.Fixture.scores)["visitorteam_score"]
+                    }
                 }
             }).ToList();
             vm.sentBetRequests = service.GetSentBetRequests().Where(b => !b.accepted && b.Fixture.status != "FT").OrderByDescending(b => b.date).Select(b => new BetOverviewViewModel.Bet
@@ -75,7 +92,14 @@ namespace Brobet.ViewModelServices
                 },
                 fixture = new BetOverviewViewModel.Fixture
                 {
-                    name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
+                    homeTeam = new BetOverviewViewModel.Fixture.Team
+                    {
+                        name = b.Fixture.LocalTeam.name
+                    },
+                    awayTeam = new BetOverviewViewModel.Fixture.Team
+                    {
+                        name = b.Fixture.VisitorTeam.name
+                    }
                 }
             }).ToList();
             vm.receivedBetRequests = service.GetReceivedBetRequests().Where(b => !b.accepted && b.Fixture.status != "FT").OrderByDescending(b => b.date).Select(b => new BetOverviewViewModel.Bet
@@ -95,7 +119,14 @@ namespace Brobet.ViewModelServices
                 },
                 fixture = new BetOverviewViewModel.Fixture
                 {
-                    name = b.Fixture.LocalTeam.name + " vs " + b.Fixture.VisitorTeam.name
+                    homeTeam = new BetOverviewViewModel.Fixture.Team
+                    {
+                        name = b.Fixture.LocalTeam.name
+                    },
+                    awayTeam = new BetOverviewViewModel.Fixture.Team
+                    {
+                        name = b.Fixture.VisitorTeam.name
+                    }
                 }
             }).ToList();
             return vm;
