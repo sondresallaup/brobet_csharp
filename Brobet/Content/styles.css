@@ -330,6 +330,9 @@ body .account .body .input-group input.submit {
   font-weight: 600;
   margin-bottom: 20px;
 }
+body .account .body .input-group input.submit.loading {
+  background-color: #d8ecff;
+}
 body .body-container {
   background-color: #ffffff;
   max-width: 400px;
