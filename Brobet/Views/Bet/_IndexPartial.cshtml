@@ -24,8 +24,13 @@
                         </div>
                     </div>
                     <div class="fixture">
-                        <div class="name">
-                            @bet.fixture.name
+                        <div class="names">
+                            <div class="home-team team">
+                                @bet.fixture.homeTeam.name
+                            </div>
+                            <div class="home-team team">
+                                @bet.fixture.awayTeam.name
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,8 +50,13 @@
                         </div>
                     </div>
                     <div class="fixture">
-                        <div class="name">
-                            @bet.fixture.name
+                        <div class="names">
+                            <div class="home-team team">
+                                @bet.fixture.homeTeam.name
+                            </div>
+                            <div class="home-team team">
+                                @bet.fixture.awayTeam.name
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -66,8 +76,13 @@
                         </div>
                     </div>
                     <div class="fixture">
-                        <div class="name">
-                            @bet.fixture.name
+                        <div class="names">
+                            <div class="home-team team">
+                                @bet.fixture.homeTeam.name
+                            </div>
+                            <div class="home-team team">
+                                @bet.fixture.awayTeam.name
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,22 +102,36 @@
                         </div>
                     </div>
                     <div class="fixture">
-                        <div class="name">
-                            @bet.fixture.name
+                        <div class="status">
+                            @if (bet.winner == null)
+                            {
+                                <span class="tie">tie</span>
+                            }
+                            else if (bet.winner.userId == Model.currentUser.userId)
+                            {
+                                <span class="won">won</span>
+                            }
+                            else
+                            {
+                                <span class="lost">lost</span>
+                            }
                         </div>
-                    </div>
-                    <div class="status">
-                        @if (bet.winner == null)
-                        {
-                        }
-                        else if (bet.winner.userId == Model.currentUser.userId)
-                        {
-                            <span class="won">won</span>
-                        }
-                        else
-                        {
-                            <span class="lost">lost</span>
-                        }
+                        <div class="score">
+                            <div class="home-team team">
+                                @bet.fixture.homeTeam.score
+                            </div>
+                            <div class="home-team team">
+                                @bet.fixture.awayTeam.score
+                            </div>
+                        </div>
+                        <div class="names">
+                            <div class="home-team team">
+                                @bet.fixture.homeTeam.name
+                            </div>
+                            <div class="home-team team">
+                                @bet.fixture.awayTeam.name
+                            </div>
+                        </div>
                     </div>
                 </div>
             }

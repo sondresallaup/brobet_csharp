@@ -58,39 +58,85 @@ body {
     }
 
     .bet-list {
+        margin: 0 -30px;
+        margin-bottom: 50px;
+
+        h3 {
+            padding: 0 30px;
+        }
+
         .bet {
-            position: relative;
-            background-color: whitesmoke;
-            padding: 10px 20px;
-            border-radius: 10px;
-            border-bottom: none;
-            margin: 10px -20px;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e6e6e6;
 
             .fixture {
                 border-bottom: none;
-            }
+                border: 1px solid #e6e6e6;
+                background-color: #fafafa;
+                padding: 0;
 
-            .status {
-                span {
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    padding: 0px 5px;
-                    border-radius: 9px;
-                    color: white;
+                .team {
+                    padding: 3px 0;
+                }
 
+                .status {
+                    display: inline-block;
+                    vertical-align: middle;
+                    text-align: center;
+                    width: 40px;
 
-                    &.won {
-                        background-color: #47de47;
+                    span {
+                        display: inline-block;
+                        height: 56px;
+                        line-height: 56px;
+                        width: 100%;
+                        font-family: 'Holtwood One SC', serif;
+                        font-size: 10px;
+
+                        &.won {
+                            background-color: #cbffcb;
+                        }
+
+                        &.lost {
+                            background-color: #ffc1c1;
+                        }
                     }
+                }
 
-                    &.lost {
-                        background-color: #e00909;
+                .score {
+                    display: inline-block;
+                    vertical-align: middle;
+                    text-align: center;
+                    width: 25px;
+
+                    .team {
+                        &.home-team {
+                        }
+
+                        &.away-team {
+                        }
+                    }
+                }
+
+                .names {
+                    display: inline-block;
+                    vertical-align: middle;
+                    width: calc(~"100% - 74px");
+
+                    .team {
+                        &.home-team {
+                        }
+
+                        &.away-team {
+                        }
                     }
                 }
             }
 
+
             .friend {
+                margin-bottom: 10px;
+
                 .name {
                     font-weight: 600;
                 }
