@@ -38,30 +38,59 @@ body .refresh-text {
   top: calc(env(safe-area-inset-top) + 62px);
   z-index: -1;
 }
+body .bet-list {
+  margin: 0 -30px;
+  margin-bottom: 50px;
+}
+body .bet-list h3 {
+  padding: 0 30px;
+}
 body .bet-list .bet {
-  position: relative;
-  background-color: whitesmoke;
-  padding: 10px 20px;
-  border-radius: 10px;
-  border-bottom: none;
-  margin: 10px -20px;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e6e6e6;
 }
 body .bet-list .bet .fixture {
   border-bottom: none;
+  border: 1px solid #e6e6e6;
+  background-color: #fafafa;
+  padding: 0;
 }
-body .bet-list .bet .status span {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 0px 5px;
-  border-radius: 9px;
-  color: white;
+body .bet-list .bet .fixture .team {
+  padding: 3px 0;
 }
-body .bet-list .bet .status span.won {
-  background-color: #47de47;
+body .bet-list .bet .fixture .status {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  width: 40px;
 }
-body .bet-list .bet .status span.lost {
-  background-color: #e00909;
+body .bet-list .bet .fixture .status span {
+  display: inline-block;
+  height: 56px;
+  line-height: 56px;
+  width: 100%;
+  font-family: 'Holtwood One SC', serif;
+  font-size: 10px;
+}
+body .bet-list .bet .fixture .status span.won {
+  background-color: #cbffcb;
+}
+body .bet-list .bet .fixture .status span.lost {
+  background-color: #ffc1c1;
+}
+body .bet-list .bet .fixture .score {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  width: 25px;
+}
+body .bet-list .bet .fixture .names {
+  display: inline-block;
+  vertical-align: middle;
+  width: calc(100% - 74px);
+}
+body .bet-list .bet .friend {
+  margin-bottom: 10px;
 }
 body .bet-list .bet .friend .name {
   font-weight: 600;
