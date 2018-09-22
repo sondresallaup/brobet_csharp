@@ -29,7 +29,7 @@ namespace Brobet.ViewModels
             homeOdds = f.homeOdds;
             drawOdds = f.drawOdds;
             awayOdds = f.awayOdds;
-            deleted = f.deleted;
+            deleted = f.deleted.HasValue && f.deleted.Value;
         }
 
         public int id { get; set; }
@@ -54,7 +54,7 @@ namespace Brobet.ViewModels
         public double? homeOdds { get; set; }
         public double? drawOdds { get; set; }
         public double? awayOdds { get; set; }
-        public bool? deleted { get; set; }
+        public bool deleted { get; set; }
 
         public int minute
         {
@@ -101,6 +101,7 @@ namespace Brobet.ViewModels
         {
             get
             {
+                if (!hasProbability) return 0;
                 return (int)Math.Round(((1.0 / this.homeOdds.Value) / this.totalProbability) *100.0, 0);
             }
 
@@ -110,6 +111,7 @@ namespace Brobet.ViewModels
         {
             get
             {
+                if (!hasProbability) return 0;
                 return (int)Math.Round(((1.0 / this.drawOdds.Value) / this.totalProbability) *100.0, 0);
             }
 
@@ -119,6 +121,7 @@ namespace Brobet.ViewModels
         {
             get
             {
+                if (!hasProbability) return 0;
                 return (int)Math.Round(((1.0 / this.awayOdds.Value) / this.totalProbability) * 100.0, 0);
             }
 

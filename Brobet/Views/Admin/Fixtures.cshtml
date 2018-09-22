@@ -24,7 +24,7 @@
         </div>
         @foreach (var fixture in seasonD.Value)
         {
-        <div class="fixture status-@fixture.status @(fixture.homeOdds.HasValue ? "has-odds" : "")" data-fixture-id="@fixture.id" data-status="@fixture.status">
+        <div class="fixture status-@fixture.status @(fixture.homeOdds.HasValue ? "has-odds" : "") @(fixture.deleted ? "deleted" : "")" data-fixture-id="@fixture.id" data-status="@fixture.status">
             <div class="info">
                 <div class="id">@fixture.id</div>
                 <div class="date">@(fixture.startingAt.HasValue ? fixture.startingAt.Value.ToLongDateString() + ", " + fixture.startingAt.Value.ToLongTimeString() : "No date")</div>
@@ -62,6 +62,8 @@
             <div class="buttons-container">
                 <a class="save button" href="javascript:void(0);">Save</a>
                 <span class="saving-info"></span>
+                <a class="delete button" href="javascript:void(0);">@(!fixture.deleted ? "Delete" : "Undelete")</a>
+                <span class="deleting-info"></span>
             </div>
         </div>
         }
@@ -95,6 +97,30 @@
             $.post('/Admin/UpdateFixture/', data, function (result) {
                 $fixture.find('.saving-info').html('Saved');
                 $fixture.addClass('has-odds');
+            });
+        });
+
+        $('.delete.button').click(function () {
+            $(this).hide();
+            var $fixture = $(this).closest('.fixture');
+            var fixtureId = $fixture.data('fixture-id');
+
+            $fixture.find('.deleting-info').html('Deleting...');
+
+            var data = {
+                id: fixtureId,
+                delete: !$fixture.hasClass('deleted')
+            };
+
+            $.post('/Admin/DeleteFixture/', data, function (result) {
+                if ($fixture.hasClass('deleted')) {
+                    $fixture.find('.deleting-info').html('Undeleted');
+                    $fixture.removeClass('deleted');
+                }
+                else {
+                    $fixture.find('.deleting-info').html('Deleted');
+                    $fixture.addClass('deleted');
+                }
             });
         });
     });

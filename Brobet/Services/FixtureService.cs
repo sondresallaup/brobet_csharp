@@ -16,7 +16,7 @@ namespace Brobet.Services
         public Dictionary<int, List<FixtureViewModel>> GetFixtures(int daysFromNow = 0)
         {
             var date = DateTime.Today.AddDays(daysFromNow);
-            var fixtures = db.Fixtures.Where(f => f.date == date).OrderBy(f => f.startingAt).GroupBy(f => f.seasonId).ToDictionary(f => f.Key.Value, f => f.Select(fa => new FixtureViewModel(fa)).ToList());
+            var fixtures = db.Fixtures.Where(f => !(f.deleted.HasValue && f.deleted.Value) && f.date == date).OrderBy(f => f.startingAt).GroupBy(f => f.seasonId).ToDictionary(f => f.Key.Value, f => f.Select(fa => new FixtureViewModel(fa)).ToList());
             return fixtures;
         }
 
@@ -40,6 +40,14 @@ namespace Brobet.Services
             fixture.drawOdds = drawOdds;
             fixture.awayOdds = awayOdds;
             db.SaveChanges();
+        }
+
+        public void DeleteFixture(int id, bool delete = true)
+        {
+            var fixture = db.Fixtures.SingleOrDefault(f => f.id == id);
+            fixture.deleted = delete;
+            db.SaveChanges(); 
+            // TODO: Delete bets and warn affected users
         }
     }
 }
