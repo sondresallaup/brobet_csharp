@@ -30,5 +30,18 @@ namespace Brobet.Controllers
                 response = "SUCCESS"
             });
         }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpPost]
+        public ActionResult DeleteFixture(int id, bool delete = true)
+        {
+            var service = new FixtureService();
+            service.DeleteFixture(id, delete);
+
+            return Json(new
+            {
+                response = "SUCCESS"
+            });
+        }
     }
 }
