@@ -28,7 +28,7 @@ namespace Brobet.ViewModels
             public Fixture fixture { get; set; }
             public bool isFromCurrentUser { get; set; }
             public List<BetObject> currentUserBetObjects { get; set; }
-            public User winner { get; set; }
+            public int? winner { get; set; }
 
             public class BetObject
             {
