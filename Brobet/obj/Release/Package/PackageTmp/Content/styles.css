@@ -1081,6 +1081,9 @@ body .body-container.edit-avatar .edit-avatar-containers .edit-avatar-container 
 .admin-fixtures .season .fixture.has-odds {
   background-color: rgba(0, 128, 0, 0.3);
 }
+.admin-fixtures .season .fixture.deleted {
+  background-color: #ff0000;
+}
 .admin-fixtures .season .fixture .info {
   display: inline-block;
   vertical-align: top;

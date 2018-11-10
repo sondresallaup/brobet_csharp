@@ -47,11 +47,11 @@
 
 
             var error = false;
-            if ($username.val().length < 3) {
+            if ($username.val().length < 1) {
                 //Username error
                 error = true;
             }
-            if ($password.val().length < 3) {
+            if ($password.val().length < 1) {
                 //Password error
                 error = true;
             }
@@ -70,11 +70,11 @@
 
 
             function successResponse(response) {
-                $loginButton.removeClass('loading').val('Log in');
                 if (response.response === 'ERROR') {
                     if (response.message === 'WRONG_AUTHENTICATION') {
                         $username.addClass('error');
                     }
+                    $loginButton.removeClass('loading').val('Log in');
                     $response.html('Wrong password');
                 }
                 else if (response.response === 'SUCCESS') {
