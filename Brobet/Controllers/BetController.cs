@@ -38,6 +38,26 @@ namespace Brobet.Controllers
             
             return PartialView("_IndexPartial", vm);
         }
+
+        [HttpPost]
+        public ActionResult BetsAsJson()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Json(new
+                {
+                    result = "error"
+                });
+            }
+
+            var vms = new BetViewModelService();
+            var vm = vms.GetBetOverviewViewModel();
+            //vm.currentUser = accountServices.GetCurrentUser();
+
+            return Json(vm);
+        }
+
         public ActionResult List()
         {
             var accountServices = new AccountServices();
