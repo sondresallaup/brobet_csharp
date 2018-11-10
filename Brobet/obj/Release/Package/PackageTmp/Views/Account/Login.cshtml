@@ -20,6 +20,9 @@
             <div class="input-group">
                 <input type="submit" class="submit" value="Log in"/>
             </div>
+            <div class="input-group">
+                <span class="response"></span>
+            </div>
         </form>
     </div>
 </div>
@@ -32,10 +35,16 @@
     $(function () {
         var $username = $(this).find('.username');
         var $password = $(this).find('.password');
+        var $loginButton = $(this).find('.submit');
+        var $response = $(this).find('.response');
 
         $('#login-form').submit(function (e) {
             e.preventDefault();
+            $response.html('');
+
             var data = $(this).serialize();
+            
+
 
             var error = false;
             if ($username.val().length < 3) {
@@ -48,6 +57,9 @@
             }
             if (error) return;
 
+            if ($loginButton.hasClass('loading')) return;
+            $loginButton.addClass('loading').val('Logging in...');
+
             $.ajax({
                 type: "POST",
                 url: '/Account/Login',
@@ -58,10 +70,12 @@
 
 
             function successResponse(response) {
+                $loginButton.removeClass('loading').val('Log in');
                 if (response.response === 'ERROR') {
                     if (response.message === 'WRONG_AUTHENTICATION') {
                         $username.addClass('error');
                     }
+                    $response.html('Wrong password');
                 }
                 else if (response.response === 'SUCCESS') {
                     console.log(response);
@@ -76,7 +90,8 @@
             }
 
             function errorResponse(response) {
-                console.log(response);
+                $loginButton.removeClass('loading').val('Log in');
+                $response.html('Wrong password');
             }
 
         });
