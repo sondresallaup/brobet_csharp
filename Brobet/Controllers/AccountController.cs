@@ -251,6 +251,24 @@ namespace Brobet.Controllers
             });
         }
 
+        [HttpPost]
+        public ActionResult FriendsAsJson()
+        {
+            var accountServices = new AccountServices();
+            if (!accountServices.isLoggedIn())
+            {
+                return Json(new
+                {
+                    result = "error"
+                });
+            }
+
+            var vms = new AccountServices();
+            var vm = vms.GetFriends();
+
+            return Json(vm);
+        }
+
         private Dictionary<string, string> getToken()
         {
 
