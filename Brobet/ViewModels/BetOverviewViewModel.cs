@@ -30,6 +30,8 @@ namespace Brobet.ViewModels
             public List<BetObject> currentUserBetObjects { get; set; }
             public List<BetObject> fromUserBetObjects { get; set; }
             public List<BetObject> toUserBetObjects { get; set; }
+            public int fromAmount { get; set; }
+            public int toAmount { get; set; }
             public int? winner { get; set; }
 
             public class BetObject
