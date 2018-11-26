@@ -28,6 +28,8 @@ namespace Brobet.ViewModels
             public Fixture fixture { get; set; }
             public bool isFromCurrentUser { get; set; }
             public List<BetObject> currentUserBetObjects { get; set; }
+            public List<BetObject> fromUserBetObjects { get; set; }
+            public List<BetObject> toUserBetObjects { get; set; }
             public int? winner { get; set; }
 
             public class BetObject

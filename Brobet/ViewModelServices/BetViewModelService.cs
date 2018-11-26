@@ -28,6 +28,16 @@ namespace Brobet.ViewModelServices
                     type = cbo.betTypeId,
                     value = cbo.value
                 }).ToList(),
+                fromUserBetObjects = b.FromBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                toUserBetObjects = b.ToBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
                 friend = new BetOverviewViewModel.Friend
                 {
                     id = b.Friend.userId,
@@ -51,6 +61,16 @@ namespace Brobet.ViewModelServices
                 isFromCurrentUser = b.isFromCurrentUser,
                 winner = b.Winner?.userId,
                 currentUserBetObjects = b.CurrentUserBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                fromUserBetObjects = b.FromBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                toUserBetObjects = b.ToBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
                 {
                     type = cbo.betTypeId,
                     value = cbo.value
@@ -84,6 +104,16 @@ namespace Brobet.ViewModelServices
                     type = cbo.betTypeId,
                     value = cbo.value
                 }).ToList(),
+                fromUserBetObjects = b.FromBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                toUserBetObjects = b.ToBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
                 friend = new BetOverviewViewModel.Friend
                 {
                     id = b.ToUser.userId,
@@ -107,6 +137,16 @@ namespace Brobet.ViewModelServices
                 id = b.id,
                 isFromCurrentUser = false,
                 currentUserBetObjects = b.ToBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                fromUserBetObjects = b.FromBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
+                {
+                    type = cbo.betTypeId,
+                    value = cbo.value
+                }).ToList(),
+                toUserBetObjects = b.ToBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
                 {
                     type = cbo.betTypeId,
                     value = cbo.value
