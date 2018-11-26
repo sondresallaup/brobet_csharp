@@ -38,6 +38,8 @@ namespace Brobet.ViewModelServices
                     type = cbo.betTypeId,
                     value = cbo.value
                 }).ToList(),
+                fromAmount = b.fromAmount,
+                toAmount = b.toAmount,
                 friend = new BetOverviewViewModel.Friend
                 {
                     id = b.Friend.userId,
@@ -75,6 +77,8 @@ namespace Brobet.ViewModelServices
                     type = cbo.betTypeId,
                     value = cbo.value
                 }).ToList(),
+                fromAmount = b.fromAmount,
+                toAmount = b.toAmount,
                 friend = new BetOverviewViewModel.Friend
                 {
                     id = b.Friend.userId,
@@ -114,6 +118,8 @@ namespace Brobet.ViewModelServices
                     type = cbo.betTypeId,
                     value = cbo.value
                 }).ToList(),
+                fromAmount = b.fromAmount,
+                toAmount = b.toAmount,
                 friend = new BetOverviewViewModel.Friend
                 {
                     id = b.ToUser.userId,
@@ -151,6 +157,8 @@ namespace Brobet.ViewModelServices
                     type = cbo.betTypeId,
                     value = cbo.value
                 }).ToList(),
+                fromAmount = b.fromAmount,
+                toAmount = b.toAmount,
                 friend = new BetOverviewViewModel.Friend
                 {
                     id = b.FromUser.userId,
