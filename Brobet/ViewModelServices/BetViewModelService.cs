@@ -62,6 +62,7 @@ namespace Brobet.ViewModelServices
                 id = b.id,
                 isFromCurrentUser = b.isFromCurrentUser,
                 winner = b.Winner?.userId,
+                winnerString = b.winnerString,
                 currentUserBetObjects = b.CurrentUserBetObjects.Select(cbo => new BetOverviewViewModel.Bet.BetObject
                 {
                     type = cbo.betTypeId,
